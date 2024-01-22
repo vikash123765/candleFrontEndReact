@@ -1,0 +1,88 @@
+html, body, #root {
+    min-height: 100vh;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+}
+
+.spacer {
+    flex-grow: 1;
+}
+
+header {
+    background-color: var(--primary);
+    color: var(--bg);
+}
+
+header > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+
+
+    & a {
+        color: var(--bg);
+    }
+
+    
+    & nav ul {
+        list-style-type: none;
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+
+        & li {
+            display: inline;
+        }
+    }
+
+    & nav.mobile {
+        position: relative;
+        &:hover {
+            & ul {
+                display: flex !important;
+            }
+        }
+        & .menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--primary);
+            border-radius: 0 0 .5rem .5rem;
+            & ul {
+                display: none;
+                flex-direction: column;
+                padding: 0 2rem;
+            }
+        }
+    }
+}
+
+main {
+    padding: 1rem;
+    flex-grow: 1;
+
+    & > * > section {
+        &:not(:first-child), &:not(:last-child) {
+            margin: 2rem 0;
+        }
+    }
+}
+
+footer {
+    border-top: 3px solid var(--primary);
+    box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+}
+
+#footer-items {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+
+    @media screen and (max-width: 800px) {
+        grid-template-columns: 1fr;
+    }
+}

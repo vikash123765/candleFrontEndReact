@@ -1,0 +1,31 @@
+#cart {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+#cart_form {
+
+}
+
+#cart_form .foot {
+    display: flex;
+    justify-content: space-around;
+    padding: 2rem;
+}
+
+.cart-item {
+    display: grid;
+    border-radius: 1rem;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+}
+
+.cart-item {
+    background-color: lightblue;
+    padding: 1rem;
+}
+
+.cart-item .left img {
+    width: 100%;
+}

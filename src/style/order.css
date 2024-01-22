@@ -1,0 +1,24 @@
+#orders {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+}
+
+.order {
+    padding: .25rem;
+    background-color: lightgoldenrodyellow;
+}
+
+.order-badges {
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.order-badge.sent {
+    background-color: blue;
+}
+
+.order-badge.delivered {
+    background-color: green;
+}

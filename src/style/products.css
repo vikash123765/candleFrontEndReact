@@ -1,0 +1,39 @@
+#products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    @media screen and (max-width: 800px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.product-card {
+    text-align: left;
+    background-color: var(--primary);
+    color: var(--bg);
+
+    box-shadow: var(--shadow);
+    
+    cursor: pointer;
+    transition: transform 125ms;
+
+    &:hover {
+        transform: scale(1.025);
+    }
+
+    & .info {
+        display: grid;
+        grid-template-columns: auto 50px;
+
+        & .price {
+            text-align: right;
+        }
+    }
+}
+
+
+.product-card img {
+    width: 100%;
+    border-radius: .5rem;
+}
