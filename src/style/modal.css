@@ -9,8 +9,9 @@
 }
 
 .product-modal {
-    background-color: var(--primary);
-    color: var(--bg);
+    background-color: var(--bg);
+    border: 1px solid var(--primary);
+    /* color: var(--bg); */
     display: inline-block;
     position: absolute;
     top: 50%;

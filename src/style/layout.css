@@ -16,6 +16,10 @@ header {
     color: var(--bg);
 }
 
+header h1 {
+    font-family: serif;
+}
+
 header > div {
     display: flex;
     justify-content: space-between;
@@ -24,6 +28,8 @@ header > div {
 
 
     & a {
+
+        
         color: var(--bg);
     }
 

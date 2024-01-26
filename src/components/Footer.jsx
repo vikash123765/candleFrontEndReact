@@ -37,8 +37,8 @@ export default function Footer() {
 
                 <div className="footer-item">
                     <h4>Social media</h4>
-                    {social.map(s => (
-                        <a href={s.href} target="_blank">
+                    {social.map((s, i) => (
+                        <a href={s.href} key={s.href+i} target="_blank">
                             {s.icon}
                         </a>
                     ))}

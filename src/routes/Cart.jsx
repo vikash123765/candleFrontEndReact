@@ -6,8 +6,9 @@ import { useNavigate } from "react-router-dom"
 
 import GuestCheckoutForm from "../components/GuestCheckoutForm.jsx"
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+
 const payPalOptions = {
-    clientId: "",
+    clientId: "AV0M2rBqtYjM6MjDeL31vez-jyOjvQRZ8mHWO_svunBMxAk005tx2CsffnIautZsLfqcJkZJ3ftABVAb",
     currency: "EUR"
 }
 
@@ -151,7 +152,7 @@ export default function Cart() {
                         </button>
                     )} */}
                     {store.loggedIn && (
-                        <PayPalScriptProvider>
+                        <PayPalScriptProvider options={payPalOptions}>
                             <PayPalButtons />
                         </PayPalScriptProvider>
                     )}
@@ -161,7 +162,7 @@ export default function Cart() {
                 <GuestCheckoutForm guestCheckout={guestCheckout}/>
             )} */}
             {!store.loggedIn && (
-                <PayPalScriptProvider>
+                <PayPalScriptProvider options={payPalOptions}>
                     <PayPalButtons />
                 </PayPalScriptProvider>
             )}

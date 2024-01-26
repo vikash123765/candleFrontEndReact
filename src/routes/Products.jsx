@@ -1,6 +1,7 @@
 import { getAllProducts } from "../lib/api"
 import { useEffect, useState, useRef } from "react"
 import ProductCard from "../components/ProductCard"
+import { Slider } from '@mui/material'
 
 /*
     {
@@ -23,9 +24,8 @@ export default function Products() {
 
     const [products, setProducts] = useState([])
     const [types, setTypes] = useState([])
+    const [priceRangeValues, setPriceRangeValues] = useState([0, 300])
     const [filteredProducts, setFilteredProducts] = useState(null)
-    const [rangeMin, setRangeMin] = useState(MIN_PRICE)
-    const [rangeMax, setRangeMax] = useState(MAX_PRICE)
     const searchRef = useRef(null)
 
     function createProductDTOs(pdx) {
@@ -39,6 +39,7 @@ export default function Products() {
         getAllProducts()
             .then(pdx => {
                 pdx = createProductDTOs(pdx)
+                // console.log("getAllProducts:", pdx)
                 setProducts(pdx)
                 // console.log(pdx[0])
                 let typesArr = pdx.map(p => p.productType)
@@ -51,8 +52,12 @@ export default function Products() {
 
     useEffect(()=>{
         if (!filteredProducts) return
-        console.log(filteredProducts.map(p => p.productPrice))
+        
     }, [filteredProducts])
+
+    useEffect(()=>{
+        setProductRange()
+    }, [priceRangeValues])
 
     function filterByType(e) {
         const val = e.target.value
@@ -93,7 +98,12 @@ export default function Products() {
         }))
     }
 
+    function handlePriceRangeSlider(e, values) {
+        setPriceRangeValues(values)
+    }
+
     function setProductRange() {
+        const [rangeMin, rangeMax] = priceRangeValues
         setFilteredProducts(products.filter(p => {
             return p.productPrice >= rangeMin && p.productPrice <= rangeMax
         }))
@@ -135,29 +145,18 @@ export default function Products() {
                     <option value="name-d">Name (ascending)</option> */}
                 </select>
             </div>
-            <div>
-                Price min <input 
-                    type="range" 
-                    min={MIN_PRICE} 
-                    max={rangeMax}
-                    defaultValue={rangeMin}
-                    onChange={(e)=>{
-                        setRangeMin(e.target.value)
-                        setProductRange()
-                    }}  
-                    /> {rangeMin}
-                <br />
-                Price max <input 
-                    type="range" 
-                    min={rangeMin} 
-                    max={MAX_PRICE} 
-                    defaultValue={rangeMax}
-                    onChange={(e) => {
-                        setRangeMax(e.target.value)
-                        setProductRange()
-                    }}
-                    /> {rangeMax}
-            </div>
+            <Slider
+                getAriaLabel={()=>'Price range'}
+                min={0}
+                max={300}
+                defaultValue={[0, 300]}
+                marks={[
+                    {value: 0, label: '¤0'},
+                    {value: 300, label: '¤300'}
+                ]}
+                onChange={handlePriceRangeSlider}
+                valueLabelDisplay="auto"
+            />
         </div>    
         <div id="products">
             {(filteredProducts||products).map(p => {

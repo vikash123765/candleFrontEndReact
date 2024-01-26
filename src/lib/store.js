@@ -3,6 +3,7 @@ import { atom } from 'jotai'
 
 const storeAtom = atom({
     cart: [],
+    guestCart: [],
     orders: []
 })
 

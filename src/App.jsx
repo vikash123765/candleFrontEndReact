@@ -68,7 +68,7 @@ function App() {
           setUser(userRes)
           setLoggedIn(true)
           updateStore(setStore, {
-            cart: getCart_localStorage(),
+            cart: getCart_localStorage(true),
             user: userRes,
             loggedIn: true
           })
@@ -85,6 +85,7 @@ function App() {
   }, [])
 
   function logOut() {
+    localStorage.removeItem('guest-cart')
     signOutUser()
     setUser({})
     setLoggedIn(false)
@@ -94,6 +95,9 @@ function App() {
     <>
       <header>
         <div>
+          <h1>
+            The shop
+          </h1>
           <h2>Welcome, {user.userName || 'guest'}!</h2>
           <div className="spacer"></div>
             <Nav />

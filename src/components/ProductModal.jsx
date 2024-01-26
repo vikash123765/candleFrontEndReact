@@ -1,4 +1,5 @@
 import { useAtom } from 'jotai'
+import { useState } from 'react'
 import { storeAtom } from '../lib/store'
 import { addToCart_localStorage } from '../lib/cart'
 import AddIcon from '@mui/icons-material/Add';
@@ -11,6 +12,7 @@ import CloseIcon from '@mui/icons-material/Close';
 export default function ProductModal({p, setModalShown}) {
 
     const [store, setStore] = useAtom(storeAtom)
+    const [stagedItems, setStagedItems] = useState([])
 
     function closeModal() {
         setModalShown(false)
@@ -20,7 +22,7 @@ export default function ProductModal({p, setModalShown}) {
       // console.log(store.cart)
       setStore(current => {
         current.cart.push(p)
-        addToCart_localStorage(p)
+        addToCart_localStorage(p, store.loggedIn)
         // return a copy of the current store, so react notices the change
         return {...current}
       })
@@ -44,6 +46,22 @@ export default function ProductModal({p, setModalShown}) {
       return count
     }
 
+    function addToStagedItems() {
+      setStagedItems([...stagedItems, p])
+    }
+
+    function removeFromStagedItems() {
+      setStagedItems([...stagedItems.slice(0, stagedItems.length-1)])
+    }
+
+    function addStagedItemsToCart() {
+      for (let i = 0; i < stagedItems.length; i ++) {
+        addToCart()
+      }
+      setStagedItems([])
+      closeModal()
+    }
+
     const displayPrice = p.productPrice.toFixed(2)
 
   return (
@@ -64,14 +82,16 @@ export default function ProductModal({p, setModalShown}) {
               <div>{p.productType}</div>
               <div>Description: {p.productDescription}</div>
               <div className="buttons">
-                <button onClick={removeFromCart} className='remove'>
+                <button onClick={removeFromStagedItems} className='remove'>
                   <RemoveIcon/>
                 </button>
-                <button onClick={addToCart} className='add'>
+                <button onClick={addToStagedItems} className='add'>
                   <AddIcon />
                 </button>
                 <div className='cart'>
-                  {countInCart()} in cart
+                  <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
+                    Add {stagedItems.length} to cart
+                  </button>
                 </div>
               </div>
             </div>

@@ -10,8 +10,9 @@
 
 .product-card {
     text-align: left;
-    background-color: var(--primary);
-    color: var(--bg);
+    background-color: var(--bg);
+    border: 2px solid var(--primary);
+    /* color: var(--bg); */
 
     box-shadow: var(--shadow);
     

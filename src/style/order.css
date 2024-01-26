@@ -19,6 +19,10 @@
     background-color: blue;
 }
 
+.order-badge.not {
+    background-color: black;
+}
+
 .order-badge.delivered {
     background-color: green;
 }
