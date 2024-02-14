@@ -1,0 +1,55 @@
+#profile {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+#address,
+#change-password {
+    width: 45%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+input,
+select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    color: currentColor; /* Inherit the color value from the parent (default text color) */
+}
+
+input[readonly],
+select[readonly] {
+    color: rgba(0, 0, 0, 0.4); /* Almost transparent black for readonly (existing) values */
+}
+
+button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #2076c1;
+}

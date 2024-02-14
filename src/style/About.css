@@ -1,0 +1,44 @@
+.about-container {
+    padding: 20px;
+    background-color: #fff; /* Added background color for better readability */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Added a subtle box shadow for depth */
+    border-radius: 8px; /* Added border-radius for a softer look */
+}
+
+.about-section,
+.team-section {
+    margin-bottom: 30px;
+}
+
+.team-member {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.team-member img {
+    width: 150px;
+    height: 150px; /* Set a fixed height for a more consistent look */
+    object-fit: cover; /* Preserve aspect ratio for the image */
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+/* Added styles for better overall readability */
+h2 {
+    color: #333;
+}
+
+p {
+    color: #666;
+    line-height: 1.5;
+}
+
+/* Added styles for links */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

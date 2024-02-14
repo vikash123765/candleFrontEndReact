@@ -158,9 +158,10 @@ export default function Cart() {
                     )}
                 </div>
             </form>
-            {/* {!store.loggedIn && (
-                <GuestCheckoutForm guestCheckout={guestCheckout}/>
-            )} */}
+            {!store.loggedIn && (
+            <GuestCheckoutForm guestCheckout={guestCheckout}/>
+            )}
+
             {!store.loggedIn && (
                 <PayPalScriptProvider options={payPalOptions}>
                     <PayPalButtons />

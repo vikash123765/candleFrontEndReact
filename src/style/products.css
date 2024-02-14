@@ -1,6 +1,6 @@
 #products {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
 
     @media screen and (max-width: 800px) {
@@ -12,10 +12,7 @@
     text-align: left;
     background-color: var(--bg);
     border: 2px solid var(--primary);
-    /* color: var(--bg); */
-
     box-shadow: var(--shadow);
-    
     cursor: pointer;
     transition: transform 125ms;
 
@@ -23,18 +20,17 @@
         transform: scale(1.025);
     }
 
-    & .info {
+    .info {
         display: grid;
         grid-template-columns: auto 50px;
 
-        & .price {
+        .price {
             text-align: right;
         }
     }
 }
 
-
 .product-card img {
     width: 100%;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
 }

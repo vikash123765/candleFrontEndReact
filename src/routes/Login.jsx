@@ -2,7 +2,7 @@
 import { useState } from "react";
 import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
-
+import '../style/LoginAndSignup.css';
 /*
     useState takes an intial value, and returns an array of two things:
         1. the state
