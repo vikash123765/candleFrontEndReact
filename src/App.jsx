@@ -96,7 +96,7 @@ function App() {
       <header>
         <div>
           <h1>
-            The shop
+            
           </h1>
           <h2>Welcome, {user.userName || 'guest'}!</h2>
           <div className="spacer"></div>

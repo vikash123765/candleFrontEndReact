@@ -3,20 +3,6 @@ import { useEffect, useState, useRef } from "react"
 import ProductCard from "../components/ProductCard"
 import { Slider } from '@mui/material'
 
-/*
-    {
-    "productId": 1,
-    "productType": "PlAIN_CASES",
-    "productName": "iphone14 pro",
-    "productDescription": "made in china",
-    "productAvailable": true,
-    "productPrice": 33,
-    "cartItems": [],
-    "guestCartItems": [],
-    "image": "https://picsum.photos/seed/iphone14 pro/500/500"
-    }
-*/
-
 const MIN_PRICE = 0
 const MAX_PRICE = 400
 
@@ -25,7 +11,7 @@ export default function Products() {
     const [products, setProducts] = useState([])
     const [types, setTypes] = useState([])
     const [priceRangeValues, setPriceRangeValues] = useState([0, 300])
-    const [filteredProducts, setFilteredProducts] = useState(null)
+    const [filteredProducts, setFilteredProducts] = useState([]) // Initialize with an empty array instead of null
     const searchRef = useRef(null)
 
     function createProductDTOs(pdx) {
@@ -39,9 +25,7 @@ export default function Products() {
         getAllProducts()
             .then(pdx => {
                 pdx = createProductDTOs(pdx)
-                // console.log("getAllProducts:", pdx)
                 setProducts(pdx)
-                // console.log(pdx[0])
                 let typesArr = pdx.map(p => p.productType)
                 setTypes([...new Set(typesArr)])
             })
@@ -51,18 +35,13 @@ export default function Products() {
     },[])
 
     useEffect(()=>{
-        if (!filteredProducts) return
-        
-    }, [filteredProducts])
-
-    useEffect(()=>{
         setProductRange()
     }, [priceRangeValues])
 
     function filterByType(e) {
         const val = e.target.value
         if (val === 'all') {
-            setFilteredProducts(null)
+            setFilteredProducts([])
             return
         }
         setFilteredProducts(products.filter(p => {
@@ -79,12 +58,12 @@ export default function Products() {
     }
 
     function resetProducts() {
-        setFilteredProducts(null)
+        setFilteredProducts([])
     }
 
     function sortProducts(e) {
         if (!e.target.value) return
-        setFilteredProducts(products.toSorted((a, b) => {
+        setFilteredProducts([...products].sort((a, b) => {
             switch(e.target.value) {
                 case 'price-d':
                     return b.productPrice - a.productPrice
@@ -94,6 +73,8 @@ export default function Products() {
                     return b.productName.localeCompare(a.productName)
                 case 'name-a':
                     return a.productName.localeCompare(b.productName)
+                default:
+                    return 0
             }
         }))
     }
@@ -141,25 +122,23 @@ export default function Products() {
                     <option value=""></option>
                     <option value="price-d">Price (descending)</option>
                     <option value="price-a">Price (ascending)</option>
-                    {/* <option value="name-d">Name (descending)</option>
-                    <option value="name-d">Name (ascending)</option> */}
                 </select>
             </div>
-            <Slider
+       {/*      <Slider
                 getAriaLabel={()=>'Price range'}
-                min={0}
-                max={300}
+                min={MIN_PRICE} // Use MIN_PRICE instead of 0
+                max={MAX_PRICE} // Use MAX_PRICE instead of 300
                 defaultValue={[0, 300]}
                 marks={[
-                    {value: 0, label: '¤0'},
-                    {value: 300, label: '¤300'}
+                    {value: 0, label: `¤${MIN_PRICE}`},
+                    {value: 300, label: `¤${MAX_PRICE}`}
                 ]}
                 onChange={handlePriceRangeSlider}
                 valueLabelDisplay="auto"
-            />
+            /> */}
         </div>    
         <div id="products">
-            {(filteredProducts||products).map(p => {
+            {(filteredProducts.length > 0 ? filteredProducts : products).map(p => {
                 return (
                     <ProductCard key={`pcard-${p.productId}`} p={p} />
                 )

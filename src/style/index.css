@@ -166,6 +166,8 @@ button {
 
 
 
+
+
 .error {
     color: maroon;
 }
@@ -181,4 +183,8 @@ button {
     .desktop {
         display: none;
     }
+}
+
+header > div a {
+    color: #000; /* Change menu route color to black */
 }

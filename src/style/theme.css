@@ -3,10 +3,9 @@
 
 :root {
     --bg: #ececec;
-    --primary: #292eb8;
+    --primary:#ececec;
     --card: #1a1aaa;
     --font-main: "Inter", sans-serif;
     --shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
 }
 
-/* Rest of your CSS goes here */

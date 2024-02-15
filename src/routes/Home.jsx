@@ -38,7 +38,7 @@ export default function Home() {
                 )
             })}
         </section>
-        <Link to="/products">See all products</Link>
+        <Link to="/products" style={{ color: '#000' }}>See all products</Link>
     </>
   )
 }

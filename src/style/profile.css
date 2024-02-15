@@ -12,7 +12,7 @@
 form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px; /* Increase the gap between form fields for better readability */
 }
 
 .form-field {
@@ -22,34 +22,34 @@ form {
 
 label {
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px; /* Increase margin for better separation between label and input */
 }
 
 input,
 select {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px; /* Increase padding for better input field visibility and touch-friendly design */
+    border: 2px solid #ccc; /* Increase border width for better visibility */
+    border-radius: 8px;
     font-size: 16px;
-    color: currentColor; /* Inherit the color value from the parent (default text color) */
+    color: #333; /* Set text color to a darker shade for better contrast */
 }
 
 input[readonly],
 select[readonly] {
-    color: rgba(0, 0, 0, 0.4); /* Almost transparent black for readonly (existing) values */
+    color: rgba(0, 0, 0, 0.6); /* Slightly darker color for readonly values */
 }
 
 button {
-    background-color: #3498db;
+    background-color: #007bff; /* Use a more vibrant color for the button */
     color: #fff;
-    padding: 12px;
+    padding: 14px 20px; /* Increase padding for better clickability */
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #2076c1;
+    background-color: #0056b3; /* Darken the background color on hover */
 }
