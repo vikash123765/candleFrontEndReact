@@ -20,7 +20,6 @@ const social = [
 export default function Footer() {
     return (
         <footer>
-            <h3>Shop</h3>
             <div id="footer-items">
 
                 <div className="footer-item">
@@ -35,7 +34,7 @@ export default function Footer() {
                     </ul>
                 </div>
 
-                <div className="footer-item">
+                <div className="footer-item-socialmedia">
                     <h4>Social media</h4>
                     {social.map((s, i) => (
                         <a href={s.href} key={s.href+i} target="_blank">

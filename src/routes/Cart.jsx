@@ -30,7 +30,9 @@ export default function Cart() {
             },
             body: JSON.stringify(store.cart.map(p => p.productId))
         });
-        
+
+        console.log("resposnes,", res)
+
         if (!res.ok) {
             alert('Something went wrong with finalizing the order');
             console.log(res);
@@ -58,7 +60,7 @@ export default function Cart() {
                 guestOrderRequest: data
             })
         });
-        
+
         if (!res.ok) {
             alert('Something went wrong with finalizing the guest order');
             console.log(res);
@@ -72,11 +74,39 @@ export default function Cart() {
 
     // Calculate total order amount
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
-    
+
     // Example shipping cost, replace with your logic to calculate shipping cost
     const shippingCost = 0.1;
     const totalWithShipping = total + shippingCost;
-
+    const handleApprove = (data, actions) => {
+        // Check if payment was successful
+        return actions.order.capture().then(function (details) {
+            const orderStatus = details.status;
+            if (store.loggedIn) {
+                debugger
+                console.log(store.loggedIn, "store.loggedIn")
+                userCheckout(data, actions);
+                window.alert('Payment Successful');
+                
+            } else {
+                guestCheckout(data, actions);
+            }
+            console.log("order status", orderStatus)
+        }).catch(err => {
+            console.error("Capture Error", err)
+            window.alert('Payment Failed');
+        })
+        // if (actions.order.status === 'APPROVED') {
+        //     // Proceed with checkout based on user type
+        //     if (store.loggedIn) {
+        //         userCheckout(data, actions);
+        //     } else {
+        //         guestCheckout(data, actions);
+        //     }
+        // } else {
+        //     console.log('Payment was not approved');
+        // }
+    }
     return (
         <div>
             <h3>Your order</h3>
@@ -93,12 +123,12 @@ export default function Cart() {
                                             current.cart.findIndex(item => item.productId === p.productId),
                                             1
                                         );
-                                        return {...current};
+                                        return { ...current };
                                     });
                                 }
 
                                 return (
-                                    <div className="cart-item" key={p.productName+i}>
+                                    <div className="cart-item" key={p.productName + i}>
                                         <div className="left">
                                             <img src={`https://picsum.photos/seed/${p.productName}/500/500`} alt="" />
                                         </div>
@@ -138,19 +168,30 @@ export default function Cart() {
                                         });
                                     }}
                                     // Handle checkout based on user type
+                                    // onApprove={(data, actions) => {
+                                    //     // Check if payment was successful
+                                    //     if (actions.order.status === 'APPROVED') {
+                                    //         // Proceed with checkout based on user type
+                                    //         if (store.loggedIn) {
+                                    //             userCheckout(data, actions);
+                                    //         } else {
+                                    //             guestCheckout(data, actions);
+                                    //         }
+                                    //     } else {
+                                    //         console.log('Payment was not approved');
+                                    //     }
+                                    // }}
                                     onApprove={(data, actions) => {
-                                        // Check if payment was successful
-                                        if (actions.order.status === 'APPROVED') {
-                                            // Proceed with checkout based on user type
-                                            if (store.loggedIn) {
-                                                userCheckout(data, actions);
-                                            } else {
-                                                guestCheckout(data, actions);
-                                            }
-                                        } else {
-                                            console.log('Payment was not approved');
-                                        }
+                                        return handleApprove(data, actions)
                                     }}
+                                    onSuccess={(details, data) => {
+                                        console.log("Transaction completed by " + details.payer.name)
+                                    }}
+                                    onError={
+                                        err => {
+                                            console.error("paypal error", err)
+                                        }
+                                    }
                                 />
                             </PayPalScriptProvider>
                         </div>

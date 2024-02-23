@@ -92,3 +92,28 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+
+.footer-item-socialmedia {
+    margin-top: 20px; /* Adjust the margin as needed */
+}
+
+.footer-item-socialmedia h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-item-socialmedia a {
+    display: inline-block;
+    margin-right: 10px; /* Adjust the spacing between icons */
+}
+
+.footer-item-socialmedia a svg {
+    width: 30px; /* Adjust the icon size as needed */
+    height: 30px;
+    fill: #0f0e0e; /* Change the color of the icon */
+    transition: fill 0.3s ease; /* Add a smooth transition effect */
+}
+
+.footer-item-socialmedia a:hover svg {
+    fill: #1a1aaa; /* Change the color on hover */
+}

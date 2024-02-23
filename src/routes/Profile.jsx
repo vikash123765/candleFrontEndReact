@@ -16,13 +16,16 @@ export default function Profile() {
 
         try {
             const result = await alterInfo(data);
-
+            if (typeof result === string) {
+                console.log("invalid json response from server")
+                return;
+            }
             if (!result || result.error) {
                 console.error('API call failed:', result);
                 // Handle error here, e.g., show an error message to the user
                 return;
             }
-
+           
             // Assuming your alterInfo API response contains updated user info and token
             const updatedUser = result.user;
             const updatedToken = result.token;
@@ -70,6 +73,11 @@ export default function Profile() {
             {/* Profile change form */}
             <div id="address">
                 <form onSubmit={handleProfileForm}>
+                    <FormField
+                        label="UserName"
+                        name="userName"
+                        defaultValue={store.user?.userName}
+                    />
                     <FormField
                         label="Your email"
                         name="userEmail"
