@@ -1,3 +1,11 @@
+/* General Styling */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Cart Styling */
 #cart {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -9,13 +17,6 @@
     margin-top: 2rem;
 }
 
-#cart_form .foot {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-    align-items: center;
-}
-
 .cart-item {
     display: grid;
     border-radius: 1rem;
@@ -24,6 +25,7 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     padding: 1rem;
+    transition: box-shadow 0.3s ease;
 }
 
 .cart-item:hover {
@@ -57,4 +59,45 @@
 
 .cart-item button:hover {
     background-color: #e60000;
+}
+
+/* Footer Styling */
+#cart_form .foot {
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem;
+    align-items: center;
+}
+
+/* Shipping Form Styling */
+.shipping-form {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.shipping-form label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.shipping-form input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.shipping-form button {
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.shipping-form button:hover {
+    background-color: #45a049;
 }

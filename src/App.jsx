@@ -4,7 +4,8 @@ import { Routes, Route } from 'react-router-dom'
 import { nav } from './lib/nav'
 import { useState, useEffect } from "react"
 import { signOutUser, isLoggedIn, getOrders } from "./lib/api"
-
+import Login from "./routes/Login.jsx"; // Replace "path-to-your" with the actual path
+import Admin from "./routes/Admin.jsx"; // Replace "path
 import { storeAtom, updateStore } from "./lib/store"
 import { useAtom } from "jotai"
 import { getCart_localStorage } from "./lib/cart"
@@ -93,36 +94,35 @@ function App() {
 
   return (
     <>
-      <header>
-        <div>
-          <h1>
-            
-          </h1>
-          <h2>Welcome, {user.userName || 'guest'}!</h2>
-          <div className="spacer"></div>
-            <Nav />
-            {/* this is a conditional JSX block */}
-            {loggedIn && (
-              <button onClick={logOut}>Log out</button>
-            )}
-        </div>
-      </header>
+    <header>
+      <div>
+        <h1></h1>
+        <h2>Welcome, {user.userName || 'guest'}!</h2>
+        <div className="spacer"></div>
+        <Nav />
+        {loggedIn && (
+          <button onClick={logOut}>Log out</button>
+        )}
+      </div>
+    </header>
 
-      <main>
-        <div>
-          <Routes>
-            {nav.map(function(item){
-              return (
-                <Route key={item.to} element={item.component} path={item.to} />
-              )
-            })}
-          </Routes>
-        </div>
-      </main>
+    <main>
+      <div>
+        <Routes>
+          {nav.map(function (item) {
+            return (
+              <Route key={item.to} element={item.component} path={item.to} />
+            );
+          })}
+          <Route path="/login" element={<Login />} />
+          <Route path="/admin" element={<Admin />} />
+        </Routes>
+      </div>
+    </main>
 
-      <Footer />
-    </>
-  )
+    <Footer />
+  </>
+);
 }
 
 export default App
