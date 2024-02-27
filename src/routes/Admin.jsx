@@ -18,42 +18,43 @@ const Admin = () => {
           'email': adminEmail, // Use the provided admin email for authentication
           'x-auth-token': authToken,
         }
-        
       });
 
       if (response.ok) {
         console.log(`Order ${orderNrCancel} canceled successfully`);
-        alert("order was cancelled !")
+        alert("order was cancelled !");
+        setOrderNrCancel("");
+       
+
       } else {
         console.error(`Failed to cancel order ${orderNrCancel}`);
-        alert("failed to cancel order please tryagain  !")
-
-
+        alert("failed to cancel order please tryagain  !");
       }
     } catch (error) {
       console.error("Error:", error);
     }
   };
+
   const handleLogout = async () => {
     try {
-        console.log("Admin Email:", adminEmail);
         console.log("Auth Token:", authToken);
 
         const response = await fetch("http://localhost:8080/admin/signOut", {
-            method: 'POST',
+            method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'email': adminEmail,
                 'x-auth-token': authToken,
             },
         });
 
         if (response.ok) {
             console.log("Admin logged out successfully");
+            alert("Admin logged out successfully")
             // Redirect to the login page or another appropriate page
             window.location.href = '/login'; // Example: Redirect to the login page
         } else {
             console.error("Failed to log out admin");
+            alert("Failed to log out admin")
             // You can show an error message or handle it as needed
         }
     } catch (error) {
@@ -64,10 +65,7 @@ const Admin = () => {
 
   const handleMarkSent = async () => {
     try {
-      const queryParams = trackingId !== "" ? `?trackingId=${trackingId}` : "";
-      const url = `http://localhost:8080/order/sent/${orderNrSent}/${queryParams}`;
-  
-      const response = await fetch(url, {
+      const response = await fetch(`${ROOT}/user/loggedIn/customerService/${formState.subject}/${formState.message}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -75,19 +73,30 @@ const Admin = () => {
           'x-auth-token': authToken,
         },
       });
-  
+
+      console.log('Response Status:', response.status);
+      console.log('Response Text:', response.statusText);
+
       if (response.ok) {
         console.log(`Order ${orderNrSent} marked as sent successfully`);
+        setOrderNrSent("");
+        setTrackingId("");
+        alert(`${orderNrSent} marked as sent`);
+
       } else {
         console.error(`Failed to mark order ${orderNrSent} as sent`);
-        alert(`Failed to mark order ${orderNrSent} as sent`)
+        alert(`Failed to mark order ${orderNrSent} as sent`);
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("something went wring please try agaim")
+      if (error instanceof TypeError && error.message === 'Failed to fetch') {
+        console.error('Network error:', error);
+        alert('Network error. Please check your internet connection.');
+      } else {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+      }
     }
   };
-  
 
   const handleMarkDelivered = async () => {
     try {
@@ -102,6 +111,9 @@ const Admin = () => {
 
       if (response.ok) {
         console.log(`Order ${orderNrDelivered} marked as delivered successfully`);
+        alert(`Order ${orderNrDelivered} marked as delivered successfully`)
+        setOrderNrDelivered("");
+  
       } else {
         console.error(`Failed to mark order ${orderNrDelivered} as delivered`);
       }
@@ -182,16 +194,15 @@ const Admin = () => {
           placeholder="Enter Order Number"
         />
         <button onClick={handleMarkDelivered}>Mark as Delivered</button>
+      </div>
 
-         {/* Log Out */}
+      {/* Log Out */}
       <div className="admin-endpoint">
         <h2>Log Out</h2>
         <button onClick={handleLogout}>Log Out</button>
-      </div>
       </div>
     </div>
   );
 };
 
 export default Admin;
-   

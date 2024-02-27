@@ -63,6 +63,7 @@ async function getOrders() {
             bad: res => {
                 console.log("failed fetching orders")
                 console.log(res)
+                
             }
         },
         logging: "Attempting to get orders"

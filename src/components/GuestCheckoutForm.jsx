@@ -25,9 +25,6 @@ export default function GuestCheckoutForm({guestCheckout}) {
           name="phoneNumber"
           type="text"
         />
-        <button>
-          Check out
-        </button>
       </form>
     </div>
   )

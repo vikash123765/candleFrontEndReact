@@ -1,4 +1,4 @@
- import { useAtom } from "jotai"
+import { useAtom } from "jotai"
 import { storeAtom } from "../lib/store"
 
 import Order from "../components/Order"
@@ -34,10 +34,11 @@ export default function Orders() {
     <div id="orders-container">
       <h2>Your orders</h2>
       <div id="orders">
-        {store.orders.map((order, i) => {
+      {store.orders.map((order, i) => {
+  return <Order key={`${order.orderId}-${i}`} order={order} orderIndex={i} />;
+})}
 
-          return <Order key={order.orderId} order={order} orderIndex={i} />
-        })}
+
       </div>
     </div>
   )
