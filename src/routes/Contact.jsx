@@ -37,14 +37,17 @@ export default function Contact() {
     // Depending on the login status, call the appropriate API
     if (store.loggedIn) {
       // Call the API for logged-in users
-      const response = await fetch(`http://localhost:8080/user/loggedIn/customerService/${formState.subject}/${formState.message}`, {
+      const response = await fetch(`http://localhost:8080/user/loggedIn/customerService/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "token": store.token, // Assuming you have a token in your store
+          "token": store.token, // Assuming you have a token in your store,
+          "senderEmail": formState.email,
         },
         body: JSON.stringify({
           message: formState.message,
+          subject: formState.subject,
+          email: formState.email
         }),
       });
 
@@ -63,11 +66,12 @@ export default function Contact() {
         headers: {
           "Content-Type": "application/json",
           "subject": formState.subject,
-          "email": formState.email,
-          
+          "senderEmail": formState.email,
         },
         body: JSON.stringify({
           message: formState.message,
+          subject: formState.subject,
+          email: formState.email
         }),
       });
 

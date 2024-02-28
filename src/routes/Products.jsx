@@ -16,12 +16,12 @@ export default function Products() {
 
     function createProductDTOs(pdx) {
         return pdx.map(p => {
-            p.type = p.productType.toLowerCase().replaceAll('_',' ')
+            p.type = p.productType.toLowerCase().replaceAll('_', ' ')
             return p
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getAllProducts()
             .then(pdx => {
                 pdx = createProductDTOs(pdx)
@@ -32,14 +32,15 @@ export default function Products() {
             .catch(err => {
                 console.log(err)
             })
-    },[])
+    }, [])
 
-    useEffect(()=>{
+    useEffect(() => {
         setProductRange()
     }, [priceRangeValues])
 
     function filterByType(e) {
         const val = e.target.value
+        console.log(val, "valx")
         if (val === 'all') {
             setFilteredProducts([])
             return
@@ -62,22 +63,31 @@ export default function Products() {
     }
 
     function sortProducts(e) {
-        if (!e.target.value) return
-        setFilteredProducts([...products].sort((a, b) => {
-            switch(e.target.value) {
-                case 'price-d':
-                    return b.productPrice - a.productPrice
-                case 'price-a':
-                    return a.productPrice - b.productPrice
-                case 'name-d':
-                    return b.productName.localeCompare(a.productName)
-                case 'name-a':
-                    return a.productName.localeCompare(b.productName)
-                default:
-                    return 0
+        const sortBy = e.target.value;
+        if (!sortBy) return;
+    
+        const sortedProducts = [...filteredProducts].sort((a, b) => {
+            if (sortBy === 'price-d') {
+                return b.productPrice - a.productPrice;
+            } else if (sortBy === 'price-a') {
+                return a.productPrice - b.productPrice;
+            } else if (sortBy === 'category' || sortBy === 'all') {
+                // Sort by productType (category) for all categories, including 'all'
+                return a.productType.localeCompare(b.productType);
             }
-        }))
+    
+            // Handle other sorting cases
+            // Add more conditions if needed
+    
+            return 0;
+        });
+    
+        setFilteredProducts([...sortedProducts]);
     }
+    
+      
+    
+
 
     function handlePriceRangeSlider(e, values) {
         setPriceRangeValues(values)
@@ -90,41 +100,41 @@ export default function Products() {
         }))
     }
 
-  return (
-    <>
-        <div id="product-filters">
-            <div>
-                Type
-                <select onChange={filterByType}>
-                    <option value="all">
-                        All
-                    </option>
-                    {types.map(type => (
-                        <option value={type} key={type}>
-                            {type.toLowerCase().replaceAll('_',' ')}
+    return (
+        <>
+            <div id="product-filters">
+                <div>
+                    Type
+                    <select onChange={filterByType}>
+                        <option value="all">
+                            All
                         </option>
-                    ))}
-                </select>
-            </div>
-            <div>
-                Name
-                <input type="search" ref={searchRef} />
-                <button onClick={searchByName}>
-                    Search
-                </button>
-                <button onClick={resetProducts}>
-                    Reset
-                </button>
-            </div>
-            <div>
-                Sort by
-                <select onChange={sortProducts}>
-                    <option value=""></option>
-                    <option value="price-d">Price (descending)</option>
-                    <option value="price-a">Price (ascending)</option>
-                </select>
-            </div>
-       {/*      <Slider
+                        {types.map(type => (
+                            <option value={type} key={type}>
+                                {type.toLowerCase().replaceAll('_', ' ')}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+                <div>
+                    Name
+                    <input type="search" ref={searchRef} />
+                    <button onClick={searchByName}>
+                        Search
+                    </button>
+                    <button onClick={resetProducts}>
+                        Reset
+                    </button>
+                </div>
+                <div>
+                    Sort by
+                    <select onChange={sortProducts}>
+                        <option value=""></option>
+                        <option value="price-d">Price (descending)</option>
+                        <option value="price-a">Price (ascending)</option>
+                    </select>
+                </div>
+                {/*      <Slider
                 getAriaLabel={()=>'Price range'}
                 min={MIN_PRICE} // Use MIN_PRICE instead of 0
                 max={MAX_PRICE} // Use MAX_PRICE instead of 300
@@ -136,14 +146,14 @@ export default function Products() {
                 onChange={handlePriceRangeSlider}
                 valueLabelDisplay="auto"
             /> */}
-        </div>    
-        <div id="products">
-            {(filteredProducts.length > 0 ? filteredProducts : products).map(p => {
-                return (
-                    <ProductCard key={`pcard-${p.productId}`} p={p} />
-                )
-            })}
-        </div>
-    </>
-  )
+            </div>
+            <div id="products">
+                {(filteredProducts.length > 0 ? filteredProducts : products).map(p => {
+                    return (
+                        <ProductCard key={`pcard-${p.productId}`} p={p} />
+                    )
+                })}
+            </div>
+        </>
+    )
 }

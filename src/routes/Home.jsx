@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
         <section id="hero">
-            <h2>Shop and save</h2>
+            <h2>VTS cases!</h2>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit similique id animi ea quo itaque rerum voluptatem alias quis quaerat totam accusamus numquam eveniet, in cupiditate iusto nihil unde maxime delectus quod? Amet cupiditate adipisci autem eligendi impedit natus distinctio deleniti? Necessitatibus pariatur reiciendis esse nobis tempore provident minus ipsa deserunt, et maxime quam fugiat eveniet blanditiis dolores eum sequi quasi explicabo ab. Eius dolores, rerum quidem eligendi nesciunt deserunt? Eaque rem repellat cupiditate asperiores! Necessitatibus recusandae nemo expedita repellendus quam vel possimus reiciendis molestias quae dolor vero ipsum, voluptatum neque sit earum voluptatem vitae hic id aut doloremque sapiente.</p>
         </section>
         <section id="products">

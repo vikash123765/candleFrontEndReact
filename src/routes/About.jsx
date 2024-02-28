@@ -14,16 +14,21 @@ const About = () => {
       </section>
 
       <section className="team-section">
-        <h2>Meet Our Team</h2>
+        <h2>Our team members</h2>
         <div className="team-member">
-          <img src="team-member1.jpg" alt="Team Member 1" />
-          <h3>John Doe</h3>
-          <p>Co-founder</p>
+             <p>CEO</p>
+          <h3>Vikash Kosaraju</h3>
+       
         </div>
         <div className="team-member">
-          <img src="team-member2.jpg" alt="Team Member 2" />
-          <h3>Jane Smith</h3>
-          <p>Product Manager</p>
+            <p>Co-founder</p>
+          <h3>Tural Noori</h3>
+        
+        </div>
+        <div className="team-member">
+          <p>Co-Founder</p>
+          <h3>Stefanos tzegay</h3>
+          
         </div>
       </section>
     </div>

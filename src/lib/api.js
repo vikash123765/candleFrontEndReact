@@ -49,7 +49,7 @@ async function alterInfo(data) {
                 'token': getToken()
             },
             body: JSON.stringify(data)
-    }, "alter info")
+    })
 }
 
 async function getOrders() {
