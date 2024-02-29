@@ -9,38 +9,50 @@ import FormField from "../components/FormField";
 
 export default function Profile() {
     const [store, setStore] = useAtom(storeAtom);
-
+  
     const handleProfileForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
-
+        
         try {
-            const result = await alterInfo(data);
-            if (typeof result === string) {
-                console.log("invalid json response from server")
-                return;
+            const parsedResult = await alterInfo(data);
+      console.log(parsedResult)
+    
+            // If there was a parsing error or the parsed result is not an object,
+            // assume the update was successful and proceed with displaying success message
+            if (parsedResult && typeof parsedResult == 'object') {
+                console.log('User information updated successfully');
+                // Assuming your alterInfo API response contains updated user info
+                const updatedUser = parsedResult;
+                // Update the user state in the frontend
+                setStore({
+                    user: updatedUser,
+                });
+            } else {
+                // Continue processing the parsed JSON result
+                if (parsedResult.error) {
+                    console.error('API call failed:', parsedResult);
+                    // Handle error here, e.g., show an error message to the user
+                    return;
+                }
+    
+                // Assuming your alterInfo API response contains updated user info
+                const updatedUser = parsedResult;
+    
+                // Update the user state in the frontend
+                setStore({
+                    user: updatedUser,
+                });
             }
-            if (!result || result.error) {
-                console.error('API call failed:', result);
-                // Handle error here, e.g., show an error message to the user
-                return;
-            }
-           
-            // Assuming your alterInfo API response contains updated user info and token
-            const updatedUser = result.user;
-            const updatedToken = result.token;
-
-            // Update the user state in the frontend, including the new token
-            setStore({
-                user: updatedUser,
-                token: updatedToken,
-            });
-
         } catch (error) {
             console.error('An unexpected error occurred:', error);
+        
             // Handle unexpected errors here
         }
     };
+    
+    
+    
 
     const handleChangePasswordForm = async (e) => {
         e.preventDefault();
@@ -74,7 +86,7 @@ export default function Profile() {
             <div id="address">
                 <form onSubmit={handleProfileForm}>
                     <FormField
-                        label="UserName"
+                        label="User Name"
                         name="userName"
                         defaultValue={store.user?.userName}
                     />

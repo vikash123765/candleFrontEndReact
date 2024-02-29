@@ -90,26 +90,30 @@ function getToken() {
 }
 
 async function handleFetch(endpoint, options = {}, routeName, textResponse) {
-    const res = await fetch(ROOT + endpoint, options)
+    const res = await fetch(ROOT + endpoint, options);
     if (options.responseHandlers) {
-        options.responseHandlers[res.ok ? 'good' : 'bad'](res)
+        options.responseHandlers[res.ok ? 'good' : 'bad'](res);
     }
     if (options.logging) {
-        console.log(options.logging)
+        console.log(options.logging);
     }
     if (!res.ok) {
         console.log(`
             Error fetching from ${endpoint}
             Route: ${routeName}
-        `)
-        console.log(res)
-        return
+        `);
+        console.log(res);
+        return;
     }
-    const data = await res[
-        textResponse ? 'text' : 'json'
-    ]()
-    return data
+    if (textResponse) {
+      
+        return await res.text();
+    } else {
+      
+        return await res.json();
+    }
 }
+
 
 async function getAllProducts(limit = 3) {
     const data = await handleFetch(`/products/available?limit=${limit}`, {}, "Get all products")

@@ -36,7 +36,7 @@ export default function Nav() {
                         <Link to="/cart" className='cart-icon'>
                             <ShoppingCartIcon /> 
                             <div className='badge'>
-                                {store.cart.length}
+                                {store.cart && store.cart.length}
                             </div>
                         </Link>
                     </li>
@@ -70,7 +70,7 @@ export default function Nav() {
                             <Link to="/cart" className='cart-icon'>
                                 <ShoppingCartIcon /> 
                                 <div className='badge'>
-                                    {store.cart.length}
+                                    {store.cart && store.cart.length}
                                 </div>
                             </Link>
                         </li>

@@ -20,6 +20,7 @@ export default function Cart() {
     const [shippingPrice, setShippingPrice] = useState(null);
     const [totalWithShipping, setTotalWithShipping] = useState(0);
     const [Total, setTotal] = useState(0)
+    const totalRef = useRef(0);
     const isSwedenRef = useRef(isSweden);
     const isTracableRef = useRef(isTracable);
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
@@ -167,6 +168,7 @@ export default function Cart() {
 
 
     useEffect(() => {
+        totalRef.current = total;
         const calculateTotalWithShipping = () => {
             setTotalWithShipping(total + (shippingPrice || 0));
         };
@@ -276,7 +278,7 @@ export default function Cart() {
                         setShippingPrice(shippingCost);
 
                         // Calculate total with shipping cost for PayPal payment
-                        const totalWithShippingValue = (total + shippingCost).toFixed(2);
+                        const totalWithShippingValue = (totalRef.current + shippingCost).toFixed(2);
 
                         resolve(
                           actions.order.create({

@@ -3,6 +3,7 @@ import { storeAtom } from '../lib/store.js';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormField from "../components/FormField";
+import { alterInfo, changePassword,getCookie,getToken } from "../lib/api";
 
 
 export default function Contact() {
@@ -36,18 +37,20 @@ export default function Contact() {
 
     // Depending on the login status, call the appropriate API
     if (store.loggedIn) {
+      console.log(store)
+      let mockEmail = localStorage.getItem("mock-token");
       // Call the API for logged-in users
-      const response = await fetch(`http://localhost:8080/user/loggedIn/customerService/`, {
+      const response = await fetch(`http://localhost:8080/user/loggedIn/customerService`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "token": store.token, // Assuming you have a token in your store,
-          "senderEmail": formState.email,
+          "token": getCookie('token'), // Assuming you have a token in your store,
+          "senderEmail": store.user.userEmail,
+          "subject": formState.subject
         },
         body: JSON.stringify({
           message: formState.message,
-          subject: formState.subject,
-          email: formState.email
+     
         }),
       });
 
