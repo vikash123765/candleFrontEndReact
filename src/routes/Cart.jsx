@@ -25,7 +25,7 @@ export default function Cart() {
     const isTracableRef = useRef(isTracable);
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
 
-    
+
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
         if (name === 'isSweden') {
@@ -105,17 +105,21 @@ export default function Cart() {
         }
     };
 
-    const guestCheckout = async (data) => {
+    const guestCheckout = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const data = Object.fromEntries(new FormData(form));
+        console.log("shiva", e)
         try {
-         
-            console.log("Data",data);
 
-            console.log("Body",JSON.stringify({
+            console.log("Data", data);
+
+            console.log("Body", JSON.stringify({
                 jsonPayload: JSON.stringify(store.cart.map((p) => p.productId)),
                 guestOrderRequest: data,
             }))
-            
-            console.log("Json Pay Load",JSON.stringify(store.cart.map((p) => p.productId)));
+
+            console.log("Json Pay Load", JSON.stringify(store.cart.map((p) => p.productId)));
 
             const res = await fetch(ROOT + '/finalizeGuestOrder', {
                 method: 'POST',
@@ -136,6 +140,7 @@ export default function Cart() {
 
             console.log('Guest order finalized successfully');
             clearCart(setStore);
+            console.log("response data", res)
             navigate('/');
         } catch (error) {
             console.error('Error in guestCheckout:', error);
@@ -144,7 +149,7 @@ export default function Cart() {
 
 
 
-    const handleApprove = (data, actions, guestOrderRequest) => {
+    const handleApprove = (data, actions) => {
         return actions.order
             .capture()
             .then(function (details) {
@@ -153,7 +158,7 @@ export default function Cart() {
                     userCheckout(data, actions);
                     window.alert('Payment Successful');
                 } else {
-                    guestCheckout(data, actions);
+                    // guestCheckout(data, actions);
                 }
                 console.log('Order Status:', orderStatus);
             })
@@ -165,13 +170,13 @@ export default function Cart() {
 
     useEffect(() => {
         handleCalculateShipping(isSweden, isTracable);
-      }, [isSweden, isTracable]);
-    
-      useEffect(() => {
+    }, [isSweden, isTracable]);
+
+    useEffect(() => {
         isSwedenRef.current = isSweden;
         isTracableRef.current = isTracable;
-      }, [isSweden, isTracable]);
-    
+    }, [isSweden, isTracable]);
+
 
 
     useEffect(() => {
@@ -259,68 +264,68 @@ export default function Cart() {
                     {/* Display guest checkout form only if there are items in the cart and the user is not logged in */}
                     {store.cart.length > 0 && !store.loggedIn && <GuestCheckoutForm guestCheckout={guestCheckout} />}
                     <PayPalScriptProvider options={payPalOptions}>
-                    <PayPalButtons
-              createOrder={(data, actions) => {
-                return new Promise(async (resolve, reject) => {
-                  try {
-                    // Pass isSweden and isTracable as additional parameters
-                    const isSweden = isSwedenRef.current.toString();
-                    const isTracable = isTracableRef.current.toString();
+                        <PayPalButtons
+                            createOrder={(data, actions) => {
+                                return new Promise(async (resolve, reject) => {
+                                    try {
+                                        // Pass isSweden and isTracable as additional parameters
+                                        const isSweden = isSwedenRef.current.toString();
+                                        const isTracable = isTracableRef.current.toString();
 
-                    const orderWeight = store.cart.length * 80;
-                    const response = await fetch(
-                      `http://localhost:8080/calculate-shipping-rates/${isSweden}/${isTracable}/${orderWeight}`
-                    );
+                                        const orderWeight = store.cart.length * 80;
+                                        const response = await fetch(
+                                            `http://localhost:8080/calculate-shipping-rates/${isSweden}/${isTracable}/${orderWeight}`
+                                        );
 
-                    if (response.ok) {
-                      const result = await response.json();
-                      console.log('Shipping Cost Response:', result);
+                                        if (response.ok) {
+                                            const result = await response.json();
+                                            console.log('Shipping Cost Response:', result);
 
-                      const { shippingCost } = result;
+                                            const { shippingCost } = result;
 
-                      if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
-                        console.log('Shipping Price:', shippingCost);
+                                            if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
+                                                console.log('Shipping Price:', shippingCost);
 
-                        // Update shippingPrice state
-                        setShippingPrice(shippingCost);
+                                                // Update shippingPrice state
+                                                setShippingPrice(shippingCost);
 
-                        // Calculate total with shipping cost for PayPal payment
-                        const totalWithShippingValue = (totalRef.current + shippingCost).toFixed(2);
+                                                // Calculate total with shipping cost for PayPal payment
+                                                const totalWithShippingValue = (totalRef.current + shippingCost).toFixed(2);
 
-                        resolve(
-                          actions.order.create({
-                            purchase_units: [
-                              {
-                                amount: {
-                                  value: totalWithShippingValue,
-                                  currency_code: 'SEK',
-                                },
-                              },
-                            ],
-                          })
-                        );
-                      } else {
-                        console.error('Invalid shipping cost:', shippingCost);
-                        reject(new Error('Invalid shipping cost'));
-                      }
-                    } else {
-                      console.error('Error calculating shipping rates');
-                      reject(new Error('Error calculating shipping rates'));
-                    }
-                  } catch (error) {
-                    console.error('Error in createOrder:', error);
-                    reject(error);
-                  }
-                });
-              }}
-              onApprove={(data, actions) => handleApprove(data, actions)}
-              onSuccess={(details, data) => {
-                console.log('Transaction completed by ' + details.payer.name);
-              }}
-              onError={(err) => {
-                console.error('PayPal error', err);
-              }}
-            />
+                                                resolve(
+                                                    actions.order.create({
+                                                        purchase_units: [
+                                                            {
+                                                                amount: {
+                                                                    value: totalWithShippingValue,
+                                                                    currency_code: 'SEK',
+                                                                },
+                                                            },
+                                                        ],
+                                                    })
+                                                );
+                                            } else {
+                                                console.error('Invalid shipping cost:', shippingCost);
+                                                reject(new Error('Invalid shipping cost'));
+                                            }
+                                        } else {
+                                            console.error('Error calculating shipping rates');
+                                            reject(new Error('Error calculating shipping rates'));
+                                        }
+                                    } catch (error) {
+                                        console.error('Error in createOrder:', error);
+                                        reject(error);
+                                    }
+                                });
+                            }}
+                            onApprove={(paypalData, actions) => handleApprove(paypalData, actions, "hey thiss is third")}
+                            onSuccess={(details, paypalData) => {
+                                console.log('Transaction completed by ' + details.payer.name);
+                            }}
+                            onError={(err) => {
+                                console.error('PayPal error', err);
+                            }}
+                        />
 
 
                     </PayPalScriptProvider>

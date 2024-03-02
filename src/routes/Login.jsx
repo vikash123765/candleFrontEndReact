@@ -17,7 +17,7 @@ export default function Login() {
         const form = e.target;
         const formData = Object.fromEntries(new FormData(form));
 
-        try{
+        try {
             let adminRes = await axios("http://localhost:8080/admin/signIn", {
                 method: 'POST',
                 headers: {
@@ -29,18 +29,18 @@ export default function Login() {
             if (adminRes.status == '200') {
                 const headers = adminRes.headers;
                 const mockCookie = headers.get('X-Token')
-                localStorage.setItem("tokenA",mockCookie);
+                localStorage.setItem("tokenA", mockCookie);
                 document.cookie = mockCookie + ";SameSite=Lax";
                 alert("sign in sucessfull !")
                 window.location.href = '/admin';
                 return;
             }
-        }catch(error){
-console.log("Unable to Login")
+        } catch (error) {
+            console.log("Unable to Login")
         }
 
         try {
-          
+
 
             let userRes = await fetch(LOGIN_ENDPOINT, {
                 method: 'POST',
@@ -105,7 +105,7 @@ console.log("Unable to Login")
 
             form.reset();
 
-            
+
         } catch (error) {
             console.error('Error during signup:', error);
             alert("Error during signp please try again")

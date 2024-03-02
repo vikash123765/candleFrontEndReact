@@ -22,6 +22,7 @@ export default function Profile() {
             // assume the update was successful and proceed with displaying success message
             if (parsedResult && typeof parsedResult == 'object') {
                 console.log('User information updated successfully');
+                alert("user info changed sucessfully!")
                 // Assuming your alterInfo API response contains updated user info
                 const updatedUser = parsedResult;
                 // Update the user state in the frontend

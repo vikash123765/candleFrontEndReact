@@ -1,13 +1,12 @@
 import FormField from "./FormField"
 
 export default function GuestCheckoutForm({guestCheckout}) {
-
   return (
     <div>
       <form onSubmit={guestCheckout}>
         <FormField 
           label="Name"
-          name="name"
+          name="userName"
           type="text"
         />
         <FormField 
@@ -25,6 +24,9 @@ export default function GuestCheckoutForm({guestCheckout}) {
           name="phoneNumber"
           type="text"
         />
+        <button>
+          Check out
+        </button>
       </form>
     </div>
   )
