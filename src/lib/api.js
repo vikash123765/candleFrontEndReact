@@ -41,6 +41,19 @@ async function isLoggedIn() {
 
 }
 
+
+
+async function isAdminLoggedIn() {
+    // get token. if there is none, it will be ""
+    const token = localStorage.getItem('tokenA');
+    if (!token){
+        return false;
+    }else{
+        return true;
+    }
+
+}
+
 async function alterInfo(data) {
     return await handleFetch('/user/alterInfo', {
             method: 'PUT',
@@ -180,6 +193,7 @@ export {
     getProductsByIds,
     signOutUser,
     isLoggedIn,
+    isAdminLoggedIn,
     ROOT,
     getCookie,
     getToken,

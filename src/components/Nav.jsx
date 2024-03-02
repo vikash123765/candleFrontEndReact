@@ -25,6 +25,12 @@ export default function Nav() {
                         if (!store.loggedIn && (item.loggedIn === true)) {
                             return
                         }
+                        if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
+                            return
+                        }
+                        if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
+                            return
+                        }
                         return (
                         <li key={item.to}>
                             <Link to={item.to}>{item.text}</Link>
@@ -57,6 +63,12 @@ export default function Nav() {
                                 return
                             }
                             if (!store.loggedIn && (item.loggedIn === true)) {
+                                return
+                            }
+                            if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
+                                return
+                            }
+                            if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
                                 return
                             }
                             return (

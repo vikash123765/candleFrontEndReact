@@ -9,6 +9,8 @@ const Admin = () => {
   const [trackingId, setTrackingId] = useState(""); // Input for tracking ID when marking as sent
   const [orderNrDelivered, setOrderNrDelivered] = useState(""); // Input for order number to mark as delivered
 
+
+  
   const handleCancelOrder = async () => {
     try {
       const response = await fetch(`http://localhost:8080/order/${orderNrCancel}`, {
@@ -50,6 +52,7 @@ const Admin = () => {
         if (response.ok) {
             console.log("Admin logged out successfully");
             alert("Admin logged out successfully")
+            localStorage.removeItem("tokenA");
             // Redirect to the login page or another appropriate page
             window.location.href = '/login'; // Example: Redirect to the login page
         } else {
@@ -121,6 +124,8 @@ const Admin = () => {
       console.error("Error:", error);
     }
   };
+
+
 
   return (
     <div>

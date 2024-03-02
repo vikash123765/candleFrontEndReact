@@ -46,6 +46,7 @@ const nav = [
     {
       to: "/admin",
       text: "Admin",
+      adminLoggedIn:true,
       component: <Admin />
   },
     {

@@ -105,10 +105,17 @@ export default function Cart() {
         }
     };
 
-    const guestCheckout = async (data, actions) => {
+    const guestCheckout = async (data) => {
         try {
-            const order = await actions.order.capture();
-            console.log('Order:', order);
+         
+            console.log("Data",data);
+
+            console.log("Body",JSON.stringify({
+                jsonPayload: JSON.stringify(store.cart.map((p) => p.productId)),
+                guestOrderRequest: data,
+            }))
+            
+            console.log("Json Pay Load",JSON.stringify(store.cart.map((p) => p.productId)));
 
             const res = await fetch(ROOT + '/finalizeGuestOrder', {
                 method: 'POST',

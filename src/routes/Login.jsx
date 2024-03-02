@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
-import "../style/LoginAndSignup.css";
+import axios from 'axios';
 
 const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
 
@@ -17,8 +17,8 @@ export default function Login() {
         const form = e.target;
         const formData = Object.fromEntries(new FormData(form));
 
-        try {
-            let adminRes = await fetch("http://localhost:8080/admin/signIn", {
+        try{
+            let adminRes = await axios("http://localhost:8080/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
@@ -26,15 +26,21 @@ export default function Login() {
                 },
             });
 
-            if (adminRes.ok) {
+            if (adminRes.status == '200') {
                 const headers = adminRes.headers;
-                const mockCookie = headers.get('X-Token');
-                console.log("Admin mockCookie:", mockCookie);
+                const mockCookie = headers.get('X-Token')
+                localStorage.setItem("tokenA",mockCookie);
                 document.cookie = mockCookie + ";SameSite=Lax";
                 alert("sign in sucessfull !")
                 window.location.href = '/admin';
                 return;
             }
+        }catch(error){
+console.log("Unable to Login")
+        }
+
+        try {
+          
 
             let userRes = await fetch(LOGIN_ENDPOINT, {
                 method: 'POST',

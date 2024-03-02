@@ -3,7 +3,7 @@ import Footer from "./components/Footer"
 import { Routes, Route } from 'react-router-dom'
 import { nav } from './lib/nav'
 import { useState, useEffect } from "react"
-import { signOutUser, isLoggedIn, getOrders } from "./lib/api"
+import { signOutUser, isLoggedIn, getOrders,isAdminLoggedIn } from "./lib/api"
 import Login from "./routes/Login.jsx"; // Replace "path-to-your" with the actual path
 import Admin from "./routes/Admin.jsx"; // Replace "path
 import { storeAtom, updateStore } from "./lib/store"
@@ -49,6 +49,8 @@ function App() {
 
   const [user, setUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false)
+
 
   async function fetchOrders() {
     getOrders()
@@ -77,6 +79,22 @@ function App() {
         } else {
           updateStore(setStore, {
             cart: getCart_localStorage()
+          })
+        }
+      })
+
+      isAdminLoggedIn().then((adminValue)=>{
+        if(adminValue){
+          setAdminLoggedIn(true);
+          updateStore(setStore, {
+       
+            adminLoggedIn: true
+          })
+        }else{
+          setAdminLoggedIn(false);
+          updateStore(setStore, {
+       
+            adminLoggedIn: false
           })
         }
       })
@@ -114,6 +132,10 @@ function App() {
               <Route key={item.to} element={item.component} path={item.to} />
             );
           })}
+          
+          {adminLoggedIn && (
+            <Route path="/admin" element={<Admin />} />
+        )}
           <Route path="/login" element={<Login />} />
           <Route path="/admin" element={<Admin />} />
         </Routes>
