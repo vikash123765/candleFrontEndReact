@@ -1,9 +1,16 @@
-import FormField from "./FormField"
+import React, { forwardRef } from 'react';
+import FormField from "./FormField";
 
-export default function GuestCheckoutForm({guestCheckout}) {
+const GuestCheckoutForm = forwardRef((props, ref) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission logic
+    props.guestCheckout(e);
+  };
+
   return (
     <div>
-      <form onSubmit={guestCheckout}>
+      <form ref={ref} onSubmit={handleSubmit} id="guestCheckoutForm">
         <FormField 
           label="Name"
           name="userName"
@@ -24,10 +31,10 @@ export default function GuestCheckoutForm({guestCheckout}) {
           name="phoneNumber"
           type="text"
         />
-        <button>
-          Check out
-        </button>
+       
       </form>
     </div>
-  )
-}
+  );
+});
+
+export default GuestCheckoutForm;

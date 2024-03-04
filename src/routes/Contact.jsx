@@ -5,6 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import FormField from "../components/FormField";
 import { alterInfo, changePassword,getCookie,getToken } from "../lib/api";
 
+import '../style/Contact.css'; // Create a Contact.css file for styling
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 
 export default function Contact() {
   const [store, setStore] = useAtom(storeAtom);
@@ -13,7 +16,7 @@ export default function Contact() {
     email: "",
     message: "",
   });
-
+const [loading, setLoading] = useState(false); // Introduce loading state
   const navigate = useNavigate(); // Use useNavigate hook
 
   useEffect(() => {
@@ -34,6 +37,7 @@ export default function Contact() {
       alert("Please provide a message");
       return;
     }
+    setLoading(true)
 
     // Depending on the login status, call the appropriate API
     if (store.loggedIn) {
@@ -91,6 +95,7 @@ export default function Contact() {
 
   return (
     <>
+  {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       <section id="contact">
         <form onSubmit={handleSubmit}>
           <FormField

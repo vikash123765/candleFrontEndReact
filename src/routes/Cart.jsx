@@ -21,6 +21,7 @@ export default function Cart() {
     const [totalWithShipping, setTotalWithShipping] = useState(0);
     const [Total, setTotal] = useState(0)
     const totalRef = useRef(0);
+    const formRef = useRef(null);
     const isSwedenRef = useRef(isSweden);
     const isTracableRef = useRef(isTracable);
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
@@ -106,17 +107,15 @@ export default function Cart() {
     };
 
     const guestCheckout = async (e) => {
-        e.preventDefault();
-        const form = e.target;
-        const data = Object.fromEntries(new FormData(form));
-        console.log("shiva", e)
+        // e.preventDefault();
+        // const form = e.target;
+        // const data = Object.fromEntries(new FormData(form));
         try {
 
-            console.log("Data", data);
 
             console.log("Body", JSON.stringify({
                 jsonPayload: JSON.stringify(store.cart.map((p) => p.productId)),
-                guestOrderRequest: data,
+                guestOrderRequest: e,
             }))
 
             console.log("Json Pay Load", JSON.stringify(store.cart.map((p) => p.productId)));
@@ -128,7 +127,7 @@ export default function Cart() {
                 },
                 body: JSON.stringify({
                     jsonPayload: JSON.stringify(store.cart.map((p) => p.productId)),
-                    guestOrderRequest: data,
+                    guestOrderRequest: e,
                 }),
             });
 
@@ -139,6 +138,7 @@ export default function Cart() {
             }
 
             console.log('Guest order finalized successfully');
+            alert('order placed !!');
             clearCart(setStore);
             console.log("response data", res)
             navigate('/');
@@ -149,7 +149,10 @@ export default function Cart() {
 
 
 
+
     const handleApprove = (data, actions) => {
+        console.log("data, actions", data, actions)
+        event.preventDefault();
         return actions.order
             .capture()
             .then(function (details) {
@@ -158,15 +161,21 @@ export default function Cart() {
                     userCheckout(data, actions);
                     window.alert('Payment Successful');
                 } else {
-                    // guestCheckout(data, actions);
+
+                    // For non-logged in users, trigger the form submission
+                    const form = document.getElementById('guestCheckoutForm');
+                    const formData = Object.fromEntries(new FormData(form));
+                    // form && form.submit(); // Submit the form after a successful PayPal payment
+                    guestCheckout(formData);
                 }
-                console.log('Order Status:', orderStatus);
             })
             .catch((err) => {
                 console.error('Capture Error', err);
                 window.alert('Payment Failed');
             });
     };
+
+
 
     useEffect(() => {
         handleCalculateShipping(isSweden, isTracable);
@@ -262,7 +271,9 @@ export default function Cart() {
                         </div>
                     </form>
                     {/* Display guest checkout form only if there are items in the cart and the user is not logged in */}
-                    {store.cart.length > 0 && !store.loggedIn && <GuestCheckoutForm guestCheckout={guestCheckout} />}
+                    {store.cart.length > 0 && !store.loggedIn && (
+                        <GuestCheckoutForm guestCheckout={guestCheckout} />
+                    )}
                     <PayPalScriptProvider options={payPalOptions}>
                         <PayPalButtons
                             createOrder={(data, actions) => {
@@ -318,7 +329,7 @@ export default function Cart() {
                                     }
                                 });
                             }}
-                            onApprove={(paypalData, actions) => handleApprove(paypalData, actions, "hey thiss is third")}
+                            onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
                             onSuccess={(details, paypalData) => {
                                 console.log('Transaction completed by ' + details.payer.name);
                             }}
