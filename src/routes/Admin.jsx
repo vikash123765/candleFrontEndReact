@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import '../style/Admin.css';
+const ROOT = "http://localhost:8080";
 
 const Admin = () => {
   const [adminEmail, setAdminEmail] = useState(""); // Input for admin email (authentication)
@@ -9,7 +10,10 @@ const Admin = () => {
   const [trackingId, setTrackingId] = useState(""); // Input for tracking ID when marking as sent
   const [orderNrDelivered, setOrderNrDelivered] = useState(""); // Input for order number to mark as delivered
 
-
+  const [formState, setFormState] = useState({
+    subject: "", // Add other form fields as needed
+    message: "",
+  });
   
   const handleCancelOrder = async () => {
     try {
@@ -65,41 +69,40 @@ const Admin = () => {
     }
 };
 
+const handleMarkSent = async () => {
+  try {
+    const response = await fetch(`http://localhost:8080/order/sent/${orderNrSent}/${trackingId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'email': adminEmail,
+        'x-auth-token': authToken,
+      },
+    });
 
-  const handleMarkSent = async () => {
-    try {
-      const response = await fetch(`${ROOT}/user/loggedIn/customerService/${formState.subject}/${formState.message}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          'email': adminEmail,
-          'x-auth-token': authToken,
-        },
-      });
+    console.log('Response Status:', response.status);
+    console.log('Response Text:', response.statusText);
 
-      console.log('Response Status:', response.status);
-      console.log('Response Text:', response.statusText);
-
-      if (response.ok) {
-        console.log(`Order ${orderNrSent} marked as sent successfully`);
-        setOrderNrSent("");
-        setTrackingId("");
-        alert(`${orderNrSent} marked as sent`);
-
-      } else {
-        console.error(`Failed to mark order ${orderNrSent} as sent`);
-        alert(`Failed to mark order ${orderNrSent} as sent`);
-      }
-    } catch (error) {
-      if (error instanceof TypeError && error.message === 'Failed to fetch') {
-        console.error('Network error:', error);
-        alert('Network error. Please check your internet connection.');
-      } else {
-        console.error('Error:', error);
-        alert('Something went wrong. Please try again.');
-      }
+    if (response.ok) {
+      console.log(`Order ${orderNrSent} marked as sent successfully`);
+      setOrderNrSent("");
+      setTrackingId("");
+      alert(`${orderNrSent} marked as sent`);
+    } else {
+      console.error(`Failed to mark order ${orderNrSent} as sent`);
+      alert(`Failed to mark order ${orderNrSent} as sent`);
     }
-  };
+  } catch (error) {
+    if (error instanceof TypeError && error.message === 'Failed to fetch') {
+      console.error('Network error:', error);
+      alert('Network error. Please check your internet connection.');
+    } else {
+      console.error('Error:', error);
+      alert('Something went wrong. Please try again.');
+    }
+  }
+};
+
 
   const handleMarkDelivered = async () => {
     try {
@@ -124,8 +127,6 @@ const Admin = () => {
       console.error("Error:", error);
     }
   };
-
-
 
   return (
     <div>
