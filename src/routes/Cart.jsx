@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import GuestCheckoutForm from '../components/GuestCheckoutForm.jsx';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState, useEffect, useRef } from 'react';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+// Declare shippingCost state
 const payPalOptions = {
     clientId: 'AW4rF3ytyCzS2oxIhUE_Ihw-ifEVIRKICnYfvZiUqi8-E_XJ-r2xyquy7H1XN0Z2GGEoUCLV_uEdec5_',
     currency: 'SEK',
@@ -24,8 +26,11 @@ export default function Cart() {
     const formRef = useRef(null);
     const isSwedenRef = useRef(isSweden);
     const isTracableRef = useRef(isTracable);
+    const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+    const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
+const [isFinalizingOrder, setIsFinalizingOrder] = useState(false);
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
-
+const [shippingCost, setShippingCost] = useState(null); 
 
     const handleCheckboxChange = (event) => {
         const { name, checked } = event.target;
@@ -38,6 +43,7 @@ export default function Cart() {
 
     const handleCalculateShipping = async () => {
         try {
+            setIsCalculatingShipping(true);
             if (!store.cart || store.cart.length === 0) {
                 console.error('Cart is empty.');
                 return;
@@ -53,18 +59,21 @@ export default function Cart() {
                 const result = await response.json();
                 console.log('Shipping Cost Response:', result);
 
-                const { shippingCost } = result;
-
+                const { shippingCost, message } = result;
 
                 if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
                     console.log('Shipping Price:', shippingCost);
+                    console.log('Shipping Message:', message);
 
                     // Calculate the new totalWithShipping
                     const newTotalWithShipping = total + shippingCost;
 
                     // Update both shippingPrice and totalWithShipping
                     setShippingPrice(shippingCost);
-                    setTotalWithShipping(newTotalWithShipping);  // Updated this line
+                    setTotalWithShipping(newTotalWithShipping);
+
+                    // Set the shippingCost in the state
+                    setShippingCost(result);
                 } else {
                     console.error('Invalid shipping cost:', shippingCost);
                 }
@@ -73,10 +82,13 @@ export default function Cart() {
             }
         } catch (error) {
             console.error('Error in handleCalculateShipping:', error);
+        } finally {
+            setIsCalculatingShipping(false);
         }
     };
 
     const userCheckout = async (data, actions) => {
+        setIsFinalizingOrder(true);
         try {
             const order = await actions.order.capture();
             console.log('Order:', order);
@@ -99,14 +111,21 @@ export default function Cart() {
             }
 
             console.log('Order finalized successfully');
+            setIsFinalizingOrder(false);
+            alert('order placed !!');
             clearCart(setStore);
             navigate('/');
         } catch (error) {
             console.error('Error in userCheckout:', error);
+        } finally {
+            setIsFinalizingOrder(false);
         }
     };
 
     const guestCheckout = async (e) => {
+        setIsPlacingOrder(true); // Set loading state
+       
+
         // e.preventDefault();
         // const form = e.target;
         // const data = Object.fromEntries(new FormData(form));
@@ -138,12 +157,15 @@ export default function Cart() {
             }
 
             console.log('Guest order finalized successfully');
+            setIsPlacingOrder(false); // Reset loading state
             alert('order placed !!');
             clearCart(setStore);
             console.log("response data", res)
             navigate('/');
         } catch (error) {
             console.error('Error in guestCheckout:', error);
+        } finally {
+            setIsPlacingOrder(false); // Reset loading state
         }
     };
 
@@ -151,8 +173,8 @@ export default function Cart() {
 
 
     const handleApprove = (data, actions) => {
-        console.log("data, actions", data, actions)
-        event.preventDefault();
+        setIsFinalizingOrder(true);
+
         return actions.order
             .capture()
             .then(function (details) {
@@ -161,17 +183,17 @@ export default function Cart() {
                     userCheckout(data, actions);
                     window.alert('Payment Successful');
                 } else {
-
-                    // For non-logged in users, trigger the form submission
                     const form = document.getElementById('guestCheckoutForm');
                     const formData = Object.fromEntries(new FormData(form));
-                    // form && form.submit(); // Submit the form after a successful PayPal payment
                     guestCheckout(formData);
                 }
             })
             .catch((err) => {
                 console.error('Capture Error', err);
                 window.alert('Payment Failed');
+            })
+            .finally(() => {
+                setIsFinalizingOrder(false);
             });
     };
 
@@ -196,9 +218,6 @@ export default function Cart() {
         console.log("totalshippingUseEffect", totalWithShipping);
         calculateTotalWithShipping();
     }, [total, shippingPrice]);
-
-
-
 
 
     return (
@@ -262,12 +281,16 @@ export default function Cart() {
                             <button type="button" onClick={handleCalculateShipping}>
                                 Calculate Shipping Rates
                             </button>
-                            {/* Display shipping price if available */}
                             {shippingPrice !== null && !isNaN(shippingPrice) && (
                                 <div>
-                                    Shipping Price: ¤{Number(shippingPrice).toFixed(2)}
+                                    Shipping Cost: ¤{Number(shippingPrice).toFixed(2)}
+                                    {shippingCost && shippingCost.message && <span> ({shippingCost.message})</span>}
                                 </div>
                             )}
+                             {isPlacingOrder  && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                             {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                            {isCalculatingShipping && <div className="loading-icon">Calculating Shipping...</div>}
+                        
                         </div>
                     </form>
                     {/* Display guest checkout form only if there are items in the cart and the user is not logged in */}
@@ -337,8 +360,6 @@ export default function Cart() {
                                 console.error('PayPal error', err);
                             }}
                         />
-
-
                     </PayPalScriptProvider>
                 </>
             ) : (

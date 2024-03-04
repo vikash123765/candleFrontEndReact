@@ -125,37 +125,36 @@ export default function Login() {
             setLoading(false); // Set loading to false after signup attempt
         }
     }
-
-    return (
-        <div className="login-signup-container">
-            {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-            <form className="login-form" onSubmit={handleLogin}>
-                <h2>Log in</h2>
-                <FormField name="email" label="Email" />
-                <FormField name="password" label="Password" type="password" />
-                <a href="/forgot">Forgot password?</a><br />
-                <button type="submit">Log in</button>
-                {error && <span className="error">{error}</span>}
-            </form>
-            <form className="signup-form" onSubmit={handleSignup}>
-                <h2>Sign up</h2>
-                <FormField name="userName" label="Username" />
-                <FormField name="userEmail" label="Email" />
-                <FormField name="address" label="Address" />
-                <FormField name="phoneNumber" label="Phone Number" />
-                <div className="form-field">
-                    <div>Gender</div>
-                    <select name="gender">
-                        <option value="MALE">Male</option>
-                        <option value="FEMALE">Female</option>
-                        <option value="OTHER">Other</option>
-                    </select>
-                </div>
-                <FormField name="userPassword" label="Password" type="password" />
-                <FormField name="password2" label="Repeat password" type="password" />
-                <button type="submit">Sign up</button>
-                {signupError && <span className="error">{signupError}</span>}
-            </form>
-        </div>
-    );
+// Update the component code
+return (
+    <div className="custom-login-signup-container">
+        {loading && <div className="custom-loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+        <form className="custom-login-form" onSubmit={handleLogin}>
+            <h2>Log in</h2>
+            <FormField name="email" label="Email" />
+            <FormField name="password" label="Password" type="password" />
+            <a href="/forgot">Forgot password?</a><br />
+            <button type="submit">Log in</button>
+            {error && <span className="custom-error">{error}</span>}
+        </form>
+        <form className="custom-signup-form" onSubmit={handleSignup}>
+            <h2>Sign up</h2>
+            <FormField name="userName" label="Username" />
+            <FormField name="userEmail" label="Email" />
+            <FormField name="address" label="Address" />
+            <FormField name="phoneNumber" label="Phone Number" />
+            <div className="custom-form-field">
+                <div>Gender</div>
+                <select name="gender">
+                    <option value="MALE">Male</option>
+                    <option value="FEMALE">Female</option>
+                </select>
+            </div>
+            <FormField name="userPassword" label="Password" type="password" />
+            <FormField name="password2" label="Repeat password" type="password" />
+            <button type="submit">Sign up</button>
+            {signupError && <span className="custom-error">{signupError}</span>}
+        </form>
+    </div>
+);
 }
