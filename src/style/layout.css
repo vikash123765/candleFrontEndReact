@@ -1,5 +1,13 @@
+/* Reset default styles for links */
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* Global styles */
 html, body, #root {
     min-height: 100vh;
+    margin: 0;
 }
 
 #root {
@@ -11,9 +19,11 @@ html, body, #root {
     flex-grow: 1;
 }
 
+/* Header styles */
 header {
     background-color: var(--primary);
-    color: #000; /* Change text color to black */
+    color: #000;
+    padding: 1rem;
 }
 
 header h1 {
@@ -26,39 +36,39 @@ header > div {
     align-items: center;
     gap: 1rem;
 
-    & a {
-        color: #000; /* Change link color to black */
-        font-family: 'Roboto', sans-serif; /* Change font to Roboto or any desired font */
-        font-weight: 500; /* Adjust font weight as needed */
-        font-size: 16px; /* Adjust font size as needed */
-        text-transform: uppercase; /* Optionally, transform text to uppercase */
+    a {
+        color: #000;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        text-transform: uppercase;
     }
 
-    & nav ul {
+    nav ul {
         list-style-type: none;
         display: flex;
         gap: 2rem;
         align-items: center;
 
-        & li {
+        li {
             display: inline;
         }
     }
 
-    & nav.mobile {
+    nav.mobile {
         position: relative;
         &:hover {
-            & ul {
+            ul {
                 display: flex !important;
             }
         }
-        & .menu {
+        .menu {
             position: absolute;
             top: 100%;
             right: 0;
             background-color: var(--primary);
             border-radius: 0 0 .5rem .5rem;
-            & ul {
+            ul {
                 display: none;
                 flex-direction: column;
                 padding: 0 2rem;
@@ -67,34 +77,39 @@ header > div {
     }
 }
 
+/* Main content styles */
 main {
     padding: 1rem;
     flex-grow: 1;
 
-    & > * > section {
-        &:not(:first-child), &:not(:last-child) {
-            margin: 2rem 0;
-        }
+    > * > section:not(:first-child):not(:last-child) {
+        margin: 2rem 0;
     }
 }
-
+/* Footer styles */
 footer {
     border-top: 3px solid var(--primary);
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
+    display: flex; /* Add display: flex to the footer container */
+    align-items: flex-start; /* Align items to the start (top) of the flex container */
 }
 
 #footer-items {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between; /* Add this to distribute items evenly */
     gap: 2rem;
+    width: 100%;
 
     @media screen and (max-width: 800px) {
-        grid-template-columns: 1fr;
+        flex-direction: column; /* Switch to a single column for smaller screens */
     }
 }
 
+
 .footer-item-socialmedia {
-    margin-top: 20px; /* Adjust the margin as needed */
+    margin-top: 20px;
+    height: 100%; /* Set a specific height for the social media header */
 }
 
 .footer-item-socialmedia h4 {
@@ -103,17 +118,44 @@ footer {
 }
 
 .footer-item-socialmedia a {
-    display: inline-block;
-    margin-right: 10px; /* Adjust the spacing between icons */
+    display: inline-block; 
+    margin-right: px;
+}
+
+/* Facebook icon color */
+.footer-item-socialmedia a:nth-child(4) svg {
+    fill: #40b094;
+}
+
+/* Facebook icon color */
+.footer-item-socialmedia a:nth-child(2) svg {
+    fill: #0850e1;
+}
+
+/* Instagram icon color */
+.footer-item-socialmedia a:nth-child(3) svg {
+    fill: rgb(65, 21, 222);
 }
 
 .footer-item-socialmedia a svg {
-    width: 30px; /* Adjust the icon size as needed */
-    height: 30px;
-    fill: #0f0e0e; /* Change the color of the icon */
-    transition: fill 0.3s ease; /* Add a smooth transition effect */
+    width: 60px;
+    height: 60px;
+    transition: fill 0.3s ease;
 }
 
 .footer-item-socialmedia a:hover svg {
-    fill: #1a1aaa; /* Change the color on hover */
+    fill: #1a1aaa;
+}
+
+/* Additional styles for links in navigation */
+nav ul li a {
+    color: #000; /* Set the color to black or the desired color */
+}
+
+.footer-item a {
+    color: #585455;
+}
+
+.footer-item a:hover {
+    color: #0056b3;
 }

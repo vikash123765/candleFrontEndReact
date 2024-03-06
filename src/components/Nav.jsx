@@ -8,22 +8,30 @@ import logoImage from '../Logo/tural face.jpeg';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 
+
 const Nav = () => {
   const [store, setStore] = useAtom(storeAtom);
+
+/*   const CompanyLogo = () => {
+    return (
+      <img
+        src={logoImage}
+        alt="Company Logo"
+        style={{ width: '50px', height: '50px', marginRight: '10px' }} // Adjust the size and margin as needed
+      />
+    );
+  }; */
 
   return (
     <>
       <nav className="desktop">
-       {/*  <div className="logo">
-          <img
-            src={logoImage}
-            alt="Company Logo"
-            style={{ width: '50px', height: '50px', marginLeft: '-1px', marginTop: '10px', marginRight: 'px' }}
-          />
+     {/*    <div className="logo">
+        <img
+        src={logoImage} // Assuming logoImage is the URL or source of the image
+        alt="Company Logo"
+        style={{ width: '50px', height: '50px', marginLeft: '-1px', marginTop: '10px', marginRight: 'px'  }} // Adjust the size and margin as needed
+      />
         </div> */}
-        <div className="greeting">
-          {store.loggedIn && <p>Welcome, {store.user?.userName}!</p>}
-        </div>
         <ul>
           {nav
             .filter((r) => r.text)

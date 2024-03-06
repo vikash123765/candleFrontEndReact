@@ -1,67 +1,76 @@
+import React from 'react';
+import { useNavigate } from 'react-router-dom';  // Updated import
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import logoImage from '../Logo/postnord.png';
+import paypal from '../Logo/paypal.png';
 
 const social = [
-    {
-        icon: <FacebookIcon style={{fontSize: '64px'}}/>,
-        href: "#"
-    },
-    {
-        icon: <InstagramIcon style={{fontSize: '64px'}}/>,
-        href: "#"
-    },
-    {
-        icon: <WhatsAppIcon style={{fontSize: '64px'}}/>,
-        href: "#"
-    },
-]
+  {
+    icon: <FacebookIcon style={{ fontSize: '64px' }} />,
+    href: "#"
+  },
+  {
+    icon: <InstagramIcon style={{ fontSize: '64px' }} />,
+    href: "#"
+  },
+  {
+    icon: <WhatsAppIcon style={{ fontSize: '64px' }} />,
+    href: "#"
+  },
+];
 
-export default function Footer() {
-    return (
-        <footer>
-            <div id="footer-items">
+const Footer = () => {
+  const navigate = useNavigate();  // Updated hook
 
-                <div className="footer-item">
-                    <h4>Contact us</h4>
-                    <ul>
-                        <li>
-                            Phone: +00 000 000 0000
-                        </li>
-                        <li>
-                            Address: Gatan 55, Stockholm, SE
-                        </li>
-                    </ul>
-                </div>
+  const generalInfoRoute = "/About"; 
 
-                <div className="footer-item-socialmedia">
-                    <h4>Social media</h4>
-                    {social.map((s, i) => (
-                        <a href={s.href} key={s.href+i} target="_blank">
-                            {s.icon}
-                        </a>
-                    ))}
-                </div>
+  const handleNavigation = (route) => {
+    navigate(route);
+  };
 
-                <div className="footer-item">
-                    <h4>Another section</h4>
-                    <ul>
-                        <li>Item</li>
-                        <li>Item</li>
-                        <li>Item</li>
-                    </ul>
-                </div>
+  return (
+    <footer>
+      <div id="footer-items">
+        <div className="footer-item">
+          <h4>Contact us</h4>
+          <ul>
+            <li>
+              Phone: +00 000 000 0000
+            </li>
+            <li>
+              Address: Gatan 55, Stockholm, SE
+            </li>
+          </ul>
+        </div>
 
-                <div className="footer-item">
-                    <h4>Another section</h4>
-                    <ul>
-                        <li>Item</li>
-                        <li>Item</li>
-                        <li>Item</li>
-                    </ul>
-                </div>
+        <div className="footer-item-socialmedia">
+          <h4>Social media</h4>
+          {social.map((s, i) => (
+            <a href={s.href} key={s.href + i} target="_blank" rel="noopener noreferrer">
+              {s.icon}
+            </a>
+          ))}
+        </div>
 
-            </div>
-        </footer>
-    )
+        <div className="footer-item">
+          <h4>General information</h4>
+          <ul>
+            <li><a href="#" onClick={() => handleNavigation(generalInfoRoute)}>Shipping</a></li>
+            <li><a href="#" onClick={() => handleNavigation("/About")}>Returns</a></li>
+            <li><a href="#" onClick={() => handleNavigation("/About")}>Payment system</a></li>
+          </ul>
+        </div>
+
+        <div className="footer-item">
+          <h4>Payment and Delivery Services</h4>
+          <img src={paypal} alt="PayPal" style={{ width: '90px', height: 'auto', marginBottom: '10px' }} />
+          <img src={logoImage} alt="PostNord" style={{ width: '110px', height: 'auto', marginBottom: '10px' }} />
+        </div>
+      </div>
+    </footer>
+  );
 }
+
+export default Footer;

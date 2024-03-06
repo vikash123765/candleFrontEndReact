@@ -417,7 +417,10 @@ createOrder={(data, actions) => {
                 console.log(isEurope)
                 console.log(isNonTracable)
                 console.log(orderWeight)
-         
+                const isSweden = isSwedenRef.current.toString();
+                const isTracable = isTracableRef.current.toString();
+                const isEurope = isEuropeRef.current.toString();
+                const isNonTracable = isNonTracabaleRef.current.toString()
             }
         } catch (error) {
             console.error('Error in createOrder:', error);

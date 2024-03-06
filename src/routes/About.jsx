@@ -21,6 +21,14 @@ const About = () => {
         </p>
       </section>
 
+      <section className="payment-section">
+        <h2>Payment System</h2>
+        <p>
+          Our E-Commerce Store offers a secure and convenient payment system. 
+          We support various payment methods to make your shopping experience smooth and reliable.
+        </p>
+      </section>
+
       <section className="shipping-section">
         <h2>Shipping Information</h2>
         <p>
