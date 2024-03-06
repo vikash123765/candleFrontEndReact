@@ -42,6 +42,7 @@ const Footer = () => {
             <li>
               Address: Gatan 55, Stockholm, SE
             </li>
+            <li><a href="#" onClick={() => handleNavigation("/Contact")}>Contact</a></li>
           </ul>
         </div>
 
@@ -64,7 +65,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-item">
-          <h4>Payment and Delivery Services</h4>
+          {/* <h4>Payment and Delivery Services</h4> */}
           <img src={paypal} alt="PayPal" style={{ width: '90px', height: 'auto', marginBottom: '10px' }} />
           <img src={logoImage} alt="PostNord" style={{ width: '110px', height: 'auto', marginBottom: '10px' }} />
         </div>

@@ -86,30 +86,27 @@ main {
         margin: 2rem 0;
     }
 }
+
 /* Footer styles */
 footer {
     border-top: 3px solid var(--primary);
     box-shadow: 0px -5px 10px rgba(0, 0, 0, 0.2);
-    display: flex; /* Add display: flex to the footer container */
-    align-items: flex-start; /* Align items to the start (top) of the flex container */
+    display: flex;
+    align-items: flex-start;
 }
 
 #footer-items {
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between; /* Add this to distribute items evenly */
+    flex-wrap: nowrap; /* Ensure items stay on the same line */
+    justify-content: space-between;
     gap: 2rem;
     width: 100%;
-
-    @media screen and (max-width: 800px) {
-        flex-direction: column; /* Switch to a single column for smaller screens */
-    }
+    overflow-x: auto; /* Enable horizontal scrolling for small screens */
 }
 
-
 .footer-item-socialmedia {
-    margin-top: 20px;
-    height: 100%; /* Set a specific height for the social media header */
+    height: 100%;
+    line-height: 64px;
 }
 
 .footer-item-socialmedia h4 {
@@ -118,8 +115,20 @@ footer {
 }
 
 .footer-item-socialmedia a {
-    display: inline-block; 
-    margin-right: px;
+    display: inline-block;
+    margin-right: 10px; /* Adjust margin as needed */
+}
+
+/* Media query for small screens */
+@media screen and (max-width: 600px) {
+    #footer-items {
+        flex-direction: column; /* Switch to a column layout for smaller screens */
+        overflow-x: hidden; /* Hide horizontal scrollbar */
+    }
+
+    .footer-item {
+        margin-top: 2rem; /* Add space between items in column layout */
+    }
 }
 
 /* Facebook icon color */
