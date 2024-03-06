@@ -1,9 +1,12 @@
+// FormField.jsx
 export default function FormField({ 
   label, 
   type="text", 
   name,
   onChange = val => {},
-  defaultValue = ""
+  defaultValue = "",
+  placeholder = "",
+  style = {}
 }) {
 
   function handleChange(e) {
@@ -22,7 +25,9 @@ export default function FormField({
               onChange={handleChange} 
               name={name}
               defaultValue={defaultValue}
-              ></textarea>
+              placeholder={placeholder}
+              style={style}
+            ></textarea>
         ):(
             <input 
               name={name} 
@@ -30,7 +35,9 @@ export default function FormField({
               onChange={handleChange}
               defaultValue={defaultValue}
               defaultChecked={defaultValue}
-              />
+              placeholder={placeholder}
+              style={style}
+            />
         )}
     </label>
   )

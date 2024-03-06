@@ -29,7 +29,7 @@ export default function Home() {
     <>
         <section id="hero">
             <h2>VTS cases!</h2>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit similique id animi ea quo itaque rerum voluptatem alias quis quaerat totam accusamus numquam eveniet, in cupiditate iusto nihil unde maxime delectus quod? Amet cupiditate adipisci autem eligendi impedit natus distinctio deleniti? Necessitatibus pariatur reiciendis esse nobis tempore provident minus ipsa deserunt, et maxime quam fugiat eveniet blanditiis dolores eum sequi quasi explicabo ab. Eius dolores, rerum quidem eligendi nesciunt deserunt? Eaque rem repellat cupiditate asperiores! Necessitatibus recusandae nemo expedita repellendus quam vel possimus reiciendis molestias quae dolor vero ipsum, voluptatum neque sit earum voluptatem vitae hic id aut doloremque sapiente.</p>
+            <p>Welcome to VTScases, where style meets protection! Elevate your mobile experience with our diverse range of phone cases. At VTScases, we pride ourselves on offering a collection that caters to every taste. Whether you prefer the vibrant allure of printed cases, the timeless simplicity of plain designs, or the bold statement made by our colored cases, we have the perfect match for your style. Our cases not only reflect the latest trends but also provide top-notch protection for your device. Discover the fusion of fashion and functionality as you explore our curated selection. Shop VTScases today and let your phone make a statement!</p>
         </section>
         <section id="products">
             {products.map(p => {

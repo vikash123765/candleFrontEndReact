@@ -13,22 +13,43 @@ const About = () => {
         </p>
       </section>
 
+      <section className="general-info-section">
+        <h2>General Information</h2>
+        <p>
+          Discover the latest trends in fashion, technology, and more at Our E-Commerce Store. 
+          We curate a diverse collection of products to cater to your unique needs and preferences.
+        </p>
+      </section>
+
+      <section className="shipping-section">
+        <h2>Shipping Information</h2>
+        <p>
+          Enjoy fast and reliable shipping services. We strive to deliver your orders promptly 
+          and keep you informed every step of the way. Check out our shipping policies for more details.
+        </p>
+      </section>
+
+      <section className="returns-section">
+        <h2>Returns & Exchanges</h2>
+        <p>
+          Your satisfaction is our priority. Learn about our hassle-free returns and exchange process 
+          to ensure you have a stress-free shopping experience with us.
+        </p>
+      </section>
+
       <section className="team-section">
-        <h2>Our team members</h2>
+        <h2>Our Team Members</h2>
         <div className="team-member">
-             <p>CEO</p>
+          <p>CEO</p>
           <h3>Vikash Kosaraju</h3>
-       
         </div>
         <div className="team-member">
-            <p>Co-founder</p>
+          <p>Co-founder</p>
           <h3>Tural Noori</h3>
-        
         </div>
         <div className="team-member">
           <p>Co-Founder</p>
-          <h3>Stefanos tzegay</h3>
-          
+          <h3>Stefanos Tzegay</h3>
         </div>
       </section>
     </div>

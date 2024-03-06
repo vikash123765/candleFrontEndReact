@@ -94,19 +94,26 @@ const [loading, setLoading] = useState(false); // Introduce loading state
   };
 
   return (
+    
     <>
+     <p>Have a question, concern, or just want to get in touch? We're here to help! Please fill out the form below, and we'll get back to you as soon as possible.
+Let us know the subject of your inquiry, whether it's about an order, a product, or any other matter.
+Feel free to share the details of your issue or inquiry. The more information you provide, the better we can assist you.
+Thank you for reaching out to us! We appreciate your feedback and are committed to providing you with the best assistance.</p>
   {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       <section id="contact">
         <form onSubmit={handleSubmit}>
           <FormField
             label="Subject"
             name="subject"
+            placeholder="Subject"
             onChange={(value) => handleInputChange("subject", value)}
           />
           {!store.loggedIn && (
             <FormField
               label="Your email"
               name="email"
+              placeholder="Email"
               value={formState.email}
               onChange={(value) => handleInputChange("email", value)}
             />
@@ -114,6 +121,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
           <FormField
             label="Message"
             type="textarea"
+            placeholder="Please explain your issue we will contact you as soon as we can!"
             name="message"
             onChange={(value) => handleInputChange("message", value)}
           />
@@ -122,7 +130,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
           </button>
         </form>
       </section>
-      <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero consequatur voluptatem, <span>possimus</span> saepe deleniti voluptas explicabo dolore ducimus, maxime aperiam neque perferendis obcaecati voluptate <span>nisi</span> impedit maiores molestiae ipsam provident?</p>
+     
     </>
   );
 }

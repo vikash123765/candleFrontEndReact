@@ -4,7 +4,7 @@ import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import '../style/Contact.css'; // Create a Contact.css file for styling
+
 import '../style/LoginAndsignup.css';
 const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
 
@@ -76,15 +76,14 @@ export default function Login() {
             setLoading(false); // Set loading to false after login attempt
         }
     }
-
     async function handleSignup(e) {
         e.preventDefault();
         setSignupError("");
-        setLoading(true); // Set loading to true during signup
-
+        setLoading(true);
+    
         const form = e.target;
         const data = Object.fromEntries(new FormData(form));
-
+    
         if (
             !data.userName ||
             !data.userEmail ||
@@ -93,56 +92,89 @@ export default function Login() {
             !data.address ||
             !data.phoneNumber
         ) {
+            setLoading(false);
             setSignupError("All fields required");
-            setLoading(false); // Set loading to false after signup attempt
+            alert("All fields required");
             return;
         }
-
+    
         if (data.userPassword !== data.password2) {
+            setLoading(false);
             setSignupError("Passwords do not match");
-            setLoading(false); // Set loading to false after signup attempt
+            alert("Passwords do not match");
             return;
         }
-
+    
         if (data.userPassword.length < 8) {
+            setLoading(false);
             setSignupError("Password must be at least 8 characters");
-            setLoading(false); // Set loading to false after signup attempt
+            alert("Password must be at least 8 characters");
             return;
         }
 
+        
+        // Assuming the phone number includes the country code, e.g., "+1234567890"
+        if (!/^\+(\d{1,2})\d{10}$/.test(data.phoneNumber)) {
+            setLoading(false);
+            setSignupError("Invalid phone number (must start with '+' and be 11 or 12 digits in total)");
+            alert("Invalid phone number (must start with '+' and be 11 or 12 digits in total)");
+            return;
+        }
+        
+        
+    
         try {
             const result = await signUpUser(data);
             console.log(result);
-            alert("account created!! ")
-
-            form.reset();
-
-
+            if (result.status==200) {
+                const responseData = await result.json();
+    
+                if (result.status === 201 && responseData.message === "account_created") {
+                    setLoading(false);
+                    alert("Account created!!");
+                    form.reset();
+                } else if (result.status === 409) {
+                    const messageType = responseData.message;
+    
+                    if (messageType === "registered_user") {
+                        setSignupError("Email already exists for a registered user. Please sign in instead.");
+                    } else if (messageType === "guest_user") {
+                        setSignupError("Email already used for guest orders. Please enter an unused one.");
+                    } else {
+                        console.error('Unexpected response:', responseData);
+                        setSignupError("Unexpected error. Please try again.");
+                    }
+                }
+            } else {
+                console.error('Unexpected response:', result.statusText);
+                setSignupError("Unexpected error. Please try again.");
+            }
         } catch (error) {
             console.error('Error during signup:', error);
-            alert("Error during signp please try again")
-        }finally {
-            setLoading(false); // Set loading to false after signup attempt
+            setSignupError("Error during signup. Please try again.");
+        } finally {
+            setLoading(false);
         }
-    }
+    }    
 // Update the component code
 return (
     <div className="custom-login-signup-container">
         {loading && <div className="custom-loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
         <form className="custom-login-form" onSubmit={handleLogin}>
             <h2>Log in</h2>
-            <FormField name="email" label="Email" />
-            <FormField name="password" label="Password" type="password" />
+            <FormField name="email" label="Email"  placeholder="Enter your username"/>
+            <FormField name="password" label="Password" type="password"  placeholder="Enter your email"/>
             <a href="/forgot">Forgot password?</a><br />
             <button type="submit">Log in</button>
             {error && <span className="custom-error">{error}</span>}
         </form>
         <form className="custom-signup-form" onSubmit={handleSignup}>
             <h2>Sign up</h2>
-            <FormField name="userName" label="Username" />
-            <FormField name="userEmail" label="Email" />
-            <FormField name="address" label="Address" />
-            <FormField name="phoneNumber" label="Phone Number" />
+            <FormField name="userName" label="Username"  placeholder="Enter your username" />
+            <FormField name="userEmail" label="Email" placeholder="Enter your email" />
+            <FormField name="address" label="Address" placeholder="Enter your complete address: Street Address,Postal Code,City and Country. Please inculde Apartment or Floor Number  " style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }} type="textarea"
+                            />
+            <FormField name="phoneNumber" label="Phone Number" placeholder="Enter your country code and number: ex: +1 1234567890 or +44 9876543210  " />
             <div className="custom-form-field">
                 <div>Gender</div>
                 <select name="gender">
@@ -150,8 +182,8 @@ return (
                     <option value="FEMALE">Female</option>
                 </select>
             </div>
-            <FormField name="userPassword" label="Password" type="password" />
-            <FormField name="password2" label="Repeat password" type="password" />
+            <FormField name="userPassword" label="Password" type="password"  placeholder="Enter your password" />
+            <FormField name="password2" label="Repeat password" type="password"  placeholder="reapet your password"/>
             <button type="submit">Sign up</button>
             {signupError && <span className="custom-error">{signupError}</span>}
         </form>

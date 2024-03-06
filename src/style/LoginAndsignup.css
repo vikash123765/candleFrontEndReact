@@ -1,0 +1,26 @@
+.custom-loading-icon {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+}
+
+/* YourComponent.css or styles.css */
+
+/* Apply dynamic sizing styles only to the address field */
+.dynamic-address-input {
+    width: 100%;
+    height: calc(4 * var(--normal-field-height));
+    box-sizing: border-box;
+  }
+  .form-field {
+    --normal-field-height: 2rem; /* Set the normal field height to your desired value */
+  }
+  
+  /* Optionally, you can also set the height for the textarea inside the .dynamic-address-input class */
+  .dynamic-address-input textarea {
+    height: 100%;
+    
+  }
+  

@@ -86,26 +86,36 @@ export default function Profile() {
             {/* Profile change form */}
             <div id="address">
                 <form onSubmit={handleProfileForm}>
+                    
                     <FormField
                         label="User Name"
                         name="userName"
-                        defaultValue={store.user?.userName}
+                       placeholder={store.user?.userName} 
                     />
                     <FormField
                         label="Your email"
                         name="userEmail"
-                        defaultValue={store.user?.userEmail}
+                        placeholder={store.user?.userEmail}
                     />
                     <FormField
                         label="Your address"
                         name="address"
-                        defaultValue={store.user?.address}
+                        placeholder={store.user?.address}
+                        type="textarea"
+                        style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }} 
+
                     />
                     <FormField
                         label="Phone number"
-                        name="phoneNumber"
-                        defaultValue={store.user?.phoneNumber}
-                    />
+                       name="phoneNumber"
+                       
+    placeholder={String("+" + store.user?.phoneNumber)}
+/>
+
+                   
+                   
+
+                    
                     <label className="form-field">
                         <span>Gender</span>
                         <select name="gender">
