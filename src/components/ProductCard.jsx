@@ -1,42 +1,46 @@
-import ProductModal from "./ProductModal"
+import React, { useState } from "react";
+import ProductModal from "./ProductModal";
+import Iphone14ProMaxPlainCaseImage from "../ProductImages/Iphone_14_pro_max_case_plain.png";
 
-// this is a hook
-/*
-    // useState returns an array of two items, so destructure it
-    1. the state
-    2. a function for updating the state
-*/
-import { useState } from "react"
+export default function ProductCard({ p }) {
+  const [image, setImage] = useState("");
+  const [modalShown, setModalShown] = useState(false);
 
-// take in props via the parameters of your component
+  // Map product names to local storage image paths
+  const imageMapping = {
+    "Iphone 14 pro max plain case": Iphone14ProMaxPlainCaseImage,
+    "Iphone 14 pro max printed case style1": "/ProductImages/product2.jpg",
+    // Add more entries as needed
+  };
 
-export default function ProductCard({p}) {
+  // Set image based on product name
+  const newImage = imageMapping[p.productName] || `https://picsum.photos/seed/${p.productName}/500/500`;
+  if (newImage !== image) {
+    setImage(newImage);
+  }
 
-    p.image ??= `https://picsum.photos/seed/${p.productName}/500/500`
+  const displayPrice = p.productPrice.toFixed(2);
 
-    let [modalShown, setModalShown] = useState(false)
+  const handleClick = () => {
+    setModalShown(true);
+  };
 
-    function handleClick() {
-        setModalShown(true)
-    }
+  const closeModal = () => {
+    setModalShown(false);
+  };
 
-    const displayPrice = p.productPrice.toFixed(2)
+  console.log("Rendering with Image:", image);
 
   return (
     <>
-        <button className="product-card" onClick={handleClick}>
-            {/* <h1>{count}</h1> */}
-            <img src={p.image} alt="" />
-            <div className="info">
-                <h3>{p.productName}</h3>
-                <div className="price">¤{displayPrice}</div>
-                {/* <div className="type">{p.type}</div> */}
-            </div>
-        </button>
-        {/* This only shows if modalShown is true */}
-        {modalShown && (
-            <ProductModal p={p} setModalShown={setModalShown} />
-        )}
+      <button className="product-card" onClick={handleClick}>
+        {image && <img src={image} alt={p.productName} />}
+        <div className="info">
+          <h3>{p.productName}</h3>
+          <div className="price">¤{displayPrice}</div>
+        </div>
+      </button>
+      {modalShown && <ProductModal p={p} image={image} setModalShown={setModalShown} />}
     </>
-  )
+  );
 }

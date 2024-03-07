@@ -134,16 +134,27 @@ async function getAllProducts(limit = 3) {
 }
 
 // example:     getProductsByIds([1, 2, 3])
+// api.js
+
 async function getProductsByIds(ids) {
-    const data = await handleFetch(`/products/ids`, {
+    try {
+      const data = await handleFetch("/products/ids", {
         method: 'POST',
         body: JSON.stringify(ids),
         headers: {
-            "Content-Type": "application/json"
-        }
-    }, "get Prodcuts by IDs")
-    return data
-}
+          'Content-Type': 'application/json',
+        },
+      }, "get Prodcuts by IDs");
+      
+      return data;
+    } catch (error) {
+      console.error("Error fetching products:", error);
+      return [];
+    }
+  }
+  
+  
+  
 
 async function signOutUser() {
     const res = await fetch(ROOT+'/user/signOut', {

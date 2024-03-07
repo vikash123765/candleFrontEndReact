@@ -4,7 +4,7 @@ import { nav } from '../lib/nav';
 import { isLoggedIn } from '../lib/api';
 import { useAtom } from 'jotai';
 import { storeAtom } from '../lib/store';
-import logoImage from '../Logo/tural face.jpeg';
+
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import MenuIcon from '@mui/icons-material/Menu';
 

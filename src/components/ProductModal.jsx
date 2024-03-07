@@ -9,14 +9,16 @@ import CloseIcon from '@mui/icons-material/Close';
 // npm i jotai
 
 
-export default function ProductModal({p, setModalShown}) {
+export default function ProductModal({ p, image, setModalShown }) {
 
     const [store, setStore] = useAtom(storeAtom)
     const [stagedItems, setStagedItems] = useState([])
 
-    function closeModal() {
-        setModalShown(false)
-    }
+
+    const closeModal = () => {
+      setModalShown(false);
+    };
+  
 
     function addToCart() {
       // console.log(store.cart)
@@ -64,21 +66,21 @@ export default function ProductModal({p, setModalShown}) {
 
     const displayPrice = p.productPrice.toFixed(2)
 
-  return (
-    <div className="product-modal_backdrop">
-      <div className="product-modal">
+    return (
+      <div className="product-modal_backdrop" onClick={closeModal}>
+        <div className="product-modal" onClick={(e) => e.stopPropagation()}>
           <div className="modal-header">
-              <h3>{p.productName}</h3>
-              <button onClick={closeModal}>
-                <CloseIcon />
-              </button>
+            <h3>{p.productName}</h3>
+            <button onClick={closeModal}>
+              <CloseIcon />
+            </button>
           </div>
           <div className="modal-body">
             <div className="left">
-              <img className="product-modal_image" src={p.image} alt="" />
+              {image && <img className="product-modal_image" src={image} alt="" />}
             </div>
             <div className="right">
-              <h4>¤{displayPrice}</h4>
+            
               <div>{p.productType}</div>
               <div>Description: {p.productDescription}</div>
               <div className="buttons">
@@ -92,6 +94,7 @@ export default function ProductModal({p, setModalShown}) {
                   <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
                     Add {stagedItems.length} to cart
                   </button>
+                  <h4 style={{ position: 'absolute', bottom: '28px', right: '200px' }}>¤{displayPrice}</h4>
                 </div>
               </div>
             </div>

@@ -1,4 +1,4 @@
-// getAllProducts is an async function that will fetch all the products
+
 import { getProductsByIds } from "../lib/api.js"
 
 import { useState, useEffect } from 'react'
@@ -16,7 +16,7 @@ export default function Home() {
 
     const [products, setProducts] = useState([])
     useEffect(()=>{
-        getProductsByIds([1, 8, 3])
+        getProductsByIds([8, 14, 11])
             .then(p => {
                 setProducts(p)
             })

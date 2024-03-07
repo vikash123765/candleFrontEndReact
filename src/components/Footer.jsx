@@ -65,10 +65,11 @@ const Footer = () => {
         </div>
 
         <div className="footer-item">
-          {/* <h4>Payment and Delivery Services</h4> */}
-          <img src={paypal} alt="PayPal" style={{ width: '90px', height: 'auto', marginBottom: '10px' }} />
-          <img src={logoImage} alt="PostNord" style={{ width: '110px', height: 'auto', marginBottom: '10px' }} />
-        </div>
+    {/* <h4>Payment and Delivery Services</h4> */}
+    <img src={paypal} alt="PayPal" style={{ width: "auto", height: '100px', marginBottom: '10px' }} />
+    <img src={logoImage} alt="PostNord" style={{ width: 'auto', height: '10px', marginBottom: '10px' }} />
+</div>
+
       </div>
     </footer>
   );
