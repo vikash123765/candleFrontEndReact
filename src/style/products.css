@@ -13,12 +13,25 @@
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
+    @media screen and (max-width: 600px) {
+        flex-direction: column;
+        align-items: stretch;
+
+        > div {
+            margin-bottom: 10px;
+        }
+
+        select, input[type="search"], button {
+            width: 100%;
+        }
+    }
 }
 
 #product-filters > div {
     display: flex;
     align-items: center;
     gap: 10px;
+
 }
 
 #product-filters label {
@@ -54,6 +67,7 @@
     background-color: var(--bg);
     border: 2px solid var(--primary);
     box-shadow: var(--shadow);
+    border: 1px solid #333; /* You can adjust the color code to make it lighter or darker */
     cursor: pointer;
     transition: transform 125ms;
     color: #333;
@@ -73,7 +87,7 @@
             font-size: 16px;
             line-height: 1.2;
             font-weight: normal;
-            color: #555;
+            color: #151414;
         }
 
         .price {
@@ -86,7 +100,12 @@
 }
 
 
-
+.product-image {
+    width: 100%; /* Adjust the width as needed */
+    height: auto; /* Maintain the aspect ratio */
+    border-radius: 0.5rem;
+  }
+  
 
 .product-card img {
     width: 100%;

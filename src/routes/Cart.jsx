@@ -18,65 +18,85 @@ export default function Cart() {
     const navigate = useNavigate();
     const [store, setStore] = useAtom(storeAtom);
 
-    const [isSweden, setIsSweden] = useState(true);
+    const [isSweden, setIsSweden] = useState(false);
     const [isNonTracable, setIsNonTracable] = useState(false);
     const [isEurope, setIsEurope] = useState(false);
-    const [isTracable, setIsTracable] = useState(true);
+    const [isTracable, setIsTracable] = useState(false);
 
-    const isNonTracableRef = useRef(isNonTracable);  
-    const isEuropeRef = useRef(isEurope) 
-    const isSwedenRef = useRef(isSweden);
-    const isTracableRef = useRef(isTracable);
-   
-   
+    const isNonTracableRef = useRef(false);
+    const isEuropeRef = useRef(false)
+    const isSwedenRef = useRef(false);
+    const isTracableRef = useRef(false);
     const [shippingPrice, setShippingPrice] = useState(null);
     const [totalWithShipping, setTotalWithShipping] = useState(0);
     const [Total, setTotal] = useState(0)
     const totalRef = useRef(0);
-
-  
-
     const formRef = useRef(null);
-   
-
-    
     const [isPlacingOrder, setIsPlacingOrder] = useState(false);
 
     const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
     const [isFinalizingOrder, setIsFinalizingOrder] = useState(false);
 
     let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
-    const [shippingCost, setShippingCost] = useState(null); 
-    
+    const [shippingCost, setShippingCost] = useState(null);
+
     const handleCheckboxChange = (e) => {
+        debugger;
         const { name, checked } = e.target;
-    
+
         switch (name) {
             case 'isSweden':
                 setIsSweden(checked);
+                isSwedenRef.current = checked;
+                if (checked) {
+                    setIsEurope(false);
+                    isEuropeRef.current = false;
+                }
                 break;
             case 'isEurope':
                 setIsEurope(checked);
+                isEuropeRef.current = checked;
+                if (checked) {
+                    setIsSweden(false);
+                    isSwedenRef.current = false;
+                }
                 break;
             case 'isTracable':
                 setIsTracable(checked);
+                isTracableRef.current = checked;
+                if (checked) {
+                    setIsNonTracable(false);
+                    isNonTracableRef.current = false;
+                }
                 break;
             case 'isNonTracable':
                 setIsNonTracable(checked);
+                isNonTracableRef.current = checked;
+                if (checked) {
+                    setIsTracable(false);
+                    isTracableRef.current = false;
+                }
                 break;
             default:
                 break;
         }
-    
-        // Update refs using the current state values
-        isSwedenRef.current = isSweden;
-        isEuropeRef.current = isEurope;
-        isTracableRef.current = isTracable;
-        isNonTracableRef.current = isNonTracable;
     };
-    
+
+
+
+
+    // useEffect(() => {
+    //     setIsSweden(isSweden)
+    //     setIsEurope(isEurope)
+    //     setIsNonTracable(isNonTracable)
+    //     setIsTracable(isTracable)
+    //     console.log("shivvvvv", isSweden, isEurope, isTracable, isNonTracable)
+    // }, [isSweden, isEurope, isTracable, isNonTracable])
+
+
+
     // ...
-    
+
 
     const handleCalculateShipping = async () => {
         try {
@@ -125,7 +145,7 @@ export default function Cart() {
     };
 
     const userCheckout = async (data, actions) => {
-       
+
         setIsPlacingOrder(true); // Set loading state
         try {
             const order = await actions.order.capture();
@@ -149,8 +169,8 @@ export default function Cart() {
             }
 
             console.log('Order finalized successfully');
-            
-        setIsPlacingOrder(false); // Set loading state
+
+            setIsPlacingOrder(false); // Set loading state
             alert('order placed !!');
 
             clearCart(setStore);
@@ -158,14 +178,14 @@ export default function Cart() {
         } catch (error) {
             console.error('Error in userCheckout:', error);
         } finally {
-            
-        setIsPlacingOrder(false); // Set loading state
+
+            setIsPlacingOrder(false); // Set loading state
         }
     };
 
     const guestCheckout = async (e) => {
         setIsPlacingOrder(true); // Set loading state
-       
+
 
         // e.preventDefault();
         // const form = e.target;
@@ -214,7 +234,7 @@ export default function Cart() {
 
 
     const handleApprove = (data, actions) => {
-        
+
         setIsPlacingOrder(true); // Set loading state(true);
 
         return actions.order
@@ -223,9 +243,9 @@ export default function Cart() {
                 const orderStatus = details.status;
                 if (store.loggedIn) {
                     userCheckout(data, actions);
-                    window.alert('Payment Successful');ä
-                    
-        setIsPlacingOrder(false); // Set loading state
+                    window.alert('Payment Successful'); ä
+
+                    setIsPlacingOrder(false); // Set loading state
 
                 } else {
                     const form = document.getElementById('guestCheckoutForm');
@@ -238,26 +258,26 @@ export default function Cart() {
                 window.alert('Payment Failed');
             })
             .finally(() => {
-                
-        setIsPlacingOrder(false); // Set loading state
+
+                setIsPlacingOrder(false); // Set loading state
             });
     };
 
 
 
-   /*  useEffect(() => {
-        handleCalculateShipping(isSweden, isEurope, isTracable, isNonTracable);
-    }, [isSweden, isEurope, isTracable, isNonTracable]);
-    
-    useEffect(() => {
-        handleCalculateShipping();
-    }, [isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current]);
-     */
+    /*  useEffect(() => {
+         handleCalculateShipping(isSweden, isEurope, isTracable, isNonTracable);
+     }, [isSweden, isEurope, isTracable, isNonTracable]);
+     
+     useEffect(() => {
+         handleCalculateShipping();
+     }, [isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current]);
+      */
 
     useEffect(() => {
         handleCalculateShipping(isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current);
     }, [isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current]);
-    
+
 
     useEffect(() => {
         totalRef.current = total;
@@ -268,7 +288,26 @@ export default function Cart() {
         calculateTotalWithShipping();
     }, [total, shippingPrice]);
 
+    const validateForm = () => {
+        if (!isSweden || !isEurope || !isTracable || !isNonTracable) {
+            return false;
+        }
+        return true;
 
+    }
+
+    const handlePayPalPayment = async () => {
+        if (!validateForm()) {
+            alert('Please fill out all required fields.');
+            return;
+        }
+
+        try {
+    } catch (error) {
+            console.error('Error creating PayPal order:', error);
+            alert('An error occurred while processing your payment. Please try again later.'); // Display error message
+        }
+    };
     return (
         <div>
             <h3>Your order</h3>
@@ -277,6 +316,7 @@ export default function Cart() {
                     <form id="cart_form">
                         <div id="cart">
                             {store.cart.map((p, i) => {
+                                {console.log("ppppppppp", p)}
                                 function remove() {
                                     setStore((current) => {
                                         current.cart.splice(
@@ -290,7 +330,7 @@ export default function Cart() {
                                 return (
                                     <div className="cart-item" key={p.productName + i}>
                                         <div className="left">
-                                            <img src={`https://picsum.photos/seed/${p.productName}/500/500`} alt="" />
+                                            <img src={`${p.image}`} alt="" />
                                         </div>
                                         <div className="right">
                                             <div>{p.productName}</div>
@@ -308,43 +348,43 @@ export default function Cart() {
                                 Total: {store && store.cart ? `¤${totalWithShipping.toFixed(2)}` : 'N/A'}
                             </h4>
                             <div className="shipping-form">
-            <label>
-                <input
-                    type="checkbox"
-                    name="isSweden"
-                    checked={isSweden}
-                    onChange={handleCheckboxChange}
-                />
-                Sweden
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    name="isEurope"
-                    checked={isEurope}
-                    onChange={handleCheckboxChange}
-                />
-                Europe
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    name="isTracable"
-                    checked={isTracable}
-                    onChange={handleCheckboxChange}
-                />
-                Tracable
-            </label>
-            <label>
-                <input
-                    type="checkbox"
-                    name="isNonTracable"
-                    checked={isNonTracable}
-                    onChange={handleCheckboxChange}
-                />
-                Non-Tracable
-            </label>
-        </div>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="isSweden"
+                                        checked={isSweden}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    Sweden
+                                </label>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="isEurope"
+                                        checked={isEurope}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    Europe
+                                </label>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="isTracable"
+                                        checked={isTracable}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    Tracable
+                                </label>
+                                <label>
+                                    <input
+                                        type="checkbox"
+                                        name="isNonTracable"
+                                        checked={isNonTracable}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                    Non-Tracable
+                                </label>
+                            </div>
                             <button type="button" onClick={handleCalculateShipping}>
                                 Calculate Shipping Rates
                             </button>
@@ -354,10 +394,10 @@ export default function Cart() {
                                     {shippingCost && shippingCost.message && <span> ({shippingCost.message})</span>}
                                 </div>
                             )}
-                             {isPlacingOrder  && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-                             {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                            {isPlacingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                            {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
                             {isCalculatingShipping && <div className="loading-icon">Calculating Shipping...</div>}
-                        
+
                         </div>
                     </form>
                     {/* Display guest checkout form only if there are items in the cart and the user is not logged in */}
@@ -365,82 +405,74 @@ export default function Cart() {
                         <GuestCheckoutForm guestCheckout={guestCheckout} />
                     )}
                     <PayPalScriptProvider options={payPalOptions}>
-                    <PayPalButtons
-createOrder={(data, actions) => {
-    console.log('createOrder function called');
-    const orderWeight = store.cart.length * 80;
+                        <PayPalButtons
+                            createOrder={(data, actions) => {
+                                console.log('createOrder function called');
+                                const orderWeight = store.cart.length * 80;
+                                handlePayPalPayment();
+                                // Directly use the state values
+                                const selectedIsSweden = isSwedenRef.current.toString();
+                                const selectedisTracable = isTracableRef.current.toString();
+                                const selectedisEurope = isEuropeRef.current.toString();
+                                const selectedisNonTracable = isNonTracableRef.current.toString();
+                                console.log("heeeeisSweden", selectedIsSweden, selectedisTracable, selectedisEurope, selectedisNonTracable)
+                                return new Promise(async (resolve, reject) => {
 
-    // Directly use the state values
-    const isSweden = isSwedenRef.current.toString();
-    const isTracable = isTracableRef.current.toString();
-    const isEurope = isEuropeRef.current.toString();
-    const isNonTracable = isNonTracableRef.current.toString();
+                                    try {
+                                        const response = await fetch(
+                                            `http://localhost:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
+                                        );
+                                        if (response.ok) {
+                                            const result = await response.json();
+                                            console.log('Shipping Cost Response:', result);
 
-    return new Promise(async (resolve, reject) => {
-        try {
-            const response = await fetch(
-                `http://localhost:8080/calculate-shipping-rates/${isSweden}/${isEurope}/${isTracable}/${isNonTracable}/${orderWeight}`
-            );
+                                            const { shippingCost } = result;
 
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Shipping Cost Response:', result);
+                                            if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
+                                                console.log('Shipping Price:', shippingCost);
 
-                const { shippingCost } = result;
+                                                const totalWithShippingValue = (total + shippingCost).toFixed(2);
 
-                if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
-                    console.log('Shipping Price:', shippingCost);
+                                                resolve(
+                                                    actions.order.create({
+                                                        purchase_units: [
+                                                            {
+                                                                amount: {
+                                                                    value: totalWithShippingValue,
+                                                                    currency_code: 'SEK',
+                                                                },
+                                                            },
+                                                        ],
+                                                    })
+                                                );
+                                            } else {
+                                                console.error('Invalid shipping cost:', shippingCost);
+                                                reject(new Error('Invalid shipping cost'));
+                                            }
+                                        } else {
+                                            console.error('Error calculating shipping rates');
+                                            reject(new Error('Error calculating shipping rates'));
 
-                    const totalWithShippingValue = (total + shippingCost).toFixed(2);
-
-                    resolve(
-                        actions.order.create({
-                            purchase_units: [
-                                {
-                                    amount: {
-                                        value: totalWithShippingValue,
-                                        currency_code: 'SEK',
-                                    },
-                                },
-                            ],
-                        })
-                    );
-                } else {
-                    console.error('Invalid shipping cost:', shippingCost);
-                    reject(new Error('Invalid shipping cost'));
-                }
-            } else {
-                console.error('Error calculating shipping rates');
-                reject(new Error('Error calculating shipping rates'));
-                console.log(isSweden)
-                console.log(isTracable)
-                console.log(isEurope)
-                console.log(isNonTracable)
-                console.log(orderWeight)
-                const isSweden = isSwedenRef.current.toString();
-                const isTracable = isTracableRef.current.toString();
-                const isEurope = isEuropeRef.current.toString();
-                const isNonTracable = isNonTracabaleRef.current.toString()
-            }
-        } catch (error) {
-            console.error('Error in createOrder:', error);
-            reject(error);
-        }
-    });
-}}
-onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
-onSuccess={(details, paypalData) => {
-    console.log('Transaction completed by ' + details.payer.name);
-}}
-onError={(err) => {
-    console.error('PayPal error', err);
-}}
-/>
-</PayPalScriptProvider>
-</>
-) : (
-<div>Your cart is empty.</div>
-)}
-</div>
-);
+                                        }
+                                    } catch (error) {
+                                        console.error('Error in createOrder:', error);
+                                        reject(error);
+                                    }
+                                });
+                            }}
+                            onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
+                            onSuccess={(details, paypalData) => {
+                                console.log('Transaction completed by ' + details.payer.name);
+                            }}
+                            onError={(err) => {
+                                console.error('PayPal error', err);
+                            }}
+                        />
+                    </PayPalScriptProvider>
+                </>
+            ) : (
+                <div>Your cart is empty.</div>
+            )}
+        </div>
+    );
 }

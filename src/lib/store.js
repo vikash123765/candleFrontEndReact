@@ -15,6 +15,7 @@ const updateStore = (setStore, obj) => {
         return {...current}
     })
 }
+console.log("storeAtom", storeAtom)
 
 export {
     storeAtom,

@@ -125,11 +125,11 @@ export default function Products() {
             <option value="price-a">Price (ascending)</option>
           </select>
         </div>
-       
+
       </div>
       <div id="products">
         {(filteredProducts.length > 0 ? Array.from(filteredProducts) : products).map(p => (
-          <ProductCard key={`pcard-${p.productId}`} p={p} />
+          <ProductCard key={`pcard-${p.productId}`} p={p} filteredProducts={filteredProducts} />
         ))}
       </div>
     </>

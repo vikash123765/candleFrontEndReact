@@ -21,8 +21,8 @@ const Admin = () => {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
-          'email': adminEmail, // Use the provided admin email for authentication
-          'x-auth-token': authToken,
+          'email': store.admin.adminEmail, // Use the provided admin email for authentication
+          'x-auth-token': getCookie('token'),
         }
       });
 
@@ -49,7 +49,7 @@ const Admin = () => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': authToken,
+                'x-auth-token': getCookie('token'),
             },
         });
 

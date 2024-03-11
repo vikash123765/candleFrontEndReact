@@ -18,6 +18,7 @@
     transform: translate(-50%, -50%);
     border-radius: 0.25rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    overflow-y: auto; 
 }
 
 .modal-header {
@@ -57,12 +58,23 @@
         }
     }
 }
+/* Add this to your CSS */
+@media screen and (max-width: 600px) {
+    .price-mobile {
+      position: absolute;
+      bottom: 28px;
+      right: 10px; /* Adjust the value as needed */
+    }
+  }
+  
 
-.product-modal_image {
-    width: 100%;
-    border-radius: 0.5rem;
-}
 
 .error {
     color: maroon;
+}
+
+.product-modal_image {
+    width: 100%;
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    border-radius: 0.5rem;
 }
