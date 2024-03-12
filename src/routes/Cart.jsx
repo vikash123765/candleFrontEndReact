@@ -17,12 +17,15 @@ const payPalOptions = {
 
 export default function Cart() {
     const navigate = useNavigate();
+
   const [store, setStore] = useAtom(storeAtom);
   const [isPayPalButtonVisible, setIsPayPalButtonVisible] = useState(false); // Define isPayPa
   const [isSweden, setIsSweden] = useState(false);
   const [isNonTracable, setIsNonTracable] = useState(false);
   const [isEurope, setIsEurope] = useState(false);
   const [isTracable, setIsTracable] = useState(false);
+  const [isPayPalButtonDisabled, setIsPayPalButtonDisabled] = useState(false);
+
   const [formData, setFormData] = useState(null);
   const isNonTracableRef = useRef(false);
   const isEuropeRef = useRef(false);
@@ -85,18 +88,33 @@ export default function Cart() {
   const handleInputChange = () => {
     // Call the handleFormChange function when an input changes
     handleFormChange();
-    updatePayPalButtonStatus();
-  };
-  const updatePayPalButtonStatus = () => {
+    updatePayPalButtonStatus().then(() => {
+        // Always enable the PayPal button
+        setIsPayPalButtonEnabled(true);
+    });
+};
+const isPayPalButtonEnabledRef = useRef(isPayPalButtonEnabled)
+   // Function to update isPayPalButtonEnabled and the corresponding ref
+   const updateIsPayPalButtonEnabled = (value) => {
+    setIsPayPalButtonEnabled(value);
+    isPayPalButtonEnabledRef.current = value;
+};
+
+// Corrected function to update isPayPalButtonEnabled
+const updatePayPalButtonStatus = () => {
     const isShippingOptionsValid =
         (isSwedenRef.current || isEuropeRef.current) &&
         (isTracableRef.current || isNonTracableRef.current);
 
+    console.log('isShippingOptionsValid:', isShippingOptionsValid);
+
     // Enable the PayPal button if the user is logged in or if shipping options are valid
     setIsPayPalButtonEnabled(isLoggedIn || isShippingOptionsValid);
+
+    console.log('PayPal button status updated:', isLoggedIn || isShippingOptionsValid);
 };
 
-  const handleFormChange = () => {
+const handleFormChange = () => {
     const form = document.getElementById('guestCheckoutForm');
     const newFormData = new FormData(form);
 
@@ -114,7 +132,11 @@ export default function Cart() {
     const formFilled = [...newFormData.values()].every((value) => value.trim() !== '');
     setFormFilled(formFilled);
 
-    setIsPayPalButtonVisible(validateForm(newFormData));
+    // Check if all required fields and shipping alternatives are selected
+    const isFormValid = validateForm(newFormData)
+       setIsPayPalButtonEnabled(isFormValid);
+
+ 
 };
 
 
@@ -168,6 +190,7 @@ useEffect(() => {
 
                     // Set the shippingCost in the state
                     setShippingCost(result);
+                    updatePayPalButtonStatus();
                 } else {
                     console.error('Invalid shipping cost:', shippingCost);
                 }
@@ -208,23 +231,6 @@ const validateForm = (data, isLoggedIn) => {
 
 const isFormValid = validateForm(formData, store.loggedIn);
 
-// ...
-
-{isFormValid && (
-    <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
-        <PayPalScriptProvider options={payPalOptions}>
-            <PayPalButtons
-                // other props...
-                disabled={!isFormValid}
-                onClick={() => {
-                    if (!isFormValid) {
-                        alert('Please fill out all required fields and select a shipping alternative.');
-                    }
-                }}
-            />
-        </PayPalScriptProvider>
-    </div>
-)}
 
     // For guest users
 const isFormValidForGuest = validateForm(formData, false);
@@ -378,7 +384,10 @@ const isFormValidForLoggedInUser = validateForm(null, true);
         handleCalculateShipping(isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current);
     }, [isSwedenRef.current, isEuropeRef.current, isTracableRef.current, isNonTracableRef.current]);
 
-
+    useEffect(() => {
+        isPayPalButtonEnabledRef.current = isPayPalButtonEnabled;
+    }, [isPayPalButtonEnabled]);
+    
     useEffect(() => {
         totalRef.current = total;
         const calculateTotalWithShipping = () => {
@@ -518,7 +527,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                                                 ],
                                                             })
                                                         );
-                                                        handlePayPalPayment();
+                                                       
                                                     } else {
                                                         console.error('Invalid shipping cost:', shippingCost);
                                                         reject(new Error('Invalid shipping cost'));
@@ -540,13 +549,24 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                     onError={(err) => {
                                         console.error('PayPal error', err);
                                     }}
+                    
                                     disabled={!isFormValid}
-                onClick={() => {
-                    if (!isFormValid) {
-                        alert('Please fill out all required fields and select a shipping alternative.');
-                    }
-                }}
-            />
+
+                                    
+    // other props...
+    onClick={() => {
+        console.log('isPayPalButtonEnabledRef:', isPayPalButtonEnabledRef.current);
+
+        if (!isPayPalButtonEnabledRef.current) {
+
+            alert('Please fill out all required fields and select a shipping alternative.');
+        }
+    }}
+                                />
+                                
+                                    
+                                    
+            
                                 
                             </PayPalScriptProvider>
                         </div>
