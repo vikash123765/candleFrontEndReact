@@ -177,9 +177,6 @@ export default function Cart() {
             navigate('/');
         } catch (error) {
             console.error('Error in userCheckout:', error);
-        } finally {
-
-            setIsPlacingOrder(false); // Set loading state
         }
     };
 
@@ -233,33 +230,50 @@ export default function Cart() {
 
 
 
-    const handleApprove = (data, actions) => {
 
-        setIsPlacingOrder(true); // Set loading state(true);
+
+
+    const handleApprove = (data, actions) => {
+        setIsPlacingOrder(true); 
 
         return actions.order
             .capture()
             .then(function (details) {
                 const orderStatus = details.status;
                 if (store.loggedIn) {
-                    userCheckout(data, actions);
-                    window.alert('Payment Successful'); ä
-
-                    setIsPlacingOrder(false); // Set loading state
-
+                    userCheckout(data, actions)
+                        .then(() => {
+                            // Order placed successfully
+                            window.alert('Payment Successful');
+                        })
+                        .catch((error) => {
+                            console.error('Error in userCheckout:', error);
+                            window.alert('Order placement failed');
+                        })
+                        .finally(() => {
+                            setIsPlacingOrder(false); // Reset loading state
+                        });
                 } else {
                     const form = document.getElementById('guestCheckoutForm');
                     const formData = Object.fromEntries(new FormData(form));
-                    guestCheckout(formData);
+                    guestCheckout(formData)
+                        .then(() => {
+                            // Order placed successfully
+                            window.alert('Payment Successful');
+                        })
+                        .catch((error) => {
+                            console.error('Error in guestCheckout:', error);
+                            window.alert('Order placement failed');
+                        })
+                        .finally(() => {
+                            setIsPlacingOrder(false); // Reset loading state
+                        });
                 }
             })
             .catch((err) => {
                 console.error('Capture Error', err);
                 window.alert('Payment Failed');
-            })
-            .finally(() => {
-
-                setIsPlacingOrder(false); // Set loading state
+                setIsPlacingOrder(false); // Reset loading state
             });
     };
 
@@ -301,9 +315,9 @@ export default function Cart() {
             alert('Please fill out all required fields.');
             return;
         }
-
         try {
-    } catch (error) {
+
+        } catch (error) {
             console.error('Error creating PayPal order:', error);
             alert('An error occurred while processing your payment. Please try again later.'); // Display error message
         }
@@ -316,7 +330,7 @@ export default function Cart() {
                     <form id="cart_form">
                         <div id="cart">
                             {store.cart.map((p, i) => {
-                                {console.log("ppppppppp", p)}
+                                { console.log("ppppppppp", p) }
                                 function remove() {
                                     setStore((current) => {
                                         current.cart.splice(
@@ -332,7 +346,7 @@ export default function Cart() {
                                         <div className="left">
                                             <img src={`${p.image}`} alt="" />
                                         </div>
-                                        <div className="right">
+                                        <div className="right" style={{ padding: '12px' }}>
                                             <div>{p.productName}</div>
                                             <div>¤{p.productPrice.toFixed(2)}</div>
                                             <button onClick={remove} type="button">
@@ -404,75 +418,79 @@ export default function Cart() {
                     {store.cart.length > 0 && !store.loggedIn && (
                         <GuestCheckoutForm guestCheckout={guestCheckout} />
                     )}
-                    <PayPalScriptProvider options={payPalOptions}>
-                        <PayPalButtons
-                            createOrder={(data, actions) => {
-                                console.log('createOrder function called');
-                                const orderWeight = store.cart.length * 80;
-                                handlePayPalPayment();
-                                // Directly use the state values
-                                const selectedIsSweden = isSwedenRef.current.toString();
-                                const selectedisTracable = isTracableRef.current.toString();
-                                const selectedisEurope = isEuropeRef.current.toString();
-                                const selectedisNonTracable = isNonTracableRef.current.toString();
-                                console.log("heeeeisSweden", selectedIsSweden, selectedisTracable, selectedisEurope, selectedisNonTracable)
-                                return new Promise(async (resolve, reject) => {
+                    <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
+                        <PayPalScriptProvider options={payPalOptions} >
+                            <PayPalButtons
+                                createOrder={(data, actions) => {
+                                    console.log('createOrder function called');
+                                    const orderWeight = store.cart.length * 80;
 
-                                    try {
-                                        const response = await fetch(
-                                            `http://localhost:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
-                                        );
-                                        if (response.ok) {
-                                            const result = await response.json();
-                                            console.log('Shipping Cost Response:', result);
+                                    // Directly use the state values
+                                    const selectedIsSweden = isSwedenRef.current.toString();
+                                    const selectedisTracable = isTracableRef.current.toString();
+                                    const selectedisEurope = isEuropeRef.current.toString();
+                                    const selectedisNonTracable = isNonTracableRef.current.toString();
+                                    console.log("heeeeisSweden", selectedIsSweden, selectedisTracable, selectedisEurope, selectedisNonTracable)
+                                    return new Promise(async (resolve, reject) => {
 
-                                            const { shippingCost } = result;
+                                        try {
+                                            const response = await fetch(
+                                                `http://localhost:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
+                                            );
+                                            if (response.ok) {
+                                                const result = await response.json();
+                                                console.log('Shipping Cost Response:', result);
 
-                                            if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
-                                                console.log('Shipping Price:', shippingCost);
+                                                const { shippingCost } = result;
 
-                                                const totalWithShippingValue = (total + shippingCost).toFixed(2);
+                                                if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
+                                                    console.log('Shipping Price:', shippingCost);
 
-                                                resolve(
-                                                    actions.order.create({
-                                                        purchase_units: [
-                                                            {
-                                                                amount: {
-                                                                    value: totalWithShippingValue,
-                                                                    currency_code: 'SEK',
+                                                    const totalWithShippingValue = (total + shippingCost).toFixed(2);
+
+                                                    resolve(
+                                                        actions.order.create({
+                                                            purchase_units: [
+                                                                {
+                                                                    amount: {
+                                                                        value: totalWithShippingValue,
+                                                                        currency_code: 'SEK',
+                                                                    },
                                                                 },
-                                                            },
-                                                        ],
-                                                    })
-                                                );
+                                                            ],
+                                                        })
+                                                    );
+                                                    handlePayPalPayment();
+                                                } else {
+                                                    console.error('Invalid shipping cost:', shippingCost);
+                                                    reject(new Error('Invalid shipping cost'));
+                                                }
                                             } else {
-                                                console.error('Invalid shipping cost:', shippingCost);
-                                                reject(new Error('Invalid shipping cost'));
-                                            }
-                                        } else {
-                                            console.error('Error calculating shipping rates');
-                                            reject(new Error('Error calculating shipping rates'));
+                                                console.error('Error calculating shipping rates');
+                                                reject(new Error('Error calculating shipping rates'));
 
+                                            }
+                                        } catch (error) {
+                                            console.error('Error in createOrder:', error);
+                                            reject(error);
                                         }
-                                    } catch (error) {
-                                        console.error('Error in createOrder:', error);
-                                        reject(error);
-                                    }
-                                });
-                            }}
-                            onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
-                            onSuccess={(details, paypalData) => {
-                                console.log('Transaction completed by ' + details.payer.name);
-                            }}
-                            onError={(err) => {
-                                console.error('PayPal error', err);
-                            }}
-                        />
-                    </PayPalScriptProvider>
+                                    });
+                                }}
+                                onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
+                                onSuccess={(details, paypalData) => {
+                                    console.log('Transaction completed by ' + details.payer.name);
+                                }}
+                                onError={(err) => {
+                                    console.error('PayPal error', err);
+                                }}
+                            />
+                        </PayPalScriptProvider>
+                    </div>
                 </>
             ) : (
                 <div>Your cart is empty.</div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

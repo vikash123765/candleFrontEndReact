@@ -11,7 +11,6 @@ import '../style/modal.css';
 
 
 export default function ProductModal({ p, image, setModalShown }) {
-  console.log(ProductModal, "ProductModal", image)
   const [store, setStore] = useAtom(storeAtom)
   const [stagedItems, setStagedItems] = useState([])
 
@@ -24,7 +23,7 @@ export default function ProductModal({ p, image, setModalShown }) {
   function addToCart() {
     // console.log(store.cart)
     setStore(current => {
-      current.cart.push(p, image)
+      current.cart.push(p)
       addToCart_localStorage(p, store.loggedIn)
       // return a copy of the current store, so react notices the change
       return { ...current }
@@ -84,20 +83,31 @@ export default function ProductModal({ p, image, setModalShown }) {
 
             <div>{p.productType}</div>
             <div>Description: {p.productDescription}</div>
-            <div className="buttons">
-              <button onClick={removeFromStagedItems} className='remove'>
-                <RemoveIcon />
-              </button>
-              <button onClick={addToStagedItems} className='add'>
-                <AddIcon />
-              </button>
-              <div className='cart'>
-                <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
-                  Add {stagedItems.length} to cart
-                </button>
-                <h4 className="price-mobile">¤{displayPrice}</h4>
+              <div className="buttons-container">
+
+                <div className="buttons row">
+
+                  <div className='col-3'>
+                    <button onClick={removeFromStagedItems} className='remove'>
+                      <RemoveIcon />
+                    </button>
+                  </div>
+                  <div className='col-3'>
+                    <button onClick={addToStagedItems} className='add'>
+                      <AddIcon />
+                    </button>
+                  </div>
+                  <div className='cart col-3'>
+                    <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
+                      Add {stagedItems.length} to cart
+                    </button>
+
+                  </div>
+                  <div className='col-3'>
+                    <h4 className="price-mobile">¤{displayPrice}</h4>
+                  </div>
+                </div>
               </div>
-            </div>
           </div>
         </div>
       </div>
