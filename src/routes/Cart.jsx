@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import GuestCheckoutForm from '../components/GuestCheckoutForm.jsx';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState, useEffect, useRef } from 'react';
+
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Declare shippingCost state
 const payPalOptions = {
@@ -16,144 +17,115 @@ const payPalOptions = {
 
 export default function Cart() {
     const navigate = useNavigate();
-    const [store, setStore] = useAtom(storeAtom);
+  const [store, setStore] = useAtom(storeAtom);
+  const [isPayPalButtonVisible, setIsPayPalButtonVisible] = useState(false); // Define isPayPa
+  const [isSweden, setIsSweden] = useState(false);
+  const [isNonTracable, setIsNonTracable] = useState(false);
+  const [isEurope, setIsEurope] = useState(false);
+  const [isTracable, setIsTracable] = useState(false);
+  const [formData, setFormData] = useState(null);
+  const isNonTracableRef = useRef(false);
+  const isEuropeRef = useRef(false);
+  const isSwedenRef = useRef(false);
+  const isTracableRef = useRef(false);
+  const [formFilled, setFormFilled] = useState(false);
+  const [shippingPrice, setShippingPrice] = useState(null);
+  const [totalWithShipping, setTotalWithShipping] = useState(0);
+  const totalRef = useRef(0);
+  const formRef = useRef(null);
 
-    const [isSweden, setIsSweden] = useState(false);
-    const [isNonTracable, setIsNonTracable] = useState(false);
-    const [isEurope, setIsEurope] = useState(false);
-    const [isTracable, setIsTracable] = useState(false);
+  const [isPlacingOrder, setIsPlacingOrder] = useState(false);
+  const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
+  const [isFinalizingOrder, setIsFinalizingOrder] = useState(false);
 
-    const isNonTracableRef = useRef(false);
-    const isEuropeRef = useRef(false)
-    const isSwedenRef = useRef(false);
-    const isTracableRef = useRef(false);
-    const [shippingPrice, setShippingPrice] = useState(null);
-    const [totalWithShipping, setTotalWithShipping] = useState(0);
-    const [Total, setTotal] = useState(0)
-    const totalRef = useRef(0);
-    const formRef = useRef(null);
-    const [isPlacingOrder, setIsPlacingOrder] = useState(false);
-    const [isFormValid, setIsFormValid] = useState(false);
-    const [isFormFilled, setIsFormFilled] = useState(false);
-    const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
-    const [isFinalizingOrder, setIsFinalizingOrder] = useState(false);
+  const [shippingCost, setShippingCost] = useState(null);
+  let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
 
-    let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
-    const [shippingCost, setShippingCost] = useState(null);
+  const handleCheckboxChange = (e) => {
+    const { name, checked } = e.target;
 
-    const handleCheckboxChange = (e) => {
-        const { name, checked } = e.target;
-    
-        switch (name) {
-            case 'isSweden':
-                setIsSweden(checked, () => validateForm());
-                isSwedenRef.current = checked;
-                if (checked) {
-                    setIsEurope(false, () => validateForm());
-                    isEuropeRef.current = false;
-                }
-                break;
-            case 'isEurope':
-                setIsEurope(checked, () => validateForm());
-                isEuropeRef.current = checked;
-                if (checked) {
-                    setIsSweden(false, () => validateForm());
-                    isSwedenRef.current = false;
-                }
-                break;
-            case 'isTracable':
-                setIsTracable(checked, () => validateForm());
-                isTracableRef.current = checked;
-                if (checked) {
-                    setIsNonTracable(false, () => validateForm());
-                    isNonTracableRef.current = false;
-                }
-                break;
-            case 'isNonTracable':
-                setIsNonTracable(checked, () => validateForm());
-                isNonTracableRef.current = checked;
-                if (checked) {
-                    setIsTracable(false, () => validateForm());
-                    isTracableRef.current = false;
-                }
-                break;
-            default:
-                break;
+    switch (name) {
+      case 'isSweden':
+        setIsSweden(checked);
+        isSwedenRef.current = checked;
+        if (checked) {
+          setIsEurope(false);
+          isEuropeRef.current = false;
+        }
+        break;
+      case 'isEurope':
+        setIsEurope(checked);
+        isEuropeRef.current = checked;
+        if (checked) {
+          setIsSweden(false);
+          isSwedenRef.current = false;
+        }
+        break;
+      case 'isTracable':
+        setIsTracable(checked);
+        isTracableRef.current = checked;
+        if (checked) {
+          setIsNonTracable(false);
+          isNonTracableRef.current = false;
+        }
+        break;
+      case 'isNonTracable':
+        setIsNonTracable(checked);
+        isNonTracableRef.current = checked;
+        if (checked) {
+          setIsTracable(false);
+          isTracableRef.current = false;
+        }
+        break;
+      default:
+        break;
+    }
+  };
+  const handleInputChange = () => {
+    // Call the handleFormChange function when an input changes
+    handleFormChange();
+  };
+
+
+  const handleFormChange = () => {
+    const form = document.getElementById('guestCheckoutForm');
+    const newFormData = new FormData(form);
+
+    setFormData(newFormData);
+
+    const isFilled =
+        newFormData.get('userName') &&
+        newFormData.get('email') &&
+        newFormData.get('shippingAddress') &&
+        newFormData.get('phoneNumber');
+
+    setFormFilled(isFilled);
+
+    // Check if all fields have strings
+    const formFilled = [...newFormData.values()].every((value) => value.trim() !== '');
+    setFormFilled(formFilled);
+
+    setIsPayPalButtonVisible(validateForm(newFormData));
+};
+
+
+useEffect(() => {
+    localStorage.clear();
+
+    const form = document.getElementById('guestCheckoutForm');
+    if (form) {
+        form.addEventListener('input', handleFormChange);
+    }
+
+    return () => {
+        if (form) {
+            form.removeEventListener('input', handleFormChange);
         }
     };
-    
+}, []);
 
 
 
-
-    // useEffect(() => {
-    //     setIsSweden(isSweden)
-    //     setIsEurope(isEurope)
-    //     setIsNonTracable(isNonTracable)
-    //     setIsTracable(isTracable)
-    //     console.log("shivvvvv", isSweden, isEurope, isTracable, isNonTracable)
-    // }, [isSweden, isEurope, isTracable, isNonTracable])
-
-
-
-    // ...
-
-    const handleFormChange = () => {
-        const form = document.getElementById('guestCheckoutForm');
-        const formData = new FormData(form);
-        
-        const isFilled =
-            formData.get('userName') &&
-            formData.get('email') &&
-            formData.get('shippingAddress') &&
-            formData.get('phoneNumber');
-
-        setIsFormFilled(isFilled);
-    };
-
-    useEffect(() => {
-        // Add event listeners to form fields to detect changes
-        const form = document.getElementById('guestCheckoutForm');
-        form.addEventListener('input', handleFormChange);
-
-        return () => {
-            // Clean up event listeners when component unmounts
-            form.removeEventListener('input', handleFormChange);
-        };
-    }, []);
-    const isPayPalButtonVisible = isFormFilled && (
-        (isSwedenRef.current && isEuropeRef.current && (isTracableRef.current || isNonTracableRef.current)) ||
-        (isEuropeRef.current && isNonTracableRef.current) ||
-        (!isSwedenRef.current && !isEuropeRef.current)
-    );
-
-
-    const validateForm = () => {
-        const isShippingSelected =
-            (isSwedenRef.current || isEuropeRef.current) && (isTracableRef.current || isNonTracableRef.current);
-    
-        const isShippingFormFilled =
-            (isSwedenRef.current && isGuestCheckoutFormFilled()) ||
-            (isEuropeRef.current && isGuestCheckoutFormFilled()) ||
-            (!isSwedenRef.current && !isEuropeRef.current); // Handle the case when no shipping option is selected
-    
-        return isShippingSelected && isShippingFormFilled;
-    };
-    
-    const isGuestCheckoutFormFilled = () => {
-        const form = document.getElementById('guestCheckoutForm');
-        const formData = new FormData(form);
-    
-        // Check if all required fields are filled
-        return (
-            formData.get('userName') &&
-            formData.get('email') &&
-            formData.get('shippingAddress') &&
-            formData.get('phoneNumber')
-        );
-    };
-    
-    
     const handleCalculateShipping = async () => {
         try {
             setIsCalculatingShipping(true);
@@ -199,6 +171,22 @@ export default function Cart() {
             setIsCalculatingShipping(false);
         }
     };
+   
+       
+    const validateForm = (data) => {
+        const isShippingFormValid =
+            data?.get('userName') &&
+            data?.get('email') &&
+            data?.get('shippingAddress') &&
+            data?.get('phoneNumber');
+    
+        const isShippingOptionsValid =
+            (isSwedenRef.current || isEuropeRef.current) &&
+            (isTracableRef.current || isNonTracableRef.current);
+    
+        return isShippingFormValid && isShippingOptionsValid;
+    };
+    
 
     const userCheckout = async (data, actions) => {
 
@@ -366,12 +354,13 @@ export default function Cart() {
         calculateTotalWithShipping();
     }, [total, shippingPrice]);
 
-    return (
-        <div>
-            <h3>Your order</h3>
-            {store.cart.length ? (
-                <>
-                    <form id="cart_form">
+    
+        return (
+            <div>
+                <h3>Your order</h3>
+                {store.cart.length ? (
+                    <>
+                        <form id="cart_form">
                         <div id="cart">
                             {store.cart.map((p, i) => {
                                 function remove() {
@@ -467,72 +456,76 @@ export default function Cart() {
                     {store.cart.length > 0 && !store.loggedIn && (
                         <GuestCheckoutForm guestCheckout={guestCheckout} />
                     )}
-                    <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
-                        <PayPalScriptProvider options={payPalOptions} >
-                            <PayPalButtons
-                                createOrder={(data, actions) => {
-                                    const orderWeight = store.cart.length * 80;
-                                    const selectedIsSweden = isSwedenRef.current.toString();
-                                    const selectedisTracable = isTracableRef.current.toString();
-                                    const selectedisEurope = isEuropeRef.current.toString();
-                                    const selectedisNonTracable = isNonTracableRef.current.toString();
-                                    return new Promise(async (resolve, reject) => {
-                                        try {
-                                            const response = await fetch(
-                                                `http://localhost:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
-                                            );
-                                            if (response.ok) {
-                                                const result = await response.json();
-                                                const { shippingCost } = result;
-                                                if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
-                                                    const totalWithShippingValue = (total + shippingCost).toFixed(2);
-                                                    resolve(
-                                                        actions.order.create({
-                                                            purchase_units: [
-                                                                {
-                                                                    amount: {
-                                                                        value: totalWithShippingValue,
-                                                                        currency_code: 'SEK',
+              
+                    <>
+                        <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
+                            <PayPalScriptProvider options={payPalOptions}>
+                                <PayPalButtons
+                                    createOrder={(data, actions) => {
+                                        const orderWeight = store.cart.length * 80;
+                                        const selectedIsSweden = isSwedenRef.current.toString();
+                                        const selectedisTracable = isTracableRef.current.toString();
+                                        const selectedisEurope = isEuropeRef.current.toString();
+                                        const selectedisNonTracable = isNonTracableRef.current.toString();
+                                        return new Promise(async (resolve, reject) => {
+                                            try {
+                                                const response = await fetch(
+                                                    `http://localhost:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
+                                                );
+                                                if (response.ok) {
+                                                    const result = await response.json();
+                                                    const { shippingCost } = result;
+                                                    if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
+                                                        const totalWithShippingValue = (total + shippingCost).toFixed(2);
+                                                        resolve(
+                                                            actions.order.create({
+                                                                purchase_units: [
+                                                                    {
+                                                                        amount: {
+                                                                            value: totalWithShippingValue,
+                                                                            currency_code: 'SEK',
+                                                                        },
                                                                     },
-                                                                },
-                                                            ],
-                                                        })
-                                                    );
-                                                    handlePayPalPayment();
+                                                                ],
+                                                            })
+                                                        );
+                                                        handlePayPalPayment();
+                                                    } else {
+                                                        console.error('Invalid shipping cost:', shippingCost);
+                                                        reject(new Error('Invalid shipping cost'));
+                                                    }
                                                 } else {
-                                                    console.error('Invalid shipping cost:', shippingCost);
-                                                    reject(new Error('Invalid shipping cost'));
+                                                    console.error('Error calculating shipping rates');
+                                                    reject(new Error('Error calculating shipping rates'));
                                                 }
-                                            } else {
-                                                console.error('Error calculating shipping rates');
-                                                reject(new Error('Error calculating shipping rates'));
+                                            } catch (error) {
+                                                console.error('Error in createOrder:', error);
+                                                reject(error);
                                             }
-                                        } catch (error) {
-                                            console.error('Error in createOrder:', error);
-                                            reject(error);
-                                        }
-                                    });
-                                }}
-                                onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
-                                onSuccess={(details, paypalData) => {
-                                    console.log('Transaction completed by ' + details.payer.name);
-                                }}
-                                onError={(err) => {
-                                    console.error('PayPal error', err);
-                                }}
-                                disabled={!validateForm()}
-                                onClick={() => {
-                                    if (!validateForm()) {
-                                        alert('Please fill out all required fields and select a shipping alternative.');
-                                    }
-                                }}
-                            />
-                        </PayPalScriptProvider>
-                    </div>
-                </>
-            ) : (
-                <div>Your cart is empty.</div>
-            )}
-        </div>
-    );
-            }    
+                                        });
+                                    }}
+                                    onApprove={(paypalData, actions) => handleApprove(paypalData, actions)}
+                                    onSuccess={(details, paypalData) => {
+                                        console.log('Transaction completed by ' + details.payer.name);
+                                    }}
+                                    onError={(err) => {
+                                        console.error('PayPal error', err);
+                                    }}
+                                    disabled={!validateForm(formData)}
+                            onClick={() => {
+                                if (!validateForm(formData)) {
+                                    alert('Please fill out all required fields and select a shipping alternative.');
+                                }
+                            }}
+                                />
+                            </PayPalScriptProvider>
+                        </div>
+                    </>
+                
+            </>
+        ) : (
+            <div>Your cart is empty.</div>
+        )}
+    </div>
+);
+        }
