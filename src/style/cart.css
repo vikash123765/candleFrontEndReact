@@ -17,7 +17,8 @@
 
 .cart-item {
     flex: 1 1 calc(33.33% - 20px);
-    max-width: calc(33.33% - 20px); /* Set max-width for each card */
+    max-width: calc(33.33% - 20px);
+    /* Set max-width for each card */
     height: 300px;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -97,8 +98,14 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 5em; /* Adjust the font size as needed */
-  }
-  
+    font-size: 5em;
+    /* Adjust the font size as needed */
+}
 
-  
+
+
+.custom-paypal-buttons .buttons-container .paypal-button-container paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production {
+    position: relative !important;
+    right: -4rem !important;
+    top: 11px !important;
+}

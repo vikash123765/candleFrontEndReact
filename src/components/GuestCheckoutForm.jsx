@@ -10,21 +10,24 @@ const GuestCheckoutForm = forwardRef((props, ref) => {
   });
 
   const handleFormChange = () => {
-    // Your logic for handling form changes
-    // Update formData and perform any necessary checks
-    props.onFormChange(formData); // Notify the parent component about form changes
+    if (props.onFormChange) {
+      props.onFormChange(formData); // Notify the parent component about form changes
+    }
   };
 
   const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-    handleFormChange();
+    if (e && e.target) {
+      const { name, value } = e.target;
+      setFormData((prevData) => ({ ...prevData, [name]: value }));
+      handleFormChange();
+    }
   };
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic
-    props.guestCheckout(formData);
+    if (props.guestCheckout) {
+      props.guestCheckout(formData);
+    }
   };
 
   return (

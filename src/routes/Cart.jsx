@@ -33,7 +33,8 @@ export default function Cart() {
   const [totalWithShipping, setTotalWithShipping] = useState(0);
   const totalRef = useRef(0);
   const formRef = useRef(null);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(/* Check if user is logged in */);
+  const [isPayPalButtonEnabled, setIsPayPalButtonEnabled] = useState(false);
   const [isPlacingOrder, setIsPlacingOrder] = useState(false);
   const [isCalculatingShipping, setIsCalculatingShipping] = useState(false);
   const [isFinalizingOrder, setIsFinalizingOrder] = useState(false);
@@ -84,8 +85,16 @@ export default function Cart() {
   const handleInputChange = () => {
     // Call the handleFormChange function when an input changes
     handleFormChange();
+    updatePayPalButtonStatus();
   };
+  const updatePayPalButtonStatus = () => {
+    const isShippingOptionsValid =
+        (isSwedenRef.current || isEuropeRef.current) &&
+        (isTracableRef.current || isNonTracableRef.current);
 
+    // Enable the PayPal button if the user is logged in or if shipping options are valid
+    setIsPayPalButtonEnabled(isLoggedIn || isShippingOptionsValid);
+};
 
   const handleFormChange = () => {
     const form = document.getElementById('guestCheckoutForm');
@@ -110,8 +119,8 @@ export default function Cart() {
 
 
 useEffect(() => {
-    localStorage.clear();
-
+      // Clear specific items in local storage
+      localStorage.clear();
     const form = document.getElementById('guestCheckoutForm');
     if (form) {
         form.addEventListener('input', handleFormChange);
@@ -172,20 +181,56 @@ useEffect(() => {
         }
     };
    
-       
-    const validateForm = (data) => {
+   // ...
+
+const validateForm = (data, isLoggedIn) => {
+    if (isLoggedIn) {
+        // For logged-in users, only validate shipping options (checkboxes)
+        return (isSwedenRef.current || isEuropeRef.current) &&
+               (isTracableRef.current || isNonTracableRef.current);
+    } else {
+        // For guest users, validate both shipping form fields and options
         const isShippingFormValid =
             data?.get('userName') &&
             data?.get('email') &&
             data?.get('shippingAddress') &&
             data?.get('phoneNumber');
-    
+
         const isShippingOptionsValid =
             (isSwedenRef.current || isEuropeRef.current) &&
             (isTracableRef.current || isNonTracableRef.current);
-    
+
         return isShippingFormValid && isShippingOptionsValid;
-    };
+    }
+};
+
+// ...
+
+const isFormValid = validateForm(formData, store.loggedIn);
+
+// ...
+
+{isFormValid && (
+    <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
+        <PayPalScriptProvider options={payPalOptions}>
+            <PayPalButtons
+                // other props...
+                disabled={!isFormValid}
+                onClick={() => {
+                    if (!isFormValid) {
+                        alert('Please fill out all required fields and select a shipping alternative.');
+                    }
+                }}
+            />
+        </PayPalScriptProvider>
+    </div>
+)}
+
+    // For guest users
+const isFormValidForGuest = validateForm(formData, false);
+
+// For logged-in users
+const isFormValidForLoggedInUser = validateForm(null, true);
     
 
     const userCheckout = async (data, actions) => {
@@ -273,18 +318,7 @@ useEffect(() => {
 
 
 
-    const handlePayPalPayment = async () => {
-        if (!validateForm()) {
-            alert('Please fill out all required fields and select a shipping alternative.');
-            return;
-        }
-        try {
-            // Your existing code for PayPal payment goes here
-        } catch (error) {
-            console.error('Error creating PayPal order:', error);
-            alert('An error occurred while processing your payment. Please try again later.');
-        }
-    };
+
     const handleApprove = (data, actions) => {
         setIsPlacingOrder(true); 
 
@@ -433,12 +467,7 @@ useEffect(() => {
                             </div>
                             <button
                                 type="button"
-                                onClick={() => {
-                                    if (!validateForm()) {
-                                        alert('Please fill out all required fields and select a shipping alternative.');
-                                    }
-                                }}
-                                disabled={!validateForm()}
+                                
                             >
                                 Calculate Shipping Rates
                             </button>
@@ -511,13 +540,14 @@ useEffect(() => {
                                     onError={(err) => {
                                         console.error('PayPal error', err);
                                     }}
-                                    disabled={!validateForm(formData)}
-                            onClick={() => {
-                                if (!validateForm(formData)) {
-                                    alert('Please fill out all required fields and select a shipping alternative.');
-                                }
-                            }}
-                                />
+                                    disabled={!isFormValid}
+                onClick={() => {
+                    if (!isFormValid) {
+                        alert('Please fill out all required fields and select a shipping alternative.');
+                    }
+                }}
+            />
+                                
                             </PayPalScriptProvider>
                         </div>
                     </>

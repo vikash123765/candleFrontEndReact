@@ -10,12 +10,11 @@ export default function FormField({
 }) {
 
   function handleChange(e) {
-    const value = 
-      type === 'checkbox' ?
-        e.target.checked === 'on':
-        e.target.value
-    onChange(value)
+    const value =
+      type === 'checkbox' ? e.target.checked : e.target.value;
+    onChange(value);
   }
+  
 
   return (
     <label className="form-field">
