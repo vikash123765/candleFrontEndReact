@@ -24,7 +24,7 @@ export default function ProductModal({ p, image, setModalShown }) {
   function addToCart() {
     // console.log(store.cart)
     setStore(current => {
-      current.cart.push(p, image)
+      current.cart.push(p)
       addToCart_localStorage(p, store.loggedIn)
       // return a copy of the current store, so react notices the change
       return { ...current }

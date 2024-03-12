@@ -9,15 +9,19 @@ import FormField from "../components/FormField";
 
 export default function Profile() {
     const [store, setStore] = useAtom(storeAtom);
-  
+    
+
+    console.log("storeshivvvvvv", store.user)
+
+
     const handleProfileForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
-        
+
         try {
             const parsedResult = await alterInfo(data);
-      console.log(parsedResult)
-    
+            console.log(parsedResult,"parsedResult")
+
             // If there was a parsing error or the parsed result is not an object,
             // assume the update was successful and proceed with displaying success message
             if (parsedResult && typeof parsedResult == 'object') {
@@ -25,10 +29,14 @@ export default function Profile() {
                 alert("user info changed sucessfully!")
                 // Assuming your alterInfo API response contains updated user info
                 const updatedUser = parsedResult;
+
+                console.log("updatedUser", updatedUser)
                 // Update the user state in the frontend
-                setStore({
-                    user: updatedUser,
-                });
+                // setStore({
+                //     user: updatedUser,
+                // });
+
+                console.log("updatedUser", store)
             } else {
                 // Continue processing the parsed JSON result
                 if (parsedResult.error) {
@@ -36,24 +44,24 @@ export default function Profile() {
                     // Handle error here, e.g., show an error message to the user
                     return;
                 }
-    
+
                 // Assuming your alterInfo API response contains updated user info
                 const updatedUser = parsedResult;
-    
+
                 // Update the user state in the frontend
-                setStore({
-                    user: updatedUser,
-                });
+                // setStore({
+                //     user: updatedUser,
+                // });
             }
         } catch (error) {
             console.error('An unexpected error occurred:', error);
-        
+
             // Handle unexpected errors here
         }
     };
-    
-    
-    
+
+
+
 
     const handleChangePasswordForm = async (e) => {
         e.preventDefault();
@@ -82,40 +90,40 @@ export default function Profile() {
     };
 
     return (
-        <section id="profile">
+        <section >
             {/* Profile change form */}
-            <div id="address">
+            <div>
                 <form onSubmit={handleProfileForm}>
-                    
+
                     <FormField
                         label="User Name"
                         name="userName"
-                       placeholder={store.user?.userName} 
+                        defaultValue={store.user?.userName}
                     />
                     <FormField
                         label="Your email"
                         name="userEmail"
-                        placeholder={store.user?.userEmail}
+                        defaultValue={store.user?.userEmail}
                     />
                     <FormField
                         label="Your address"
                         name="address"
-                        placeholder={store.user?.address}
+                        defaultValue={store.user?.address}
                         type="textarea"
-                        style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }} 
+                        style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}
 
                     />
                     <FormField
                         label="Phone number"
-                       name="phoneNumber"
-                       
-    placeholder={String("+" + store.user?.phoneNumber)}
-/>
+                        name="phoneNumber"
 
-                   
-                   
+                        defaultValue={String("+" + store.user?.phoneNumber)}
+                    />
 
-                    
+
+
+
+
                     <label className="form-field">
                         <span>Gender</span>
                         <select name="gender">
