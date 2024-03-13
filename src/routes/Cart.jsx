@@ -146,7 +146,7 @@ const handleFormChange = () => {
         const clearLocalStorageExceptTokens = () => {
             for (let key in localStorage) {
                 // Check if the key contains a token (you might adjust this condition based on your token key)
-                if (!key.includes('token')) {
+                if(!key.includes('token')) {
                     localStorage.removeItem(key);
                 }
             }
@@ -343,7 +343,9 @@ const isFormValidForLoggedInUser = validateForm(null, true);
 
         return actions.order
             .capture()
+
             .then(function (details) {
+                if (orderStatus === 'COMPLETED') { 
                 const orderStatus = details.status;
                 if (store.loggedIn) {
                     userCheckout(data, actions)
@@ -373,6 +375,11 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                         .finally(() => {
                             setIsPlacingOrder(false); // Reset loading state
                         });
+                    }
+                } else {
+                    console.error('Order capture status:', orderStatus);
+                    window.alert('Payment Failed'); // Change: Notify user about payment failure
+                    setIsPlacingOrder(false); // Reset loading state
                 }
             })
             .catch((err) => {
@@ -434,7 +441,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         <div className="left">
                                             <img src={`${p.image}`} alt="" />
                                         </div>
-                                        <div className="right" style={{ padding: '12px' }}>
+                                        <div className="right" style={{ padding: '12px', display: 'flex', alignItems: 'center' }}>
                                             <div>{p.productName}</div>
                                             <div>¤{p.productPrice.toFixed(2)}</div>
                                             <button onClick={remove} type="button">

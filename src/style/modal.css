@@ -18,8 +18,11 @@
     transform: translate(-50%, -50%);
     border-radius: 0.25rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-    overflow-y: auto; 
+    max-height: 80vh; /* Set a maximum height */
+    overflow-y: auto; /* Allow vertical scrolling */
 }
+
+
 
 .modal-header {
     display: flex;
@@ -62,8 +65,8 @@
 @media screen and (max-width: 600px) {
     .price-mobile {
       position: absolute;
-      bottom: 28px;
-      right: 10px; /* Adjust the value as needed */
+      bottom: 3px;
+      right: 70px; /* Adjust the value as needed */
     }
   }
   
