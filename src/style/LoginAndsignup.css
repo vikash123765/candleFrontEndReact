@@ -7,20 +7,55 @@
 }
 
 /* YourComponent.css or styles.css */
+.custom-login-signup-container {
+  display: flex;
+  /* Change flex direction to column for small screens */
+  justify-content: space-between;
+}
 
-/* Apply dynamic sizing styles only to the address field */
-.dynamic-address-input {
-    width: 100%;
-    height: calc(4 * var(--normal-field-height));
-    box-sizing: border-box;
-  }
-  .form-field {
-    --normal-field-height: 2rem; /* Set the normal field height to your desired value */
-  }
-  
-  /* Optionally, you can also set the height for the textarea inside the .dynamic-address-input class */
-  .dynamic-address-input textarea {
-    height: 100%;
-    
-  }
-  
+.custom-login-form-container,
+.custom-signup-form-container {
+  flex: 1;
+  margin-right: 20px; /* Adjust spacing between forms */
+}
+
+.custom-login-form,
+.custom-signup-form {
+  width: 100%;
+  max-width: 400px; /* Adjust maximum width of the forms */
+}
+
+.custom-form-field {
+  margin-bottom: 20px; /* Adjust spacing between form fields */
+}
+
+.custom-form-field select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.custom-form-field select::placeholder {
+  font-size: 12px;
+}
+
+.custom-form-field button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: #fff;
+  cursor: pointer;
+}
+
+.custom-form-field button:hover {
+  background-color: #2076c1;
+}
+
+.custom-error {
+  color: red;
+}
+
+
+

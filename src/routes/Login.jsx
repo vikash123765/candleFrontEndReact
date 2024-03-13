@@ -4,7 +4,7 @@ import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import '../style/Contact.css'; // Create a Contact.css file for styling
+
 import '../style/LoginAndsignup.css';
 const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
 
@@ -129,32 +129,44 @@ export default function Login() {
 return (
     <div className="custom-login-signup-container">
         {loading && <div className="custom-loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-        <form className="custom-login-form" onSubmit={handleLogin}>
-            <h2>Log in</h2>
-            <FormField name="email" label="Email" />
-            <FormField name="password" label="Password" type="password" />
-            <a href="/forgot">Forgot password?</a><br />
-            <button type="submit">Log in</button>
-            {error && <span className="custom-error">{error}</span>}
-        </form>
-        <form className="custom-signup-form" onSubmit={handleSignup}>
-            <h2>Sign up</h2>
-            <FormField name="userName" label="Username" />
-            <FormField name="userEmail" label="Email" />
-            <FormField name="address" label="Address" />
-            <FormField name="phoneNumber" label="Phone Number" />
-            <div className="custom-form-field">
-                <div>Gender</div>
-                <select name="gender">
-                    <option value="MALE">Male</option>
-                    <option value="FEMALE">Female</option>
-                </select>
-            </div>
-            <FormField name="userPassword" label="Password" type="password" />
-            <FormField name="password2" label="Repeat password" type="password" />
-            <button type="submit">Sign up</button>
-            {signupError && <span className="custom-error">{signupError}</span>}
-        </form>
+        
+       
+        
+        {/* Signup form */}
+        <div className="custom-signup-form-container">
+            <form className="custom-signup-form" onSubmit={handleSignup}>
+                <h2>Sign up</h2>
+                <FormField name="userName" label="Username"   placeholder="Enter your name" />
+                <FormField name="userEmail" label="Email"  placeholder="Enter your email" />
+                <FormField name="address" label="Address" 
+                placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
+                  type="textarea"
+                  style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}/>
+                <FormField name="phoneNumber" label="Phone Number"  type="textarea" placeholder="Enter your country code and number: ex: +1 1234567890 or +44 9876543210  "/>
+                <div className="custom-form-field">
+                    <div>Gender</div>
+                    <select name="gender">
+                        <option value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                    </select>
+                </div>
+                <FormField name="userPassword" label="Password" type="password" />
+                <FormField name="password2" label="Repeat password" type="password" />
+                <button type="submit">Sign up</button>
+                {signupError && <span className="custom-error">{signupError}</span>}
+            </form> 
+            {/* Login form */}
+    
+        </div>    <div className="custom-login-form-container">
+            <form className="custom-login-form" onSubmit={handleLogin}>
+                <h2>Log in</h2>
+                <FormField name="email" label="Email" />
+                <FormField name="password" label="Password" type="password" />
+                <a href="/forgot">Forgot password?</a><br />
+                <button type="submit">Log in</button>
+                {error && <span className="custom-error">{error}</span>}
+            </form>
+        </div>
     </div>
 );
 }
