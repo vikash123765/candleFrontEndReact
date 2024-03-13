@@ -140,20 +140,33 @@ const handleFormChange = () => {
 };
 
 
-useEffect(() => {
-      // Clear specific items in local storage
-      localStorage.clear();
-    const form = document.getElementById('guestCheckoutForm');
-    if (form) {
-        form.addEventListener('input', handleFormChange);
-    }
 
-    return () => {
+    useEffect(() => {
+        // Function to clear all items from local storage except tokens
+        const clearLocalStorageExceptTokens = () => {
+            for (let key in localStorage) {
+                // Check if the key contains a token (you might adjust this condition based on your token key)
+                if (!key.includes('token')) {
+                    localStorage.removeItem(key);
+                }
+            }
+        };
+
+        // Call the function to clear local storage except tokens
+        clearLocalStorageExceptTokens();
+
+        const form = document.getElementById('guestCheckoutForm');
         if (form) {
-            form.removeEventListener('input', handleFormChange);
+            form.addEventListener('input', handleFormChange);
         }
-    };
-}, []);
+
+        return () => {
+            if (form) {
+                form.removeEventListener('input', handleFormChange);
+            }
+        };
+    }, []);
+
 
 
 
@@ -578,4 +591,5 @@ const isFormValidForLoggedInUser = validateForm(null, true);
         )}
     </div>
 );
+
         }

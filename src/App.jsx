@@ -133,11 +133,7 @@ function App() {
             );
           })}
           
-          {adminLoggedIn && (
-            <Route path="/admin" element={<Admin />} />
-        )}
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
+     
         </Routes>
       </div>
     </main>
