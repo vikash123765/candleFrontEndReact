@@ -51,7 +51,7 @@ const nav = [
   },
     {
       to: '/orders',
-      text: 'My Orders',
+      text: 'Orders',
       loggedIn:true,
       component: <Orders />
     },

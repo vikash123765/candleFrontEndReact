@@ -337,48 +337,47 @@ const isFormValidForLoggedInUser = validateForm(null, true);
 
 
 
-
     const handleApprove = (data, actions) => {
         setIsPlacingOrder(true); 
-
+    
         return actions.order
             .capture()
-
             .then(function (details) {
-                if (orderStatus === 'COMPLETED') { 
                 const orderStatus = details.status;
-                if (store.loggedIn) {
-                    userCheckout(data, actions)
-                        .then(() => {
-                            // Order placed successfully
-                            window.alert('Payment Successful');
-                        })
-                        .catch((error) => {
-                            console.error('Error in userCheckout:', error);
-                            window.alert('Order placement failed');
-                        })
-                        .finally(() => {
-                            setIsPlacingOrder(false); // Reset loading state
-                        });
-                } else {
-                    const form = document.getElementById('guestCheckoutForm');
-                    const formData = Object.fromEntries(new FormData(form));
-                    guestCheckout(formData)
-                        .then(() => {
-                            // Order placed successfully
-                            window.alert('Payment Successful');
-                        })
-                        .catch((error) => {
-                            console.error('Error in guestCheckout:', error);
-                            window.alert('Order placement failed');
-                        })
-                        .finally(() => {
-                            setIsPlacingOrder(false); // Reset loading state
-                        });
+                if (orderStatus === 'COMPLETED') {
+                    window.alert('Payment Successful'); // Display payment success alert
+                    if (store.loggedIn) {
+                        userCheckout(data, actions)
+                            .then(() => {
+                                // Order placed successfully
+                                // No need to display another alert here
+                            })
+                            .catch((error) => {
+                                console.error('Error in userCheckout:', error);
+                                window.alert('Order placement failed');
+                            })
+                            .finally(() => {
+                                setIsPlacingOrder(false); // Reset loading state
+                            });
+                    } else {
+                        const form = document.getElementById('guestCheckoutForm');
+                        const formData = Object.fromEntries(new FormData(form));
+                        guestCheckout(formData)
+                            .then(() => {
+                                // Order placed successfully
+                                // No need to display another alert here
+                            })
+                            .catch((error) => {
+                                console.error('Error in guestCheckout:', error);
+                                window.alert('Order placement failed');
+                            })
+                            .finally(() => {
+                                setIsPlacingOrder(false); // Reset loading state
+                            });
                     }
                 } else {
                     console.error('Order capture status:', orderStatus);
-                    window.alert('Payment Failed'); // Change: Notify user about payment failure
+                    window.alert('Payment Failed'); // Notify user about payment failure
                     setIsPlacingOrder(false); // Reset loading state
                 }
             })
@@ -388,8 +387,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                 setIsPlacingOrder(false); // Reset loading state
             });
     };
-
-
+    
 
     /*  useEffect(() => {
          handleCalculateShipping(isSweden, isEurope, isTracable, isNonTracable);

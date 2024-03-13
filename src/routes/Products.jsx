@@ -61,21 +61,24 @@ export default function Products() {
   function sortProducts(e) {
     const sortBy = e.target.value;
     if (!sortBy || !filteredProducts) return;
-
+  
     const sortedProducts = [...filteredProducts].sort((a, b) => {
       if (sortBy === 'price-d') {
         return b.productPrice - a.productPrice;
       } else if (sortBy === 'price-a') {
         return a.productPrice - b.productPrice;
-      } else if (sortBy === 'category' || sortBy === 'all') {
+      } else if (sortBy === 'category') {
         return a.productType.localeCompare(b.productType);
+      } else if (sortBy === 'all') {
+        return a.productName.localeCompare(b.productName);
       }
-
+  
       return 0;
     });
-
-    setFilteredProducts([...sortedProducts]);
+  
+    setFilteredProducts(sortedProducts);
   }
+  
 
   function handlePriceRangeSlider(e, values) {
     setPriceRangeValues(values);
