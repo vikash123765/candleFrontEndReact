@@ -81,10 +81,10 @@
     background-color: var(--bg);
     border: 2px solid var(--primary);
     box-shadow: var(--shadow);
-    border: 1px solid #333; /* You can adjust the color code to make it lighter or darker */
+    border: 0.1px solid #beb9b9; /* You can adjust the color code to make it lighter or darker */
     cursor: pointer;
     transition: transform 125ms;
-    color: #333;
+    color: #3e3939;
     padding: 15px;
     font-family: var(--font-main); /* Apply the custom font family */
     
@@ -115,11 +115,11 @@
 
 
 .product-image {
-    width: 100%; /* Adjust the width as needed */
-    height: auto; /* Maintain the aspect ratio */
-    border-radius: 0.5rem;
-  }
-  
+    width: 190px; /* Set width to 190px */
+    height: 237px; /* Set height to 237px */
+    object-fit: cover; /* Set a maximum height to avoid overly large images */
+}
+
 
 .product-card img {
     width: 100%;

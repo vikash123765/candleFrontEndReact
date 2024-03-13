@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProductModal from "./ProductModal";
+
 import Iphone14ProMaxPlainCaseImage from "../ProductImages/Iphone_14_pro_max_case_plain.png";
 import Iphone15PlainCover from "../ProductImages/Iphone15PlainCase.jpg";
 import iphone14proMaxPrint1 from "../ProductImages/iphone14proMaxPrint1.webp";
@@ -54,7 +55,7 @@ export default function ProductCard({ p }) {
         {image && <img src={image} alt={image} />}
         <div className="info">
           <h3>{p.productName}</h3>
-          <div className="price">¤{displayPrice}</div>
+          <div className="price">€{displayPrice}</div>
         </div>
       </button>
       {modalShown && <ProductModal p={updatedProduct} image={image} setModalShown={setModalShown} />}

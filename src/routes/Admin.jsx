@@ -10,12 +10,16 @@ const Admin = () => {
   const [trackingId, setTrackingId] = useState(""); // Input for tracking ID when marking as sent
   const [orderNrDelivered, setOrderNrDelivered] = useState(""); // Input for order number to mark as delivered
 
+  const [loading, setLoading] = useState(false); // Introduce loading state
+
   const [formState, setFormState] = useState({
     subject: "", // Add other form fields as needed
     message: "",
   });
   
   const handleCancelOrder = async () => {
+    setLoading(true); // Set loading to true when operation starts
+
     try {
       const response = await fetch(`http://localhost:8080/order/${orderNrCancel}`, {
         method: 'DELETE',
@@ -38,10 +42,13 @@ const Admin = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+    }   finally {
+      setLoading(false); // Set loading back to false when operation completes
     }
   };
 
   const handleLogout = async () => {
+    setLoading(true); //
     try {
         console.log("Auth Token:", authToken);
 
@@ -66,10 +73,13 @@ const Admin = () => {
         }
     } catch (error) {
         console.error("Error during log out:", error);
+    }  finally {
+      setLoading(false); // Set loading back to false when operation completes
     }
 };
 
 const handleMarkSent = async () => {
+  setLoading(true);
   try {
     const response = await fetch(`http://localhost:8080/order/sent/${orderNrSent}/${trackingId}`, {
       method: 'PUT',
@@ -100,11 +110,14 @@ const handleMarkSent = async () => {
       console.error('Error:', error);
       alert('Something went wrong. Please try again.');
     }
+  }finally {
+    setLoading(false); // Set loading back to false when operation completes
   }
 };
 
 
   const handleMarkDelivered = async () => {
+    setLoading(true);
     try {
       const response = await fetch(`http://localhost:8080/order/delivered/${orderNrDelivered}`, {
         method: 'PUT',
@@ -125,13 +138,15 @@ const handleMarkSent = async () => {
       }
     } catch (error) {
       console.error("Error:", error);
+    }finally {
+      setLoading(false); // Set loading back to false when operation completes
     }
   };
 
   return (
     <div>
       <h1>Welcome, Admin!</h1>
-
+      {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       {/* Authentication */}
       <div className="admin-authentication">
         <label htmlFor="adminEmail">Admin Email:</label>
@@ -190,6 +205,7 @@ const handleMarkSent = async () => {
 
       {/* Mark Order as Delivered */}
       <div className="admin-endpoint">
+        
         <h2>Mark Order as Delivered</h2>
         <label htmlFor="orderNrDelivered">Order Number:</label>
         <input

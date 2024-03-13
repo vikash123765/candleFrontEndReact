@@ -64,6 +64,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
         navigate('/');
       } else {
         alert("Error sending message");
+        setLoading(false);
         console.error(response);
       }
     } else {
@@ -84,10 +85,12 @@ const [loading, setLoading] = useState(false); // Introduce loading state
 
       if (response.ok) {
         alert("Message sent successfully");
+        setLoading(false);
         // You can redirect the user to another page or do other actions
         navigate('/');
       } else {
         alert("Error sending message");
+        setLoading(false);
         console.error(response);
       }
     }

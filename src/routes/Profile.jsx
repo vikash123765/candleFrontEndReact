@@ -9,11 +9,8 @@ import FormField from "../components/FormField";
 
 export default function Profile() {
     const [store, setStore] = useAtom(storeAtom);
-    
 
-    console.log("storeshivvvvvv", store.user)
-
-
+  
     const handleProfileForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
@@ -59,10 +56,6 @@ export default function Profile() {
             // Handle unexpected errors here
         }
     };
-
-
-
-
     const handleChangePasswordForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
@@ -90,12 +83,11 @@ export default function Profile() {
     };
 
     return (
-        <section >
+        <section id="profile">
             {/* Profile change form */}
-            <div>
+            <div id="address">
                 <form onSubmit={handleProfileForm}>
-
-                    <FormField
+                <FormField
                         label="User Name"
                         name="userName"
                         defaultValue={store.user?.userName}
@@ -105,7 +97,7 @@ export default function Profile() {
                         name="userEmail"
                         defaultValue={store.user?.userEmail}
                     />
-                    <FormField
+                     <FormField
                         label="Your address"
                         name="address"
                         defaultValue={store.user?.address}
@@ -113,17 +105,13 @@ export default function Profile() {
                         style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}
 
                     />
+       
+     
                     <FormField
                         label="Phone number"
                         name="phoneNumber"
-
-                        defaultValue={String("+" + store.user?.phoneNumber)}
+                        defaultValue={store.user?.phoneNumber ? `+${store.user.phoneNumber}` : ''}
                     />
-
-
-
-
-
                     <label className="form-field">
                         <span>Gender</span>
                         <select name="gender">
@@ -133,9 +121,7 @@ export default function Profile() {
                             <option value="FEMALE">
                                 Female
                             </option>
-                            <option value="OTHER">
-                                Other
-                            </option>
+                          
                         </select>
                     </label>
 

@@ -13,6 +13,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 const payPalOptions = {
     clientId: 'AW4rF3ytyCzS2oxIhUE_Ihw-ifEVIRKICnYfvZiUqi8-E_XJ-r2xyquy7H1XN0Z2GGEoUCLV_uEdec5_',
     currency: 'SEK',
+    locale: "en_US"
 };
 
 export default function Cart() {
@@ -424,16 +425,15 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                         <form id="cart_form">
                         <div id="cart">
                             {store.cart.map((p, i) => {
-                                function remove() {
-                                    setStore((current) => {
-                                        current.cart.splice(
-                                            current.cart.findIndex((item) => item.productId === p.productId),
-                                            1
-                                        );
-                                        return { ...current };
-                                    });
-                                }
-    
+                     function remove() {
+                        setStore((current) => {
+                            current.cart.splice(
+                                current.cart.findIndex((item) => item.productId === p.productId),
+                                1
+                            );
+                            return { ...current };
+                        });
+                    }
                                 return (
                                     <div className="cart-item" key={p.productName + i}>
                                         <div className="left">
@@ -454,6 +454,16 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                             <h4 id="cart_total">
                                 Total: {store && store.cart ? `¤${totalWithShipping.toFixed(2)}` : 'N/A'}
                             </h4>
+                            {store.loggedIn && store.user && (
+                    <div>
+                        <strong>Shipping Address:</strong> {store.user.address}
+                        <p>phone Number : </p> + {store.user.phoneNumber}
+                        <p>Emaill  : </p>  {store.user.userEmail}
+                        <p>Name  : </p>  {store.user.userName}
+                     
+                        
+                    </div>
+                )}
                             <div className="shipping-form">
                                 <label>
                                     <input
@@ -517,6 +527,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                         <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
                             <PayPalScriptProvider options={payPalOptions}>
                                 <PayPalButtons
+                               
                                     createOrder={(data, actions) => {
                                         const orderWeight = store.cart.length * 80;
                                         const selectedIsSweden = isSwedenRef.current.toString();
@@ -532,6 +543,8 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                                     const result = await response.json();
                                                     const { shippingCost } = result;
                                                     if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
+                                                        let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
+
                                                         const totalWithShippingValue = (total + shippingCost).toFixed(2);
                                                         resolve(
                                                             actions.order.create({
