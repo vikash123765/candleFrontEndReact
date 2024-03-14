@@ -16,32 +16,31 @@ const About = () => {
       <section className="general-info-section">
         <h2>General Information</h2>
         <p>
-          Discover the latest trends in fashion, technology, and more at Our E-Commerce Store. 
-          We curate a diverse collection of products to cater to your unique needs and preferences.
-        </p>
+        Welcome to our vibrant new startup based in Sweden, where innovation meets style! At VTScases, we're dedicated to bringing you the trendiest and most durable mobile cases that perfectly complement your lifestyle.
+         Situated in the heart of Sweden,we're proud to serve customers all across Europe.  Get ready to elevate your mobile experience with us!
+         </p>
       </section>
 
       <section className="payment-section">
         <h2>Payment System</h2>
         <p>
-          Our E-Commerce Store offers a secure and convenient payment system. 
-          We support various payment methods to make your shopping experience smooth and reliable.
+        For your convenience and security, we've partnered with PayPal as our trusted payment system. With PayPal, you can shop with peace of mind, knowing your transactions are safe and secure, stay tuned for more payment options coming soon!!
         </p>
       </section>
 
       <section className="shipping-section">
         <h2>Shipping Information</h2>
         <p>
-          Enjoy fast and reliable shipping services. We strive to deliver your orders promptly 
-          and keep you informed every step of the way. Check out our shipping policies for more details.
+        We exclusively ship within Europe with our primary delivery partner  PostNord. With our base in Sweden, we promise the swiftest delivery times of 1-2 days for orders within Sweden itself. For European deliveries, anticipate your package within 2-3 days. Enjoy peace of mind knowing there are no additional charges – just the standard Postnord charge  and consistent, reliable service every time!
         </p>
       </section>
 
       <section className="returns-section">
         <h2>Returns & Exchanges</h2>
         <p>
-          Your satisfaction is our priority. Learn about our hassle-free returns and exchange process 
-          to ensure you have a stress-free shopping experience with us.
+        For returns due to product defects, simply take a photo, send it to our support team for verification. Upon confirmation, we'll either replace the product at no cost or provide a full refund.
+        If you wish to return a product for reasons other than defects, you'll be responsible for return shipping costs, and a refund will be issued as soon as the item is returned and confirmed as being unopened/unused.
+
         </p>
       </section>
 

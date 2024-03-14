@@ -13,8 +13,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
-}
 
+}
 .cart-item {
     flex: 1 1 calc(33.33% - 20px);
     max-width: calc(33.33% - 20px);
@@ -23,6 +23,7 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
+    position: relative; 
     transition: transform 0.3s;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -38,6 +39,34 @@
     border-bottom: 1px solid #ddd;
     border-radius: 8px 8px 0 0;
 }
+
+.cart-item .right {
+    padding: 12px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.cart-item .right button {
+    background-color: #4c36f4;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    z-index: 1; /* Ensure the button appears above other elements */
+
+}
+
+
+.cart-item .right button:hover {
+    background-color: #d32f2f;
+}
+
 
 .cart-item-details {
     padding: 10px;
@@ -102,10 +131,3 @@
     /* Adjust the font size as needed */
 }
 
-
-
-.custom-paypal-buttons .buttons-container .paypal-button-container paypal-button-layout-vertical paypal-button-shape-rect paypal-button-number-multiple paypal-button-env-production {
-    position: relative !important;
-    right: -4rem !important;
-    top: 11px !important;
-}

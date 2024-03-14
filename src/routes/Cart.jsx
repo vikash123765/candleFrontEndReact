@@ -439,9 +439,9 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         <div className="left">
                                             <img src={`${p.image}`} alt="" />
                                         </div>
-                                        <div className="right" style={{ padding: '12px', display: 'flex', alignItems: 'center' }}>
+                                        <div className="right" style={{ padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                                             <div>{p.productName}</div>
-                                            <div>¤{p.productPrice.toFixed(2)}</div>
+                                            <div>Kr{p.productPrice.toFixed(2)}</div>
                                             <button onClick={remove} type="button">
                                                 Remove
                                             </button>
@@ -490,7 +490,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         checked={isTracable}
                                         onChange={handleCheckboxChange}
                                     />
-                                    Tracable
+                                    Traceable
                                 </label>
                                 <label>
                                     <input
@@ -499,7 +499,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         checked={isNonTracable}
                                         onChange={handleCheckboxChange}
                                     />
-                                    Non-Tracable
+                                    Non-Traceable
                                 </label>
                             </div>
                             <button
@@ -524,7 +524,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                     )}
               
                     <>
-                        <div className="custom-paypal-buttons" style={{ position: "relative", right: '-10rem', top: "11px" }}>
+                        <div className="custom-paypal-buttons" >
                             <PayPalScriptProvider options={payPalOptions}>
                                 <PayPalButtons
                                
