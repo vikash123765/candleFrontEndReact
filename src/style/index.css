@@ -5,7 +5,9 @@
 @import './order.css';
 @import './layout.css';
 
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     box-sizing: border-box;
 }
 
@@ -13,7 +15,14 @@
     font-family: var(--font-main), sans-serif;
 }
 
-body, h1, h2, h3, h4, h5, h6, p {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     margin: 0;
 }
 
@@ -37,7 +46,7 @@ body {
 */
 
 /* This means all direct children of root */
-#root > * > * {
+#root>*>* {
     width: 1200px;
     max-width: 100%;
     margin: auto;
@@ -54,7 +63,8 @@ a:hover {
     text-decoration: underline;
 }
 
-button, input {
+button,
+input {
     padding: .5rem;
     border: 0;
     border-radius: .5rem;
@@ -107,20 +117,66 @@ button {
 #contact {
     background-color: yellow;
     border: 5px solid black;
-    padding: 10px;
+    padding: 0px;
     margin: 50px;
 }
 
+#contact {
+    background-color: #f8f8f8;
+    border: 2px solid #ddd;
+    border-radius: 15px;
+    padding: 30px;
+    margin: 50px auto;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+}
+
 #contact form {
-    /* width: 600px; */
-    background-color:blue;
-    padding: 10px;
+    display: grid;
+    gap: 20px;
 }
 
 .form-field {
-    display: grid;
-    grid-template-columns: 1fr 3fr;
+    margin-bottom: 20px;
 }
+
+.form-field label {
+    font-weight: bold;
+    margin-bottom: 8px;
+    display: block;
+}
+
+.form-field input,
+.form-field textarea {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.form-field textarea {
+    resize: vertical;
+}
+
+.form-field button {
+    background-color: #3498db;
+    color: #fff;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.form-field button:hover {
+    background-color: #2076c1;
+}
+
+
+
+
 
 .error {
     color: maroon;
@@ -134,7 +190,24 @@ button {
     .mobile {
         display: initial;
     }
+
     .desktop {
         display: none;
     }
+}
+
+header>div a {
+    color: #000;
+    /* Change menu route color to black */
+}
+
+.buttons-container {
+    /* background-color: green; */
+    position: relative;
+    right: 2px;
+}
+
+.price-mobile {
+    margin-left: 1rem;
+    margin-top: -10px;
 }

@@ -3,8 +3,9 @@ import Footer from "./components/Footer"
 import { Routes, Route } from 'react-router-dom'
 import { nav } from './lib/nav'
 import { useState, useEffect } from "react"
-import { signOutUser, isLoggedIn, getOrders } from "./lib/api"
-
+import { signOutUser, isLoggedIn, getOrders,isAdminLoggedIn } from "./lib/api"
+import Login from "./routes/Login.jsx"; // Replace "path-to-your" with the actual path
+import Admin from "./routes/Admin.jsx"; // Replace "path
 import { storeAtom, updateStore } from "./lib/store"
 import { useAtom } from "jotai"
 import { getCart_localStorage } from "./lib/cart"
@@ -48,6 +49,8 @@ function App() {
 
   const [user, setUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
+  const [adminLoggedIn, setAdminLoggedIn] = useState(false)
+
 
   async function fetchOrders() {
     getOrders()
@@ -68,7 +71,7 @@ function App() {
           setUser(userRes)
           setLoggedIn(true)
           updateStore(setStore, {
-            cart: getCart_localStorage(),
+            cart: getCart_localStorage(true),
             user: userRes,
             loggedIn: true
           })
@@ -80,11 +83,28 @@ function App() {
         }
       })
 
+      isAdminLoggedIn().then((adminValue)=>{
+        if(adminValue){
+          setAdminLoggedIn(true);
+          updateStore(setStore, {
+       
+            adminLoggedIn: true
+          })
+        }else{
+          setAdminLoggedIn(false);
+          updateStore(setStore, {
+       
+            adminLoggedIn: false
+          })
+        }
+      })
+
 
 
   }, [])
 
   function logOut() {
+    localStorage.removeItem('guest-cart')
     signOutUser()
     setUser({})
     setLoggedIn(false)
@@ -92,33 +112,35 @@ function App() {
 
   return (
     <>
-      <header>
-        <div>
-          <h2>Welcome, {user.userName || 'guest'}!</h2>
-          <div className="spacer"></div>
-            <Nav />
-            {/* this is a conditional JSX block */}
-            {loggedIn && (
-              <button onClick={logOut}>Log out</button>
-            )}
-        </div>
-      </header>
+    <header>
+      <div>
+        <h1></h1>
+        <h2>Welcome, {user.userName || 'guest'}!</h2>
+        <div className="spacer"></div>
+        <Nav />
+        {loggedIn && (
+          <button onClick={logOut}>Log out</button>
+        )}
+      </div>
+    </header>
 
-      <main>
-        <div>
-          <Routes>
-            {nav.map(function(item){
-              return (
-                <Route key={item.to} element={item.component} path={item.to} />
-              )
-            })}
-          </Routes>
-        </div>
-      </main>
+    <main>
+      <div>
+        <Routes>
+          {nav.map(function (item) {
+            return (
+              <Route key={item.to} element={item.component} path={item.to} />
+            );
+          })}
+          
+     
+        </Routes>
+      </div>
+    </main>
 
-      <Footer />
-    </>
-  )
+    <Footer />
+  </>
+);
 }
 
 export default App

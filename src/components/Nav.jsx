@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import { nav } from '../lib/nav'
 import { isLoggedIn } from '../lib/api'
 
+import logo from '../Logo/logoMobile.webp';
 import { useAtom } from 'jotai'
 import { storeAtom } from '../lib/store'
-
+import '../style/nav.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,9 +13,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 export default function Nav() {
 
     const [store, setStore] = useAtom(storeAtom)
+    const isFullSizeScreen = window.innerWidth > 1200;
 
     return (
         <>
+          <header>
+      
+          
+          {isFullSizeScreen &&<img src={logo} alt="Your Logo" className="logo"  /> }
             <nav className='desktop'>
                 <ul>
                     {/* I'm filtering here for only the routes that have a text property */}
@@ -23,6 +29,12 @@ export default function Nav() {
                             return
                         }
                         if (!store.loggedIn && (item.loggedIn === true)) {
+                            return
+                        }
+                        if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
+                            return
+                        }
+                        if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
                             return
                         }
                         return (
@@ -36,7 +48,7 @@ export default function Nav() {
                         <Link to="/cart" className='cart-icon'>
                             <ShoppingCartIcon /> 
                             <div className='badge'>
-                                {store.cart.length}
+                                {store.cart && store.cart.length}
                             </div>
                         </Link>
                     </li>
@@ -59,6 +71,12 @@ export default function Nav() {
                             if (!store.loggedIn && (item.loggedIn === true)) {
                                 return
                             }
+                            if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
+                                return
+                            }
+                            if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
+                                return
+                            }
                             return (
                             <li key={item.to}>
                                 <Link to={item.to}>{item.text}</Link>
@@ -70,13 +88,14 @@ export default function Nav() {
                             <Link to="/cart" className='cart-icon'>
                                 <ShoppingCartIcon /> 
                                 <div className='badge'>
-                                    {store.cart.length}
+                                    {store.cart && store.cart.length}
                                 </div>
                             </Link>
                         </li>
                     </ul>
                 </div>
             </nav>
+            </header>
         </>
     )
 }

@@ -1,186 +1,172 @@
-// useState is for creating data that, when changed, should automatically reflect in the DOM, i.e. "react"
-import { useState } from "react";
+// Import necessary modules
+import React, { useState } from "react";
 import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
+import axios from 'axios';
+import '@fortawesome/fontawesome-free/css/all.min.css';
 
-/*
-    useState takes an intial value, and returns an array of two things:
-        1. the state
-        2. a funciton for updating the state
-
-    that's why we destrcuture it
-
-    const [count, setCount] = useState(0)
-
-    npm install @paypal/react-paypal-js
-*/
-
+import '../style/LoginAndsignup.css';
 const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
 
 export default function Login() {
+    const [error, setError] = useState("");
+    const [signupError, setSignupError] = useState("");
+    const [loading, setLoading] = useState(false); // Introduce loading state for both login and signup
 
-    const [error, setError] = useState("")
-    const [signupError, setSignupError] = useState("")
 
     async function handleLogin(e) {
         e.preventDefault();
-        // the error should be set to blank, every time the form is submitted
-        setError("")
+        setError("");
+        setLoading(true); // Set loading to true during login
+
         const form = e.target;
-        // I passed the form data into Object.fromEntries, because FormData is a special data strucutre called a Map, and Object.fromEntries turns a map into an array, which is easier to work with
-        const formData = Object.fromEntries(new FormData(form))
-        /*
-            If we don't do Object.fromEntries, the nthe headers would have to looks like this..
-                headers: {
-                    email: formData.get('email')
-                    password: formData.get('password')
-                }
-        */
+        const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let res = await fetch(LOGIN_ENDPOINT, {
-                method: "POST",
-                // body: formData // sending FormData directly
+            let adminRes = await axios("http://localhost:8080/admin/signIn", {
+                method: 'POST',
                 headers: {
                     "email": formData.email,
-                    "password": formData.password
-                }
+                    "password": formData.password,
+                },
             });
 
-            // this will only get triggered if the response has a status code that is not in the 200s
-            if (!res.ok) {
-                // handle bad response, for example:
-                console.error("Login failed:", res.statusText);
+            if (adminRes.status == '200') {
+                const headers = adminRes.headers;
+                const mockCookie = headers.get('X-Token')
+                localStorage.setItem("tokenA", mockCookie);
+                document.cookie = mockCookie + ";SameSite=Lax";
+                alert("sign in sucessfull !")
+                window.location.href = '/admin';
+                return;
+            }
+        } catch (error) {
+            console.log("Unable to Login")
+        }
+
+        try {
+
+
+            let userRes = await fetch(LOGIN_ENDPOINT, {
+                method: 'POST',
+                headers: {
+                    "email": formData.email,
+                    "password": formData.password,
+                },
+            });
+
+            if (userRes.ok) {
+                const headers = userRes.headers;
+                const mockCookie = headers.get('X-Token');
+                console.log("User mockCookie:", mockCookie);
+                document.cookie = mockCookie + ";SameSite=Lax";
+                alert("sign in sucessfull !")
+                window.location.href = '/';
                 return;
             }
 
-            //"Access-Control-Allow-Headers", "X-Token";
-            //"Access-Control-Expose-Headers", "X-Token";
-
-
-
-            console.log(res)
-            const headers = res.headers
-            const mockCookie = headers.get('X-Token')
-            console.log("mockCookie:", mockCookie)
-            document.cookie = mockCookie + ";SameSite=Lax"
-
-            const text = await res.text(); // if your server responds 
-            location.href = "/"
+            console.error('Login failed:', userRes.statusText);
+            setError("Login failed. Please check your credentials.");
+            alert("login faled please checkyou credentials! ")
         } catch (error) {
-            console.error("Error during login:", error);
+            alert("login faled please try again")
+            console.error('Error during login:', error);
+        }
+        finally {
+            setLoading(false); // Set loading to false after login attempt
         }
     }
 
     async function handleSignup(e) {
         e.preventDefault();
-        setSignupError("")
+        setSignupError("");
+        setLoading(true); // Set loading to true during signup
+
         const form = e.target;
-        const data = Object.fromEntries(new FormData(form))
+        const data = Object.fromEntries(new FormData(form));
 
         if (
-            !data.userName,
-            !data.userEmail,
-            !data.userPassword,
-            !data.password2,
-            !data.address,
+            !data.userName ||
+            !data.userEmail ||
+            !data.userPassword ||
+            !data.password2 ||
+            !data.address ||
             !data.phoneNumber
         ) {
-            setSignupError("All fields required")
-            return
+            setSignupError("All fields required");
+            setLoading(false); // Set loading to false after signup attempt
+            return;
         }
 
-        if (
-            data.userPassword !== data.password2
-        ) {
-            setSignupError("Passwords do not match")
-            return
+        if (data.userPassword !== data.password2) {
+            setSignupError("Passwords do not match");
+            setLoading(false); // Set loading to false after signup attempt
+            return;
         }
 
-        if (
-            data.userPassword.length < 8
-        ) {
-            setSignupError("Password must be at least 8 characters")
-            return
+        if (data.userPassword.length < 8) {
+            setSignupError("Password must be at least 8 characters");
+            setLoading(false); // Set loading to false after signup attempt
+            return;
         }
 
-        const result = await signUpUser(data)
-        console.log(result)
+        try {
+            const result = await signUpUser(data);
+            console.log(result);
+            alert("account created!! ")
+
+            form.reset();
+
+
+        } catch (error) {
+            console.error('Error during signup:', error);
+            alert("Error during signp please try again")
+        }finally {
+            setLoading(false); // Set loading to false after signup attempt
+        }
     }
-
-    return (
-        <div>
-            <form onSubmit={handleLogin}>
-                <h2>Log in</h2>
-                <FormField
-                    name="email"
-                    label="Email"
-                />
-                <FormField
-                    name="password"
-                    label="Password"
-                    type="password"
-                />
-                <a href="/forgot">Forgot password?</a><br />
-                <button type="submit">
-                    Log in
-                </button>
-                {/* 
-                    {something && (<></>)} will render conditionally
-                */}
-                {error && (
-                    <span className="error">
-                        {error}
-                    </span>
-                )}
-            </form>
-            <form onSubmit={handleSignup}>
+// Update the component code
+return (
+    <div className="custom-login-signup-container">
+        {loading && <div className="custom-loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+        
+       
+        
+        {/* Signup form */}
+        <div className="custom-signup-form-container">
+            <form className="custom-signup-form" onSubmit={handleSignup}>
                 <h2>Sign up</h2>
-                <FormField
-                    name="userName"
-                    label="username"
-                />
-                <FormField
-                    name="userEmail"
-                    label="Email"
-                />
-                <FormField
-                    name="address"
-                    label="Address"
-                />
-                <FormField
-                    name="phoneNumber"
-                    label="Phone Number"
-                />
-                <div className="form-field">
-                    <div>
-                        Gender
-                    </div>
+                <FormField name="userName" label="Username"   placeholder="Enter your name" />
+                <FormField name="userEmail" label="Email"  placeholder="Enter your email" />
+                <FormField name="address" label="Address" 
+                placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
+                  type="textarea"
+                  style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}/>
+                <FormField name="phoneNumber" label="Phone Number"  type="textarea" placeholder="Enter your country code and number: ex: +1 1234567890 or +44 9876543210  "/>
+                <div className="custom-form-field">
+                    <div>Gender</div>
                     <select name="gender">
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
-                        <option value="OTHER">Other</option>
                     </select>
                 </div>
-                <FormField
-                    name="userPassword"
-                    label="Password"
-                    type="password"
-                />
-                <FormField
-                    name="password2"
-                    label="Repeat password"
-                    type="password"
-                />
-                <button>
-                    Sign up
-                </button>
-                {signupError && (
-                    <span className="error">
-                        {signupError}
-                    </span>
-                )}
+                <FormField name="userPassword" label="Password" type="password" />
+                <FormField name="password2" label="Repeat password" type="password" />
+                <button type="submit">Sign up</button>
+                {signupError && <span className="custom-error">{signupError}</span>}
+            </form> 
+            {/* Login form */}
+    
+        </div>    <div className="custom-login-form-container">
+            <form className="custom-login-form" onSubmit={handleLogin}>
+                <h2>Log in</h2>
+                <FormField name="email" label="Email" />
+                <FormField name="password" label="Password" type="password" />
+                <a href="/forgot">Forgot password?</a><br />
+                <button type="submit">Log in</button>
+                {error && <span className="custom-error">{error}</span>}
             </form>
         </div>
-    );
+    </div>
+);
 }

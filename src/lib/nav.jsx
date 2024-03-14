@@ -7,6 +7,8 @@ import Cart from "../routes/Cart"
 import Profile from "../routes/Profile"
 import Forgot from "../routes/Forgot"
 import Orders from "../routes/Orders"
+import Admin from "../routes/Admin"
+
 
 const nav = [
     {
@@ -42,9 +44,15 @@ const nav = [
       component: <Products />
     },
     {
+      to: "/admin",
+      text: "Admin",
+      adminLoggedIn:true,
+      component: <Admin />
+  },
+    {
       to: '/orders',
-      text: 'My Orders',
-      loggedIn: true,
+      text: 'Orders',
+      loggedIn:true,
       component: <Orders />
     },
     // routes without a "text" property will not be mapped over in the Nav component

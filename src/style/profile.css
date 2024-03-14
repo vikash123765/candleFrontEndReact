@@ -1,0 +1,55 @@
+#profile {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+#address,
+#change-password {
+    width: 45%;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increase the gap between form fields for better readability */
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: bold;
+    margin-bottom: 8px; /* Increase margin for better separation between label and input */
+}
+
+input,
+select {
+    padding: 12px; /* Increase padding for better input field visibility and touch-friendly design */
+    border: 2px solid #ccc; /* Increase border width for better visibility */
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333; /* Set text color to a darker shade for better contrast */
+}
+
+input[readonly],
+select[readonly] {
+    color: rgba(0, 0, 0, 0.6); /* Slightly darker color for readonly values */
+}
+
+button {
+    background-color: #007bff; /* Use a more vibrant color for the button */
+    color: #fff;
+    padding: 14px 20px; /* Increase padding for better clickability */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darken the background color on hover */
+}

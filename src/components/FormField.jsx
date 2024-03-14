@@ -1,18 +1,20 @@
+// FormField.jsx
 export default function FormField({ 
   label, 
   type="text", 
   name,
   onChange = val => {},
-  defaultValue = ""
+  defaultValue = "",
+  placeholder = "",
+  style = {}
 }) {
 
   function handleChange(e) {
-    const value = 
-      type === 'checkbox' ?
-        e.target.checked === 'on':
-        e.target.value
-    onChange(value)
+    const value =
+      type === 'checkbox' ? e.target.checked : e.target.value;
+    onChange(value);
   }
+  
 
   return (
     <label className="form-field">
@@ -22,7 +24,9 @@ export default function FormField({
               onChange={handleChange} 
               name={name}
               defaultValue={defaultValue}
-              ></textarea>
+              placeholder={placeholder}
+              style={style}
+            ></textarea>
         ):(
             <input 
               name={name} 
@@ -30,7 +34,9 @@ export default function FormField({
               onChange={handleChange}
               defaultValue={defaultValue}
               defaultChecked={defaultValue}
-              />
+              placeholder={placeholder}
+              style={style}
+            />
         )}
     </label>
   )

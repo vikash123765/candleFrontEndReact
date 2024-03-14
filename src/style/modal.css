@@ -9,17 +9,20 @@
 }
 
 .product-modal {
-    background-color: var(--primary);
-    color: var(--bg);
+    background-color: var(--bg);
+    border: 1px solid var(--primary);
     display: inline-block;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* padding: 1rem; */
-    border-radius: .25rem;
+    border-radius: 0.25rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    max-height: 80vh; /* Set a maximum height */
+    overflow-y: auto; /* Allow vertical scrolling */
 }
+
+
 
 .modal-header {
     display: flex;
@@ -27,7 +30,7 @@
     align-items: center;
     padding-left: 1rem;
 
-    & button {
+    button {
         border-radius: 0;
     }
 }
@@ -39,30 +42,42 @@
     padding: 1rem;
     align-items: center;
 
-    & .buttons {
+    .buttons {
         margin-top: 1rem;
         display: flex;
         align-items: center;
 
-        & .remove {
-            border-radius: .5rem 0 0 .5rem;
+        .remove {
+            border-radius: 0.5rem 0 0 0.5rem;
             border-right: 1px solid var(--primary);
         }
-        & .add {
-            border-radius: 0 .5rem .5rem 0;
+
+        .add {
+            border-radius: 0 0.5rem 0.5rem 0;
         }
-        & .cart {
+
+        .cart {
             padding-left: 1rem;
         }
     }
 }
-
-.product-modal_image {
-    width: 100%;
-    border-radius: .5rem;
-}
+/* Add this to your CSS */
+@media screen and (max-width: 600px) {
+    .price-mobile {
+      position: absolute;
+      bottom: 3px;
+      right: 70px; /* Adjust the value as needed */
+    }
+  }
+  
 
 
 .error {
     color: maroon;
+}
+
+.product-modal_image {
+    width: 100%;
+    max-width: 100%; /* Ensure the image doesn't exceed its container */
+    border-radius: 0.5rem;
 }

@@ -3,6 +3,7 @@ import { atom } from 'jotai'
 
 const storeAtom = atom({
     cart: [],
+    guestCart: [],
     orders: []
 })
 
@@ -14,6 +15,7 @@ const updateStore = (setStore, obj) => {
         return {...current}
     })
 }
+console.log("storeAtom", storeAtom)
 
 export {
     storeAtom,
