@@ -452,7 +452,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                         </div>
                         <div className="foot">
                             <h4 id="cart_total">
-                                Total: {store && store.cart ? `¤${totalWithShipping.toFixed(2)}` : 'N/A'}
+                                Total:  {store && store.cart ? `${totalWithShipping.toFixed(2)}SEK` : 'N/A'}
                             </h4>
                             {store.loggedIn && store.user && (
                     <div>
@@ -510,7 +510,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                             </button>
                             {shippingPrice !== null && !isNaN(shippingPrice) && (
                                 <div>
-                                    Shipping Cost: ¤{Number(shippingPrice).toFixed(2)}
+                                    Shipping Cost:  Kr{Number(shippingPrice).toFixed(2)}
                                     {shippingCost && shippingCost.message && <span> ({shippingCost.message})</span>}
                                 </div>
                             )}

@@ -86,7 +86,8 @@
     transition: transform 125ms;
     color: #3e3939;
     padding: 15px;
-    font-family: var(--font-main); /* Apply the custom font family */
+    font-family: var(--font-main);
+  /* Apply the custom font family */
     
     &:hover {
         transform: scale(1.025);
@@ -105,8 +106,9 @@
         }
 
         .price {
+        
             text-align: right;
-            font-size: 18px;
+            font-size: 13px;
             font-weight: bold;
             color: #3498db;
         }
@@ -115,11 +117,11 @@
 
 
 .product-image {
-    width: 190px; /* Set width to 190px */
-    height: 237px; /* Set height to 237px */
-    object-fit: cover; /* Set a maximum height to avoid overly large images */
+    width: 100%;
+    height: 150px; /* Set a fixed height for the images */
+    object-fit: cover; /* Maintain aspect ratio */
+    border-radius: 0.5rem;
 }
-
 
 .product-card img {
     width: 100%;

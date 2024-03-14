@@ -2,9 +2,10 @@ import { Link } from 'react-router-dom'
 import { nav } from '../lib/nav'
 import { isLoggedIn } from '../lib/api'
 
+import logo from '../Logo/logoMobile.webp';
 import { useAtom } from 'jotai'
 import { storeAtom } from '../lib/store'
-
+import '../style/nav.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -12,9 +13,14 @@ import MenuIcon from '@mui/icons-material/Menu';
 export default function Nav() {
 
     const [store, setStore] = useAtom(storeAtom)
+    const isFullSizeScreen = window.innerWidth > 1200;
 
     return (
         <>
+          <header>
+      
+          
+          {isFullSizeScreen &&<img src={logo} alt="Your Logo" className="logo"  /> }
             <nav className='desktop'>
                 <ul>
                     {/* I'm filtering here for only the routes that have a text property */}
@@ -89,6 +95,7 @@ export default function Nav() {
                     </ul>
                 </div>
             </nav>
+            </header>
         </>
     )
 }

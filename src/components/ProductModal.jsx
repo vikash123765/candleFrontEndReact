@@ -104,7 +104,7 @@ export default function ProductModal({ p, image, setModalShown }) {
 
                   </div>
                   <div className='col-3'>
-                    <h4 className="price-mobile">¤{displayPrice}</h4>
+                    <h4 className="price-mobile"> Kr{displayPrice}</h4>
                   </div>
                 </div>
               </div>
