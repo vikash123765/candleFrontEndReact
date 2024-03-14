@@ -6,7 +6,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import '../style/LoginAndsignup.css';
-const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
+const LOGIN_ENDPOINT = "https://mobile-case-website.vercel.app/user/signIn";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("http://localhost:8080/admin/signIn", {
+            let adminRes = await axios("https://mobile-case-website.vercel.app/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
@@ -58,7 +58,7 @@ export default function Login() {
             if (userRes.ok) {
                 const headers = userRes.headers;
                 const mockCookie = headers.get('X-Token');
-                console.log("User mockCookie:", mockCookie);
+
                 document.cookie = mockCookie + ";SameSite=Lax";
                 alert("sign in sucessfull !")
                 window.location.href = '/';
