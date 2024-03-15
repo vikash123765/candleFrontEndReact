@@ -52,6 +52,7 @@ export default function Profile() {
             }
         } catch (error) {
             console.error('An unexpected error occurred:', error);
+            alert("something went wring please try again ")
 
             // Handle unexpected errors here
         }

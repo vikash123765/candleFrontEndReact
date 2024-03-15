@@ -1,6 +1,6 @@
 {
-  "name": "candlefrontend",
-  "author": "Doug Alcedo",
+  "name": "mobilefrontend",
+  "author": "Vikash Kosaraju",
   "private": true,
   "version": "0.0.0",
   "type": "module",

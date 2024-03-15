@@ -1,5 +1,5 @@
 const DEV = true
-const ROOT = DEV ? "https://mobile-case-website.vercel.app/" : ""
+const ROOT = DEV ? "http://localhost:8080" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""

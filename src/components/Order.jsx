@@ -48,7 +48,7 @@ export default function Order({ order, orderIndex }) {
               {order.products.map((product, productIndex) => (
                 <div className="order-product" key={productIndex}>
                   <h5>{product.productName}</h5>
-                  <p>¤{product.productPrice}</p>
+                  <p>Kr{product.productPrice}</p>
                 </div>
               ))}
             </div>
