@@ -28,18 +28,20 @@ const GuestCheckoutForm = forwardRef((props, ref) => {
         break;
       case 'email':
         if (!value.trim().match(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/)) {
-          errorMessage = 'Please enter a valid email address.';
+          errorMessage = 'Please enter a valid email address (e.g., example@example.com).';
         }
         break;
       case 'shippingAddress':
         if (!value.trim()) {
           errorMessage = 'Please enter a valid shipping address.';
+        } else if (value.trim().length < 5) {
+          errorMessage = 'Shipping address is too short (minimum 5 characters).';
         }
         // Add more complex validation if needed
         break;
       case 'phoneNumber':
-        if (!value.trim().match(/^\+\d{1,3}\s\d{9,}$/)) {
-          errorMessage = 'Please enter a valid phone number in the format: +1 1234567890';
+        if (!value.trim().match(/^\+\d{1,2}\s\d{9,}$/)) {
+          errorMessage = 'Please enter a valid phone number in the format: +1 1234567890 or +12 1234567890.';
         }
         break;
       default:
@@ -144,9 +146,9 @@ const handleValidate = () => {
   value={formData.phoneNumber}
   error={formErrors.phoneNumber} // Pass error message as a prop
 />
+             
+     
 
-        
-        <button type="submit">Submit</button>
       </form>
     </div>
   );
