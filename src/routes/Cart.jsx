@@ -574,10 +574,9 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                     onSuccess={(details, paypalData) => {
                                         console.log('Transaction completed by ' + details.payer.name);
                                     }}
-                                    onError={(err) => {
-                                        console.error('PayPal error', err);
-                                    }}
-                    
+                                    onCancel={() => setIsFinalizingOrder(false)}
+                                    onError={() => setIsFinalizingOrder(false)}
+                            
                                     disabled={!isFormValid}
 
                                     
