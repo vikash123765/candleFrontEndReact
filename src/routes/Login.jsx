@@ -23,7 +23,7 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("https://13.234.225.97:8080/admin/signIn", {
+            let adminRes = await axios("https://mobile-case-website.vercel.app:8080/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,

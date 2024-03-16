@@ -1,5 +1,5 @@
 const DEV = true
-const ROOT = DEV ? "https://13.234.225.97:8080" : ""
+const ROOT = DEV ? "https://https://mobile-case-website.vercel.app/:8080" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""
@@ -251,7 +251,9 @@ async function signUpUser(data) {
     } catch (error) {
         console.error("error during signUp", error);
         return {
-            error: "Error durng signup"
+           
+            error: "Error durng signup" 
+            
         }
     }
 
