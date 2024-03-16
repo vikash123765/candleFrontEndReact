@@ -1,5 +1,5 @@
 const DEV = true
-const ROOT = DEV ? "http://3.111.52.167:8080" : ""
+const ROOT = DEV ? "http://52.66.252.50:8080" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""

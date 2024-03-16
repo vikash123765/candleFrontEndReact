@@ -179,7 +179,7 @@ const handleFormChange = () => {
             const orderWeight = store.cart.length * 80;
 
             const response = await fetch(
-                `http://3.111.52.167:8080/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`
+                `http://52.66.252.50:8080/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`
             );
 
             if (response.ok) {
@@ -534,7 +534,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         return new Promise(async (resolve, reject) => {
                                             try {
                                                 const response = await fetch(
-                                                    `http://3.111.52.167:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
+                                                    `http://52.66.252.50:8080/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`
                                                 );
                                                 if (response.ok) {
                                                     const result = await response.json();
