@@ -6,7 +6,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import '../style/LoginAndsignup.css';
-const LOGIN_ENDPOINT = "https://13.234.225.97:8080/user/signIn";
+const LOGIN_ENDPOINT = "https://35.154.98.21:8080/user/signIn";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("https://13.234.225.97:8080/admin/signIn", {
+            let adminRes = await axios("https://35.154.98.21:8080/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
