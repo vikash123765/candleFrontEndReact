@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../style/Admin.css';
-const ROOT = "https://35.154.98.21:8080";
+const ROOT = "https://13.201.52.107:8443";
 
 const Admin = () => {
   const [adminEmail, setAdminEmail] = useState(""); // Input for admin email (authentication)
@@ -21,7 +21,7 @@ const Admin = () => {
     setLoading(true); // Set loading to true when operation starts
 
     try {
-      const response = await fetch(`https://35.154.98.21:8080/order/${orderNrCancel}`, {
+      const response = await fetch(`https://13.201.52.107:8443/order/${orderNrCancel}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const Admin = () => {
     try {
         console.log("Auth Token:", authToken);
 
-        const response = await fetch("https://35.154.98.21:8080/admin/signOut", {
+        const response = await fetch("https://13.201.52.107:8443/admin/signOut", {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const Admin = () => {
 const handleMarkSent = async () => {
   setLoading(true);
   try {
-    const response = await fetch(`https://35.154.98.21:8080/order/sent/${orderNrSent}/${trackingId}`, {
+    const response = await fetch(`https://13.201.52.107:8443/order/sent/${orderNrSent}/${trackingId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const handleMarkSent = async () => {
   const handleMarkDelivered = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://35.154.98.21:8080/order/delivered/${orderNrDelivered}`, {
+      const response = await fetch(`https://13.201.52.107:8443/order/delivered/${orderNrDelivered}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

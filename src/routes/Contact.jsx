@@ -44,7 +44,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       console.log(store)
       let mockEmail = localStorage.getItem("mock-token");
       // Call the API for logged-in users
-      const response = await fetch(`https://35.154.98.21:8080/user/loggedIn/customerService`, {
+      const response = await fetch(`https://13.201.52.107:8443/user/loggedIn/customerService`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -69,7 +69,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       }
     } else {
       // Call the API for guest users
-      const response = await fetch(`https://35.154.98.21:8080/guest/customerService/message`, {
+      const response = await fetch(`https://13.201.52.107:8443/guest/customerService/message`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
