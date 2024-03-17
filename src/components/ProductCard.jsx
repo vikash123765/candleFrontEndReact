@@ -38,7 +38,7 @@ export default function ProductCard({ p }) {
 
   // Map product IDs to local storage image paths
   const imageMapping = {
-    4: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
+    1: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
     14: Iphone15PlainCover, // Use the actual product ID here
     5: iphone14proMaxPrint1,
     9: iphone14proMaxPrint2,
