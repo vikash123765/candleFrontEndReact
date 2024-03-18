@@ -6,7 +6,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import '../style/LoginAndsignup.css';
-const LOGIN_ENDPOINT = "https://13.201.52.107:8443/user/signIn";
+const LOGIN_ENDPOINT = "https://13.233.74.89:8443/user/signIn";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("https://13.201.52.107:8443/admin/signIn", {
+            let adminRes = await axios("https://13.233.74.89:8443/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
