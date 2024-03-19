@@ -1,4 +1,3 @@
-
 import { useAtom } from 'jotai';
 import { storeAtom } from '../lib/store';
 import { ROOT, getToken } from '../lib/api.js';
@@ -45,52 +44,50 @@ export default function Cart() {
 
   const [shippingCost, setShippingCost] = useState(null);
   let total = store.cart.reduce((acc, cv) => acc + cv.productPrice, 0);
-
   const handleCheckboxChange = (e) => {
     const { name, checked } = e.target;
 
     switch (name) {
-      case 'isSweden':
-        setIsSweden(checked);
-        isSwedenRef.current = checked;
-        if (checked) {
-          setIsEurope(false);
-          isEuropeRef.current = false;
-        }
-        break;
-      case 'isEurope':
-        setIsEurope(checked);
-        isEuropeRef.current = checked;
-        if (checked) {
-          setIsSweden(false);
-          isSwedenRef.current = false;
-        }
-        break;
-      case 'isTracable':
-        setIsTracable(checked);
-        isTracableRef.current = checked;
-        if (checked) {
-          setIsNonTracable(false);
-          isNonTracableRef.current = false;
-        }
-        break;
-      case 'isNonTracable':
-        setIsNonTracable(checked);
-        isNonTracableRef.current = checked;
-        if (checked) {
-          setIsTracable(false);
-          isTracableRef.current = false;
-        }
-        break;
-      default:
-        break;
+        case 'isSweden':
+            setIsSweden(checked);
+            isSwedenRef.current = checked;
+            if (checked) {
+                setIsEurope(false);
+                isEuropeRef.current = false;
+            }
+            break;
+        case 'isEurope':
+            setIsEurope(checked);
+            isEuropeRef.current = checked;
+            if (checked) {
+                setIsSweden(false);
+                isSwedenRef.current = false;
+            }
+            break;
+        case 'isTracable':
+            setIsTracable(checked);
+            isTracableRef.current = checked;
+            if (checked) {
+                setIsNonTracable(false);
+                isNonTracableRef.current = false;
+            }
+            break;
+        case 'isNonTracable':
+            setIsNonTracable(checked);
+            isNonTracableRef.current = checked;
+            if (checked) {
+                setIsTracable(false);
+                isTracableRef.current = false;
+            }
+            break;
+        default:
+            break;
     }
-  };
-  const handleInputChange = () => {
-    // Call the handleFormChange function when an input changes
+};
+
+const handleInputChange = () => {
     handleFormChange();
     updatePayPalButtonStatus().then(() => {
-        // Always enable the PayPal button
         setIsPayPalButtonEnabled(true);
     });
 };

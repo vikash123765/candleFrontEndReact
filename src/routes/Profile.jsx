@@ -10,52 +10,64 @@ import FormField from "../components/FormField";
 export default function Profile() {
     const [store, setStore] = useAtom(storeAtom);
 
-  
     const handleProfileForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
-
+    
+        // Check if required fields are empty
+        if (!data.userName || !data.userEmail || !data.address || !data.phoneNumber) {
+            alert('All fields are required');
+            return;
+        }
+    
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(data.userEmail)) {
+            alert('Please enter a valid email address');
+            return;
+        }
+    
+        // Validate phone number format
+        const phoneRegex = /^(\d{1,2})?\d{10}$/;
+       if (!phoneRegex.test(data.phoneNumber)) {
+            alert('Please enter a valid phone number example 11234567890 or 121234567890 wher first 2 disgts are country codes no spces please');
+            return;
+        }
+    
+        // Update profile information
         try {
             const parsedResult = await alterInfo(data);
-            console.log(parsedResult,"parsedResult")
-
-            // If there was a parsing error or the parsed result is not an object,
-            // assume the update was successful and proceed with displaying success message
+            console.log(parsedResult, "parsedResult")
+    
             if (parsedResult && typeof parsedResult == 'object') {
                 console.log('User information updated successfully');
-                alert("user info changed sucessfully!")
+                alert("User info changed successfully!");
+    
                 // Assuming your alterInfo API response contains updated user info
                 const updatedUser = parsedResult;
-
-                console.log("updatedUser", updatedUser)
+                console.log("updatedUser", updatedUser);
                 // Update the user state in the frontend
                 // setStore({
                 //     user: updatedUser,
                 // });
-
-                console.log("updatedUser", store)
+    
+                console.log("updatedUser", store);
             } else {
-                // Continue processing the parsed JSON result
                 if (parsedResult.error) {
                     console.error('API call failed:', parsedResult);
                     // Handle error here, e.g., show an error message to the user
-                    return;
+                    alert("API call failed: " + parsedResult.error);
+                } else {
+                    console.error('Unexpected result from API:', parsedResult);
+                    alert('Unexpected result from API');
                 }
-
-                // Assuming your alterInfo API response contains updated user info
-                const updatedUser = parsedResult;
-
-                // Update the user state in the frontend
-                // setStore({
-                //     user: updatedUser,
-                // });
             }
         } catch (error) {
             console.error('An unexpected error occurred:', error);
-
-            // Handle unexpected errors here
+            alert("Something went wrong, please try again later");
         }
     };
+    
     const handleChangePasswordForm = async (e) => {
         e.preventDefault();
         const data = Object.fromEntries(new FormData(e.target));
