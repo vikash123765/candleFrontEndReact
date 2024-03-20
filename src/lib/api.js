@@ -1,5 +1,5 @@
 const DEV = true
-const ROOT = DEV ? "https://api.vtscases.com/" : ""
+const ROOT = DEV ? "https://api.vtscases.com" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""

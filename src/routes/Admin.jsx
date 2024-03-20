@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../style/Admin.css';
-const ROOT = "https://api.vtscases.com/";
+const ROOT = "https://api.vtscases.com";
 
 const Admin = () => {
   const [adminEmail, setAdminEmail] = useState(""); // Input for admin email (authentication)
