@@ -8,7 +8,7 @@ import ProductCard from "../components/ProductCard.jsx"
 
 // since it's async we must await it
 // let products = await getAllProducts()
-// let products = []
+// let productshk = []
 // console.log(products)
 
 
