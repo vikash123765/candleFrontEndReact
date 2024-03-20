@@ -27,7 +27,7 @@ jobs:
 
             # Check if the pull was successful
             if [ $? -eq 0 ]; then
-            #sudo npm run build
+            sudo npm run build
             sudo  cp -rf dist/* /var/www/html/
             echo "Git pull successful, and app process restarted."
             else
