@@ -27,7 +27,8 @@ const Admin = () => {
           'Content-Type': 'application/json',
           'email': adminEmail, // Use the provided admin email for authentication
           'x-auth-token': authToken,
-        }
+        },
+        mode: 'cors' // Include 'mode: cors' for CORS
       });
 
       if (response.ok) {
@@ -57,7 +58,7 @@ const Admin = () => {
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-token': authToken,
-            },
+            },mode: 'cors' // Include 'mode: cors' for CORS
         });
 
         if (response.ok) {
@@ -87,7 +88,7 @@ const handleMarkSent = async () => {
         'Content-Type': 'application/json',
         'email': adminEmail,
         'x-auth-token': authToken,
-      },
+      },mode: 'cors' // Include 'mode: cors' for CORS
     });
 
     console.log('Response Status:', response.status);
@@ -125,7 +126,7 @@ const handleMarkSent = async () => {
           'Content-Type': 'application/json',
           'email': adminEmail, // Use the provided admin email for authentication
           'x-auth-token': authToken,
-        },
+        },mode: 'cors' // Include 'mode: cors' for CORS
       });
 
       if (response.ok) {

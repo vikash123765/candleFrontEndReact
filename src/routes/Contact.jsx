@@ -46,6 +46,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       // Call the API for logged-in users
       const response = await fetch(`https://api.vtscases.com/user/loggedIn/customerService`, {
         method: "POST",
+        mode: 'cors', // Include 'mode: cors' for CORS
         headers: {
           "Content-Type": "application/json",
           "token": getCookie('token'), // Assuming you have a token in your store,
@@ -71,6 +72,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       // Call the API for guest users
       const response = await fetch(`https://api.vtscases.com/guest/customerService/message`, {
         method: "POST",
+        mode: 'cors', // Include 'mode: cors' for CORS
         headers: {
           "Content-Type": "application/json",
           "subject": formState.subject,
