@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import '../style/Admin.css';
-const ROOT = "https://api.vtscases.com/";
+const ROOT = "http://65.1.16.209:8080/";
 
 const Admin = () => {
   const [adminEmail, setAdminEmail] = useState(""); // Input for admin email (authentication)
@@ -21,7 +21,7 @@ const Admin = () => {
     setLoading(true); // Set loading to true when operation starts
 
     try {
-      const response = await fetch(`https://api.vtscases.com/order/${orderNrCancel}`, {
+      const response = await fetch(`http://65.1.16.209:8080/order/${orderNrCancel}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ const Admin = () => {
     try {
         console.log("Auth Token:", authToken);
 
-        const response = await fetch("https://api.vtscases.com/admin/signOut", {
+        const response = await fetch("http://65.1.16.209:8080/admin/signOut", {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ const Admin = () => {
 const handleMarkSent = async () => {
   setLoading(true);
   try {
-    const response = await fetch(`https://api.vtscases.com/order/sent/${orderNrSent}/${trackingId}`, {
+    const response = await fetch(`http://65.1.16.209:8080/order/sent/${orderNrSent}/${trackingId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -119,7 +119,7 @@ const handleMarkSent = async () => {
   const handleMarkDelivered = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`https://api.vtscases.com/order/delivered/${orderNrDelivered}`, {
+      const response = await fetch(`http://65.1.16.209:8080/order/delivered/${orderNrDelivered}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

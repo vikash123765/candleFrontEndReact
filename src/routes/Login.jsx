@@ -6,7 +6,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import '../style/LoginAndsignup.css';
-const LOGIN_ENDPOINT = "https://api.vtscases.com/user/signIn";
+const LOGIN_ENDPOINT = "http://65.1.16.209:8080/user/signIn";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("https://api.vtscases.com/admin/signIn", {
+            let adminRes = await axios("http://65.1.16.209:8080/admin/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
@@ -47,7 +47,7 @@ export default function Login() {
         try {
 
 
-            let userRes = await fetch(LOGIN_ENDPOINT, {
+            let userRes = await fetch("http://65.1.16.209:8080/user/signIn", {
                 method: 'POST',
                 headers: {
                     "email": formData.email,
