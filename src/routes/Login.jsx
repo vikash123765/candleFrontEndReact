@@ -25,7 +25,7 @@ export default function Login() {
         try {
             let adminRes = await axios("https://api.vtscases.com/admin/signIn", {
                 method: 'POST',
-                mode: 'same-origin',
+                mode: 'cors',
                 headers: {
                     "email": formData.email,
                     "password": formData.password,
