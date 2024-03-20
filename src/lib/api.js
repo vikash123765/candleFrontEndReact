@@ -103,7 +103,7 @@ function getToken() {
 }
 
 async function handleFetch(endpoint, options = {}, routeName, textResponse) {
-    options.mode = 'cors';
+    options.mode = 'same-origin';
 
     const res = await fetch(
         ROOT + endpoint, options,
