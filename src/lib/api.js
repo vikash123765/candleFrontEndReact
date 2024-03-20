@@ -1,5 +1,5 @@
 const DEV = true
-const ROOT = DEV ? "https://65.1.16.209:8080/" : ""
+const ROOT = DEV ? "https://api.vtscases.com/" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""
@@ -12,7 +12,7 @@ async function isLoggedIn() {
             token
         }
     })
-    
+
     // handle bad request
     if (!res.ok) {
         if (res.status == 404) {
