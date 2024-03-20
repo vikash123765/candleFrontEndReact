@@ -182,7 +182,7 @@ const handleFormChange = () => {
                 `https://api.vtscases.com/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`,
                 {
                     method: 'GET',
-                    mode: 'cors' // Include 'mode: cors' for CORS
+                    mode: 'same-origin', // Include 'mode: cors' for CORS
                 }
             );
 
@@ -541,7 +541,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                                     `https://api.vtscases.com/calculate-shipping-rates/${selectedIsSweden}/${selectedisEurope}/${selectedisTracable}/${selectedisNonTracable}/${orderWeight}`,
                                                     {
                                                         method: 'GET',
-                                                        mode: 'cors' // Include 'mode: cors' for CORS
+                                                        mode: 'same-origin', // Include 'mode: cors' for CORS
                                                     }
                                                     );
                                                 if (response.ok) {

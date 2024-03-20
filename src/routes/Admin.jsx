@@ -28,7 +28,7 @@ const Admin = () => {
           'email': adminEmail, // Use the provided admin email for authentication
           'x-auth-token': authToken,
         },
-        mode: 'cors' // Include 'mode: cors' for CORS
+        mode: 'same-origin', // Include 'mode: cors' for CORS
       });
 
       if (response.ok) {
