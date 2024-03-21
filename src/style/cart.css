@@ -148,7 +148,7 @@ nav.mobile {
     }
 
     .cart-item .right .remove-icon {
-        /* Style for the red "x" icon */
+        /* Style for the red "×" icon */
         position: absolute;
         bottom: 10px;
         right: 10px;
@@ -156,15 +156,28 @@ nav.mobile {
         color: #f44336; /* Red color */
         font-size: 1.5em; /* Adjust the font size as needed */
         cursor: pointer;
-    }.cart-item .price {
+    }
+    
+    /* Display the price on mobile screens */
+    .cart-item .price {
         position: absolute;
         bottom: 10px;
-        left: 12px; /* Adjust left positioning */
-        z-index: 1; /* Ensure the price appears above other elements */
-        color: #000; /* Adjust color as needed */
-        font-size: 1em; /* Adjust font size as needed */
+        left: 12px;
+        z-index: 1;
+        color: #000;
+        font-size: 1em;
     }
 }
+
+/* Adjust cart item width for mobile screens */
+@media screen and (max-width: 768px) {
+    #cart .cart-item {
+        flex: 1 1 calc(50% - 20px); /* Adjust the width for mobile screens */
+        max-width: calc(50% - 20px); /* Adjust the max-width for mobile screens */
+    }
+}
+
+
 
 @media screen and (min-width: 769px) {
     .remove-icon {
