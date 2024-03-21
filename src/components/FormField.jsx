@@ -32,12 +32,8 @@ export default function FormField({
           name={name} 
           type={type} 
           onChange={handleChange}
-<<<<<<< HEAD
           defaultValue={defaultValue}
           defaultChecked={defaultValue}
-=======
-          value={value} 
->>>>>>> a9f7600164af4c243d8e4ede1c00af895837a4a7
           placeholder={placeholder}
           style={style}
         />
