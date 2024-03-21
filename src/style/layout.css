@@ -55,26 +55,24 @@ header > div {
         }
     }
 
-    nav.mobile {
+    .nav.mobile {
         position: relative;
-        &:hover {
-            ul {
-                display: flex !important;
-            }
-        }
-        .menu {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background-color: var(--primary);
-            border-radius: 0 0 .5rem .5rem;
-            ul {
-                display: none;
-                flex-direction: column;
-                padding: 0 2rem;
-            }
+    }
+    
+    .menu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background-color: var(--primary);
+        border-radius: 0 0 .5rem .5rem;
+        z-index: 10000; /* Set a high z-index to ensure it overlaps other elements */
+        ul {
+            display: none;
+            flex-direction: column;
+            padding: 0 2rem;
         }
     }
+    
 }
 
 /* Main content styles */

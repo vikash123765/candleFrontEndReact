@@ -13,11 +13,3 @@
         height:1px;/* Adjust width for mobile screens */
     }
 }
-
-/* Adjust styles for the mobile navigation menu */
-.mobile {
-
-    z-index: 10000; /* Set a high z-index to ensure it overlaps other elements */
-    overflow-y: auto;
-   
-}
