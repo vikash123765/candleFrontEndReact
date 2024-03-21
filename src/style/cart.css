@@ -6,8 +6,19 @@
     border: 1px solid #ddd;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Add relative positioning */
+    z-index: 1; /* Ensure the cart stays above other content */
 }
 
+nav.mobile {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background-color: var(--primary);
+    width: 100%;
+    z-index: 2; /* Ensure the menu is above the cart */
+
+}
 /* Cart Items */
 #cart {
     display: flex;
@@ -148,3 +159,8 @@
     }
 }
 
+@media screen and (min-width: 769px) {
+    .remove-icon {
+        display: none;
+    }
+}
