@@ -6,61 +6,49 @@
     @media screen and (max-width: 800px) {
         grid-template-columns: 1fr 1fr;
     }
+
+    @media screen and (max-width: 600px) {
+        grid-template-columns: 1fr; /* Adjust grid layout for single column */
+    }
 }
+
 #product-filters {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px;
     border-bottom: 1px solid #ccc;
-    @media screen and (max-width: 600px) {
+}
+
+@media screen and (max-width: 600px) {
+    #product-filters {
         flex-direction: column;
         align-items: stretch;
-
-        > div {
-            margin-bottom: 10px;
-        }
-
-        select, input[type="search"], button {
-            width: 100%;
-        }
     }
 }
 
-
-#product-filters select, #product-filters input[type="search"] {
-    width: 150px; /* Adjust width as needed */
-    padding: 5px;
-  }
-  
-  #product-filters select::placeholder, #product-filters input[type="search"]::placeholder {
-    font-size: 12px; /* Adjust font size as needed */
-  }
-  
-  #product-filters button {
-    margin-left: 10px;
-    padding: 5px 10px;
-  }
 #product-filters > div {
     display: flex;
     align-items: center;
     gap: 10px;
-
+    margin-bottom: 10px; /* Adjust margin */
 }
 
 #product-filters label {
     font-size: 12px;
 }
 
-#product-filters select, 
+#product-filters select,
 #product-filters input[type="search"] {
+    width: 100%; /* Adjust width for smaller screens */
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-#product-filters select {
-    min-width: 120px;
+#product-filters select::placeholder,
+#product-filters input[type="search"]::placeholder {
+    font-size: 12px;
 }
 
 #product-filters button {
@@ -70,6 +58,7 @@
     background-color: #3498db;
     color: #fff;
     cursor: pointer;
+    margin-left: 10px;
 }
 
 #product-filters button:hover {
@@ -87,8 +76,8 @@
     color: #3e3939;
     padding: 15px;
     font-family: var(--font-main);
-  /* Apply the custom font family */
-    
+    /* Apply the custom font family */
+
     &:hover {
         transform: scale(1.025);
     }
@@ -97,24 +86,8 @@
         display: grid;
         grid-template-columns: auto 50px;
         gap: 10px;
-
-        .details {
-            font-size: 16px;
-            line-height: 1.2;
-            font-weight: normal;
-            color: #151414;
-        }
-
-        .price {
-        
-            text-align: right;
-            font-size: 13px;
-            font-weight: bold;
-            color: #3498db;
-        }
     }
 }
-
 
 .product-image {
     width: 100%;
@@ -126,4 +99,20 @@
 .product-card img {
     width: 100%;
     border-radius: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .product-card {
+        padding: 10px; /* Adjust padding for smaller cards */
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column; /* Stack info elements vertically */
+        gap: 5px; /* Reduce gap between elements */
+    }
+
+    .product-image {
+        height: auto; /* Ensure image maintains aspect ratio */
+    }
 }

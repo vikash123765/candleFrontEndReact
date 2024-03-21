@@ -116,9 +116,6 @@ export default function Products() {
           <button onClick={searchByName}>
             Search
           </button>
-          <button onClick={resetProducts}>
-            Reset
-          </button>
         </div>
         <div>
           Sort by
