@@ -1,80 +1,57 @@
-#products {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
-
-    @media screen and (max-width: 800px) {
-        grid-template-columns: 1fr 1fr;
-    }
-}
-#product-filters {
+#profile {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ccc;
-    @media screen and (max-width: 600px) {
-        padding: 7px;
-        flex-direction: column;
-        align-items: stretch;
-
-        > div {
-            margin-bottom: 10px;
-        }
-
-        select, input[type="search"], button {
-            width: 100%;
-        }
-    }
+    justify-content: space-around;
+    margin: 20px;
 }
 
+#address,
+#change-password {
+    width: 45%;
+}
 
-#product-filters select, #product-filters input[type="search"] {
-    width: 150px; /* Adjust width as needed */
-    padding: 5px;
-  }
-  
-  #product-filters select::placeholder, #product-filters input[type="search"]::placeholder {
-    font-size: 12px; /* Adjust font size as needed */
-  }
-  
-  #product-filters button {
-    margin-left: 10px;
-    padding: 5px 10px;
-  }
-#product-filters > div {
+form {
     display: flex;
-    align-items: center;
-    gap: 10px;
-
+    flex-direction: column;
+    gap: 20px; /* Increase the gap between form fields for better readability */
 }
 
-#product-filters label {
-    font-size: 12px;
+.form-field {
+    display: flex;
+    flex-direction: column;
 }
 
-#product-filters select, 
-#product-filters input[type="search"] {
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+label {
+    font-weight: bold;
+    margin-bottom: 8px; /* Increase margin for better separation between label and input */
 }
 
-#product-filters select {
-    min-width: 120px;
+input,
+select {
+    padding: 12px; /* Increase padding for better input field visibility and touch-friendly design */
+    border: 2px solid #ccc; /* Increase border width for better visibility */
+    border-radius: 8px;
+    font-size: 16px;
+    color: #333; /* Set text color to a darker shade for better contrast */
 }
 
-#product-filters button {
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #3498db;
+input[readonly],
+select[readonly] {
+    color: rgba(0, 0, 0, 0.6); /* Slightly darker color for readonly values */
+}
+
+button {
+    background-color: #007bff; /* Use a more vibrant color for the button */
     color: #fff;
+    padding: 14px 20px; /* Increase padding for better clickability */
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
-#product-filters button:hover {
-    background-color: #2076c1;
+button:hover {
+    background-color: #0056b3; /* Darken the background color on hover */
 }
 
 .product-card {
@@ -87,35 +64,45 @@
     transition: transform 125ms;
     color: #3e3939;
     padding: 15px;
-    font-family: var(--font-main);
-  /* Apply the custom font family */
-    
-    &:hover {
-        transform: scale(1.025);
-    }
-
-    .info {
-        display: grid;
-        grid-template-columns: auto 50px;
-        gap: 10px;
-
-        .details {
-            font-size: 16px;
-            line-height: 1.2;
-            font-weight: normal;
-            color: #151414;
-        }
-
-        .price {
-        
-            text-align: right;
-            font-size: 13px;
-            font-weight: bold;
-            color: #3498db;
-        }
-    }
+    font-family: var(--font-main); /* Apply the custom font family */
+    width: calc(50% - 10px); /* Adjust width for some space between cards and walls */
+    display: flex; /* Added flexbox display */
+    justify-content: space-between; /* Align content to right side */
 }
 
+.product-card:hover {
+    transform: scale(1.025);
+}
+
+.product-card .info {
+    display: grid;
+    grid-template-columns: auto 50px;
+    gap: 10px;
+}
+
+.product-card .info .details {
+    font-size: 16px;
+    line-height: 1.2;
+    font-weight: normal;
+    color: #151414;
+}
+
+.product-card .info .price {
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: #3498db;
+    overflow: hidden; /* Ensure price does not flow outside of the card */
+    white-space: nowrap; /* Prevent price from wrapping */
+    text-overflow: ellipsis; /* Display ellipsis for overflowed content */
+}
+
+@media screen and (max-width: 600px) {
+    .product-card {
+        padding: 7px; /* Adjust padding for smaller screens */
+        width: 90%; /* Adjust width for smaller screens */
+    }
+}
 
 .product-image {
     width: 100%;
