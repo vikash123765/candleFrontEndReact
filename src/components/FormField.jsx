@@ -29,14 +29,14 @@ export default function FormField({
         ></textarea>
       ) : (
         <input 
-        name={name} 
-        type={type} 
-        onChange={handleChange}
-        value={defaultValue} {/* Use value prop instead of defaultValue */}
-        placeholder={placeholder}
-        style={style}
-      />
-      
+          name={name} 
+          type={type} 
+          onChange={handleChange}
+          defaultValue={defaultValue}
+          defaultChecked={defaultValue}
+          placeholder={placeholder}
+          style={style}
+        />
       )}
       {error && <span className="error-message">{error}</span>} {/* Display error message if error exists */}
     </label>
