@@ -1,57 +1,64 @@
-#profile {
+#products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+
+    @media screen and (max-width: 600px) {
+        grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row for all mobile screens */
+    }
+}
+
+#product-filters {
     display: flex;
-    justify-content: space-around;
-    margin: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
 }
 
-#address,
-#change-password {
-    width: 45%;
+@media screen and (max-width: 600px) {
+    #product-filters {
+        flex-direction: column;
+        align-items: stretch;
+    }
 }
 
-form {
+#product-filters > div {
     display: flex;
-    flex-direction: column;
-    gap: 20px; /* Increase the gap between form fields for better readability */
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px; /* Adjust margin */
 }
 
-.form-field {
-    display: flex;
-    flex-direction: column;
+#product-filters label {
+    font-size: 12px;
 }
 
-label {
-    font-weight: bold;
-    margin-bottom: 8px; /* Increase margin for better separation between label and input */
+#product-filters select,
+#product-filters input[type="search"] {
+    width: 100%; /* Adjust width for smaller screens */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
-input,
-select {
-    padding: 12px; /* Increase padding for better input field visibility and touch-friendly design */
-    border: 2px solid #ccc; /* Increase border width for better visibility */
-    border-radius: 8px;
-    font-size: 16px;
-    color: #333; /* Set text color to a darker shade for better contrast */
+#product-filters select::placeholder,
+#product-filters input[type="search"]::placeholder {
+    font-size: 12px;
 }
 
-input[readonly],
-select[readonly] {
-    color: rgba(0, 0, 0, 0.6); /* Slightly darker color for readonly values */
-}
-
-button {
-    background-color: #007bff; /* Use a more vibrant color for the button */
-    color: #fff;
-    padding: 14px 20px; /* Increase padding for better clickability */
+#product-filters button {
+    padding: 8px 15px;
     border: none;
-    border-radius: 8px;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: #fff;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
+    margin-left: 10px;
 }
 
-button:hover {
-    background-color: #0056b3; /* Darken the background color on hover */
+#product-filters button:hover {
+    background-color: #2076c1;
 }
 
 .product-card {
@@ -64,43 +71,24 @@ button:hover {
     transition: transform 125ms;
     color: #3e3939;
     padding: 15px;
-    font-family: var(--font-main); /* Apply the custom font family */
-    width: calc(50% - 10px); /* Adjust width for some space between cards and walls */
-    display: flex; /* Added flexbox display */
-    justify-content: space-between; /* Align content to right side */
-}
+    font-family: var(--font-main);
+    /* Apply the custom font family */
 
-.product-card:hover {
-    transform: scale(1.025);
-}
+    &:hover {
+        transform: scale(1.025);
+    }
 
-.product-card .info {
-    display: grid;
-    grid-template-columns: auto 50px;
-    gap: 10px;
-}
+    .info {
+        display: flex;
+        flex-direction: column; /* Stack info elements vertically */
+        gap: 7px; /* Reduce gap between elements */
+    }
 
-.product-card .info .details {
-    font-size: 16px;
-    line-height: 1.2;
-    font-weight: normal;
-    color: #151414;
-}
-
-.product-card .info .price {
-    text-align: right;
-    font-size: 13px;
-    font-weight: bold;
-    color: #3498db;
-    overflow: hidden; /* Ensure price does not flow outside of the card */
-    white-space: nowrap; /* Prevent price from wrapping */
-    text-overflow: ellipsis; /* Display ellipsis for overflowed content */
-}
-
-@media screen and (max-width: 600px) {
-    .product-card {
-        padding: 7px; /* Adjust padding for smaller screens */
-        width: 90%; /* Adjust width for smaller screens */
+    .price {
+        text-align: right;
+        font-size: 13px;
+        font-weight: bold;
+        color: #3498db;
     }
 }
 
@@ -114,4 +102,14 @@ button:hover {
 .product-card img {
     width: 100%;
     border-radius: 0.5rem;
+}
+
+@media screen and (max-width: 600px) {
+    .product-card {
+        padding: 5px; /* Adjust padding for smaller cards */
+    }
+
+    .product-image {
+        height: auto; /* Ensure image maintains aspect ratio */
+    }
 }
