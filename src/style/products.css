@@ -44,7 +44,7 @@
 @media screen and (max-width: 600px) {
     .product-card {
         max-width: calc(50% - 15px); /* Adjust the width to fit two cards per row with spacing */
-        margin: 0 0 10px 0; /* Add spacing between the cards */
+        margin: 0 0 14px 0; /* Add spacing between the cards */
     }
 }
 
