@@ -18,8 +18,13 @@
     padding: 15px;
     font-family: var(--font-main);
     /* Apply the custom font family */
-    display: flex; /* Ensure that the card uses flexbox layout */
-    flex-direction: column; /* Stack the elements vertically */
+  
+    /* Stack the elements vertically */
+    flex-direction: column;
+    /* Ensure the card fits within the screen width with padding */
+    max-width: calc(50% - 15px);
+    /* Add spacing between the cards */
+    margin: 0 0 14px 0;
 }
 
 .product-card:hover {
@@ -44,7 +49,7 @@
 @media screen and (max-width: 600px) {
     .product-card {
         max-width: calc(50% - 15px); /* Adjust the width to fit two cards per row with spacing */
-        margin: 0 0 5px 0; /* Add spacing between the cards */
+        margin: 0 0 15px 0; /* Add spacing between the cards */
     }
 }
 
@@ -140,13 +145,13 @@
 
 
 
-.product-image {
+.product-card img {
+    /* Ensure that the image maintains its aspect ratio */
     width: 100%;
-    height: 150px; /* Set a fixed height for the images */
-    object-fit: cover; /* Maintain aspect ratio */
+    height: auto;
+    /* Adjust other styles as needed */
     border-radius: 0.5rem;
 }
-
 .product-card img {
     width: 100%;
     border-radius: 0.5rem;
