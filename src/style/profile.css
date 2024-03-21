@@ -109,3 +109,18 @@ button:hover {
     width: 100%;
     border-radius: 0.5rem;
 }
+
+
+/* Media query for mobile screens */
+@media screen and (max-width: 768px) {
+    #profile {
+        flex-direction: column;
+        align-items: center; /* Center items vertically on mobile */
+    }
+
+    #address,
+    #change-password {
+        width: 100%; /* Make address and change-password sections full width on mobile */
+        margin: 0; /* Remove margin on mobile */
+    }
+}

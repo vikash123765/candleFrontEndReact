@@ -57,5 +57,21 @@
   color: red;
 }
 
+/* Media query for mobile screens */
+@media screen and (max-width: 768px) {
+  .custom-login-signup-container {
+    flex-direction: column;
+  }
 
+  .custom-login-form-container,
+  .custom-signup-form-container {
+    flex: none;
+    width: 100%;
+    margin-right: 0;
+  }
 
+  .custom-login-form,
+  .custom-signup-form {
+    max-width: none;
+  }
+}
