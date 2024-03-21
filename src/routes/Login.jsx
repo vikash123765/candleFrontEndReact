@@ -113,13 +113,12 @@ export default function Login() {
 
         try {
             const result = await signUpUser(data);
-            if(result==result.OK){ 
-            alert("account created!! ")
-
-            form.reset();
-        }else{
-            alert("something went wrong try rechecking you input")
-        }
+            if (result.status === 201) { // Check for the appropriate status code for successful signup
+                alert("Account created successfully!");
+                form.reset();
+            } else {
+                alert("Something went wrong. Please try again.");
+            }
         }finally {
             setLoading(false); // Set loading to false after signup attempt
         }
