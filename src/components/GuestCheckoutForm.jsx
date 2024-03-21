@@ -41,7 +41,7 @@ const GuestCheckoutForm = forwardRef((props, ref) => {
         break;
       case 'phoneNumber':
         if (!value.trim().match(/^\+\d{1,2}\s\d{9,}$/)) {
-          errorMessage = 'Please enter a valid phone number with contry code in the format: 1 1234567890 or 12 1234567890.';
+          errorMessage = 'Please enter a valid phone number with contry code in the format: 11234567890 or 121234567890.(no spaces or +)';
         }
         break;
       default:
