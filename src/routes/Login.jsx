@@ -6,7 +6,7 @@ import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
 import '../style/LoginAndsignup.css';
-const LOGIN_ENDPOINT = "http://localhost:8080/user/signIn";
+const LOGIN_ENDPOINT = "https://api.vtscases.com/user/signIn";
 
 export default function Login() {
     const [error, setError] = useState("");
@@ -23,8 +23,9 @@ export default function Login() {
         const formData = Object.fromEntries(new FormData(form));
 
         try {
-            let adminRes = await axios("http://localhost:8080/admin/signIn", {
+            let adminRes = await axios("https://api.vtscases.com/admin/signIn", {
                 method: 'POST',
+                mode: 'cors',
                 headers: {
                     "email": formData.email,
                     "password": formData.password,
@@ -142,7 +143,7 @@ return (
                 placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
                   type="textarea"
                   style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}/>
-                <FormField name="phoneNumber" label="Phone Number"  placeholder="ex: 11234567890 or 449876543210  "/>
+                <FormField name="phoneNumber" label="Phone Number"  placeholder="Enter your country code and number: ex: +1 1234567890 or +44 9876543210  "/>
                 <div className="custom-form-field">
                     <div>Gender</div>
                     <select name="gender">
