@@ -91,6 +91,21 @@
         color: #3498db;
     }
 }
+@media screen and (max-width: 600px) {
+    .product-card {
+        padding: 20px; /* Adjust padding for smaller cards */
+    }
+
+    .product-image {
+        width: 100%; /* Make image take full width of the card */
+        height: auto; /* Ensure image maintains aspect ratio */
+        border-radius: 0.5rem;
+    }
+
+    .info {
+        width: 100%; /* Make text take full width of the card */
+    }
+}
 
 .product-image {
     width: 100%;
@@ -103,15 +118,5 @@
     width: 100%;
     border-radius: 0.5rem;
 }
-@media screen and (max-width: 600px) {
-    .product-card {
-        padding: 40px; /* Adjust padding for smaller cards */
-    }
 
-    .product-image {
-        width: 100%; /* Make image take full width of the card */
-     
-
-    }
-}
 
