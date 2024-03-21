@@ -113,19 +113,13 @@ export default function Login() {
 
         try {
             const result = await signUpUser(data);
-            if(result==OK){  console.log(result);
+            if(result==result.OK){ 
             alert("account created!! ")
 
             form.reset();
         }else{
             alert("something went wrong try rechecking you input")
         }
-          
-
-
-        } catch (error) {
-            console.error('Error during signup:', error);
-            alert("Error during signp please try again")
         }finally {
             setLoading(false); // Set loading to false after signup attempt
         }
