@@ -5,7 +5,7 @@ export default function FormField({
   type="text", 
   name,
   onChange = val => {},
-  value = "", // Change defaultValue to value
+  defaultValue = "",
   placeholder = "",
   style = {},
   error = "" // Add error prop for displaying error message
@@ -23,7 +23,7 @@ export default function FormField({
         <textarea 
           onChange={handleChange} 
           name={name}
-          value={value} 
+          defaultValue={defaultValue}
           placeholder={placeholder}
           style={style}
         ></textarea>
