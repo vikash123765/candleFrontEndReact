@@ -6,7 +6,14 @@
     @media screen and (max-width: 600px) {
         grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row for all mobile screens */
     }
+<<<<<<< HEAD
 }.product-card {
+=======
+}
+
+.product-card {
+    margin: 0 5px;
+>>>>>>> 1807e5cbcd7311194636db7940270c4cfdcd0a5e
     text-align: left;
     background-color: var(--bg);
     border: 2px solid var(--primary);
