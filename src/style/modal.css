@@ -61,21 +61,12 @@
         }
     }
 }
-.price-mobile {
-    
-    position: absolute;
-    bottom:-1x;
-    right: 1px; /* Adjust the value as needed */
-    font-size: 1.2rem; /* Adjust font size as needed */
-    font-weight: bold;
-    color: #3498db; /* Adjust color as needed */
-}
 /* Add this to your CSS */
 @media screen and (max-width: 600px) {
     .price-mobile {
       position: absolute;
-      bottom:15px;
-      right: -30px; /* Adjust the value as needed */
+      bottom:-9px;
+      right: 1px; /* Adjust the value as needed */
     }
   }
 
