@@ -100,13 +100,13 @@
 
 @media screen and (max-width: 600px) {
     .product-card {
-        padding: 10px; /* Adjust padding for smaller cards */
+        padding: 5px; /* Adjust padding for smaller cards */
     }
 
     .info {
         display: flex;
         flex-direction: column; /* Stack info elements vertically */
-        gap: 5px; /* Reduce gap between elements */
+        gap: 7px; /* Reduce gap between elements */
     }
 
     .product-image {
