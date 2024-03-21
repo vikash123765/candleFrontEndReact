@@ -30,7 +30,7 @@ export default function Profile() {
         // Validate phone number format
         const phoneRegex = /^(\d{1,2})?\d{10}$/;
        if (!phoneRegex.test(data.phoneNumber)) {
-            alert('Please enter a valid phone number example 11234567890 or 121234567890 wher first 2 digits are country codes no spces please');
+            alert('ex. 11234567890 or 121234567890');
             return;
         }
     
@@ -122,7 +122,7 @@ export default function Profile() {
                     <FormField
                         label="Phone number"
                         name="phoneNumber"
-                        defaultValue={store.user?.phoneNumber}
+                        defaultValue={store.user?.phoneNumber ? `+${store.user.phoneNumber}` : ''}
                     />
                     <label className="form-field">
                         <span>Gender</span>
