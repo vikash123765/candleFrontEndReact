@@ -122,7 +122,7 @@ export default function Profile() {
                     <FormField
                         label="Phone number"
                         name="phoneNumber"
-                        defaultValue={store.user?.phoneNumber ? `${store.user.phoneNumber}` : ''}
+                        defaultValue={store.user?.phoneNumber || ''}
                     />
                     <label className="form-field">
                         <span>Gender</span>
