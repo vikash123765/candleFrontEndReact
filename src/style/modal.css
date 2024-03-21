@@ -65,8 +65,8 @@
 @media screen and (max-width: 600px) {
     .price-mobile {
       position: absolute;
-      bottom: 3px;
-      right: 70px; /* Adjust the value as needed */
+      bottom:-1x;
+      right: 1px; /* Adjust the value as needed */
     }
   }
 
@@ -82,3 +82,34 @@
     border-radius: 0.5rem;
 }
 
+@media screen and (max-width: 800px) {
+    .product-modal {
+        width: calc(100% - 40px); /* Decreased by 60px on all sides */
+        max-width: calc(100% - 40px);
+        padding: 20px; /* Adjusted padding */
+    }
+
+    .modal-body {
+        display: block;
+    }
+
+    .buttons {
+        flex-direction: row; /* Display buttons horizontally */
+        justify-content: space-between; /* Add this to distribute buttons evenly */
+        margin-top: 1rem;
+    }
+
+    .buttons button {
+        flex-basis: 48%; /* Adjusted width of buttons */
+    }
+
+    .remove,
+    .add {
+        flex-basis: 48%; /* Adjusted width of buttons */
+    }
+
+    .cart {
+        padding-left: 1rem;
+        flex-basis: 100%; /* Take up remaining space */
+    }
+}
