@@ -105,12 +105,12 @@
 }
 @media screen and (max-width: 600px) {
     .product-card {
-        padding: 20px; /* Adjust padding for smaller cards */
+        padding: 40px; /* Adjust padding for smaller cards */
     }
 
     .product-image {
         width: 100%; /* Make image take full width of the card */
-        height: 100%; /* Make image take full height of the card */
+     
 
     }
 }
