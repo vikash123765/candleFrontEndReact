@@ -94,6 +94,8 @@
 @media screen and (max-width: 800px) {
     .product-card {
         padding: 2px; /* Adjust padding for smaller cards */
+        height:100%;
+        width:100%;
     }
 
     .product-image {
