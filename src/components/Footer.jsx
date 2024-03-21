@@ -37,10 +37,10 @@ const Footer = () => {
           <h4>Contact us</h4>
           <ul>
             <li>
-              Phone: +00 000 000 0000
+              Phone: +46 72 84 29 733
             </li>
             <li>
-              Address: Gatan 55, Stockholm, SE
+              Address: Ankdammsgatan 38, Stockholm, SE
             </li>
             <li><a href="#" onClick={() => handleNavigation("/Contact")}>Contact</a></li>
           </ul>
