@@ -156,6 +156,13 @@ nav.mobile {
         color: #f44336; /* Red color */
         font-size: 1.5em; /* Adjust the font size as needed */
         cursor: pointer;
+    }.cart-item .price {
+        position: absolute;
+        bottom: 10px;
+        left: 12px; /* Adjust left positioning */
+        z-index: 1; /* Ensure the price appears above other elements */
+        color: #000; /* Adjust color as needed */
+        font-size: 1em; /* Adjust font size as needed */
     }
 }
 
