@@ -73,24 +73,29 @@
     padding: 15px;
     font-family: var(--font-main);
     /* Apply the custom font family */
-
-    &:hover {
-        transform: scale(1.025);
-    }
-
-    .info {
-        display: flex;
-        flex-direction: column; /* Stack info elements vertically */
-        gap: 7px; /* Reduce gap between elements */
-    }
-
-    .price {
-        text-align: right;
-        font-size: 13px;
-        font-weight: bold;
-        color: #3498db;
-    }
+    display: flex; /* Ensure that the card uses flexbox layout */
+    flex-direction: column; /* Stack the elements vertically */
 }
+
+.product-card:hover {
+    transform: scale(1.025);
+}
+
+.info {
+    flex: 1; /* Allow the info section to grow to fill remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.price {
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: #3498db;
+    margin-top: auto; /* Align the price to the bottom */
+}
+
 @media screen and (max-width: 600px) {
     .product-card {
         padding: 20px; /* Adjust padding for smaller cards */
