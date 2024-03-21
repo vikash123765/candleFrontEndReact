@@ -30,7 +30,7 @@ export default function Profile() {
         // Validate phone number format
         
        if (!phoneRegex.test(data.phoneNumber)) {
-            alert('Please enter a valid phone number example 11234567890 or 121234567890 wher first 2 digits are country codes no + or spcaes please');
+            alert('Please enter a valid phone number,country and number no spaces or + please');
             return;
         }
     
@@ -118,9 +118,10 @@ export default function Profile() {
 
                     />
        
-     
+                     <p>please eneter a phone number with country code and number with no spaces or +</p>
                     <FormField
                         label="Phone number"
+                    
                         name="phoneNumber"
                         defaultValue={store.user?.phoneNumber ? `${store.user.phoneNumber}` : ''}
                     />
