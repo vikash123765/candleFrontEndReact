@@ -6,58 +6,7 @@
     @media screen and (max-width: 600px) {
         grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row for all mobile screens */
     }
-}.product-card {
-    text-align: left;
-    background-color: var(--bg);
-    border: 2px solid var(--primary);
-    box-shadow: var(--shadow);
-    border: 0.1px solid #beb9b9; /* You can adjust the color code to make it lighter or darker */
-    cursor: pointer;
-    transition: transform 125ms;
-    color: #3e3939;
-    padding: 15px;
-    font-family: var(--font-main);
-    /* Apply the custom font family */
-  
-    /* Stack the elements vertically */
-    flex-direction: column;
-    /* Ensure the card fits within the screen width with padding */
-    max-width: calc(50% - 15px);
-    /* Add spacing between the cards */
-    margin: 0 0 14px 0;
 }
-
-.product-card:hover {
-    transform: scale(1.025);
-}
-
-.info {
-    flex: 1; /* Allow the info section to grow to fill remaining space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.price {
-    text-align: right;
-    font-size: 13px;
-    font-weight: bold;
-    color: #3498db;
-    margin-top: auto; /* Align the price to the bottom */
-}
-
-@media screen and (max-width: 600px) {
-    .product-card {
-        max-width: calc(50% - 15px); /* Adjust the width to fit two cards per row with spacing */
-<<<<<<< HEAD
-        margin: 0 0 15px 0; /* Add spacing between the cards */
-=======
-        margin: 0 0 14px 0; /* Add spacing between the cards */
->>>>>>> 4bad675e6bc8a68f134258780a2b6bf73338df17
-    }
-}
-
-
 
 #product-filters {
     display: flex;
@@ -124,38 +73,47 @@
     padding: 15px;
     font-family: var(--font-main);
     /* Apply the custom font family */
-    display: flex; /* Ensure that the card uses flexbox layout */
-    flex-direction: column; /* Stack the elements vertically */
+
+    &:hover {
+        transform: scale(1.025);
+    }
+
+    .info {
+        display: flex;
+        flex-direction: column; /* Stack info elements vertically */
+        gap: 7px; /* Reduce gap between elements */
+    }
+
+    .price {
+        text-align: right;
+        font-size: 13px;
+        font-weight: bold;
+        color: #3498db;
+    }
+}
+@media screen and (max-width: 600px) {
+    .product-card {
+        padding: 20px; /* Adjust padding for smaller cards */
+    }
+
+    .product-image {
+        width: 100%; /* Make image take full width of the card */
+        height: auto; /* Ensure image maintains aspect ratio */
+        border-radius: 0.5rem;
+    }
+
+    .info {
+        width: 100%; /* Make text take full width of the card */
+    }
 }
 
-.product-card:hover {
-    transform: scale(1.025);
-}
-
-.info {
-    flex: 1; /* Allow the info section to grow to fill remaining space */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.price {
-    text-align: right;
-    font-size: 13px;
-    font-weight: bold;
-    color: #3498db;
-    margin-top: auto; /* Align the price to the bottom */
-}
-
-
-
-.product-card img {
-    /* Ensure that the image maintains its aspect ratio */
+.product-image {
     width: 100%;
-    height: auto;
-    /* Adjust other styles as needed */
+    height: 150px; /* Set a fixed height for the images */
+    object-fit: cover; /* Maintain aspect ratio */
     border-radius: 0.5rem;
 }
+
 .product-card img {
     width: 100%;
     border-radius: 0.5rem;
