@@ -130,4 +130,21 @@
     font-size: 5em;
     /* Adjust the font size as needed */
 }
-
+/* Add this media query to target screens with a maximum width of 768px (adjust as needed) */
+@media screen and (max-width: 768px) {
+    .cart-item .right button {
+      display: none; /* Hide the button on mobile screens */
+    }
+  
+    .cart-item .right .remove-icon {
+      /* Style for the red "x" icon */
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 1; /* Ensure the icon appears above other elements */
+      color: #f44336; /* Red color */
+      font-size: 1.5em; /* Adjust the font size as needed */
+      cursor: pointer;
+    }
+  }
+  

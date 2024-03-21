@@ -443,6 +443,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         <div className="right" style={{ padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                                             <div>{p.productName}</div>
                                             <div>Kr{p.productPrice.toFixed(2)}</div>
+                                            <span className="remove-icon" onClick={remove}>×</span>
                                             <button onClick={remove} type="button">
                                                 Remove
                                             </button>

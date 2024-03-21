@@ -38,27 +38,27 @@ export default function ProductCard({ p }) {
 
   // Map product IDs to local storage image paths
   const imageMapping = {
-    1: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
-    2: Iphone15PlainCover, // Use the actual product ID here
-    3: iphone14proMaxPrint1,
-    4: iphone14proMaxPrint2,
-    5: iphone14proMaxPrint3,
-    10: iphone14proMaxBlue,
-    11: iphone14proMaxBlack,
-    12: iphone14proMaxWhite,
-    19:iphone15Black,
-    18:iphone15White,
-    16:iphone15blue,
-    20:iphone15print1,
-    21:iphone15print2,
-    22:iphone15print3,
-    23:s23print1,
-    24:s23print2,
-    25:s23print3,
-    27:s23blue,
-    28:s23Black,
-    29:s23white,
-    26:s23plain,
+    12: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
+    13: Iphone15PlainCover, // Use the actual product ID here
+    14: iphone14proMaxPrint1,
+    15: iphone14proMaxPrint2,
+    16: iphone14proMaxPrint3,
+    17: iphone14proMaxBlue,
+    18: iphone14proMaxBlack,
+    19: iphone14proMaxWhite,
+    20:iphone15Black,
+    21:iphone15White,
+    22:iphone15blue,
+    23:iphone15print1,
+    24:iphone15print2,
+    25:iphone15print3,
+    26:s23print1,
+    27:s23print2,
+    28:s23print3,
+    30:s23blue,
+    31:s23Black,
+    32:s23white,
+    33:s23plain,
 
     // Add more entries as needed
   };

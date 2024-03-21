@@ -69,7 +69,7 @@
       right: 70px; /* Adjust the value as needed */
     }
   }
-  
+
 
 
 .error {
@@ -81,3 +81,4 @@
     max-width: 100%; /* Ensure the image doesn't exceed its container */
     border-radius: 0.5rem;
 }
+
