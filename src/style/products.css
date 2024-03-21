@@ -7,6 +7,48 @@
         grid-template-columns: repeat(2, 1fr); /* Display 2 cards per row for all mobile screens */
     }
 }
+.product-card {
+    text-align: left;
+    background-color: var(--bg);
+    border: 2px solid var(--primary);
+    box-shadow: var(--shadow);
+    border: 0.1px solid #beb9b9; /* You can adjust the color code to make it lighter or darker */
+    cursor: pointer;
+    transition: transform 125ms;
+    color: #3e3939;
+    padding: 15px;
+    font-family: var(--font-main);
+    /* Apply the custom font family */
+    display: flex; /* Ensure that the card uses flexbox layout */
+    flex-direction: column; /* Stack the elements vertically */
+}
+
+.product-card:hover {
+    transform: scale(1.025);
+}
+
+.info {
+    flex: 1; /* Allow the info section to grow to fill remaining space */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.price {
+    text-align: right;
+    font-size: 13px;
+    font-weight: bold;
+    color: #3498db;
+    margin-top: auto; /* Align the price to the bottom */
+}
+
+@media screen and (max-width: 600px) {
+    .product-card {
+        max-width: calc(100% - 30px); /* Ensure the card fits within the screen width with padding */
+        margin: 0 auto; /* Center the card horizontally */
+    }
+}
+
 
 #product-filters {
     display: flex;
@@ -96,21 +138,7 @@
     margin-top: auto; /* Align the price to the bottom */
 }
 
-@media screen and (max-width: 600px) {
-    .product-card {
-        padding: 20px; /* Adjust padding for smaller cards */
-    }
 
-    .product-image {
-        width: 100%; /* Make image take full width of the card */
-        height: auto; /* Ensure image maintains aspect ratio */
-        border-radius: 0.5rem;
-    }
-
-    .info {
-        width: 100%; /* Make text take full width of the card */
-    }
-}
 
 .product-image {
     width: 100%;
