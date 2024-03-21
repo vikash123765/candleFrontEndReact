@@ -111,8 +111,7 @@
     .product-image {
         width: 100%; /* Make image take full width of the card */
         height: 100%; /* Make image take full height of the card */
-        object-fit: cover; /* Maintain aspect ratio and fill the entire space */
-        border-radius: 0.5rem;
+
     }
 }
 
