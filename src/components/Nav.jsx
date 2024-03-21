@@ -1,101 +1,95 @@
-import { Link } from 'react-router-dom'
-import { nav } from '../lib/nav'
-import { isLoggedIn } from '../lib/api'
-
+import { useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { nav } from '../lib/nav';
+import { isLoggedIn } from '../lib/api';
 import logo from '../Logo/logoMobile.webp';
-import { useAtom } from 'jotai'
-import { storeAtom } from '../lib/store'
+import { useAtom } from 'jotai';
+import { storeAtom } from '../lib/store';
 import '../style/nav.css';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-
 import MenuIcon from '@mui/icons-material/Menu';
 
 export default function Nav() {
+    const [store, setStore] = useAtom(storeAtom);
+    const history = useHistory();
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // State to manage menu open/close
 
-    const [store, setStore] = useAtom(storeAtom)
-    const isFullSizeScreen = window.innerWidth > 1200;
+    const handleMenuToggle = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleLinkClick = () => {
+        setIsMenuOpen(false); // Close menu when a link is clicked
+    };
 
     return (
-        <>
-          <header>
-      
-          
-          {isFullSizeScreen &&<img src={logo} alt="Your Logo" className="logo"  /> }
+        <header>
+            <img src={logo} alt="Your Logo" className="logo" /> {/* Assuming you want the logo displayed on all screen sizes */}
             <nav className='desktop'>
                 <ul>
-                    {/* I'm filtering here for only the routes that have a text property */}
-                    {nav.filter(r => r.text).map(function(item){
-                        if (store.loggedIn && (item.loggedIn === false)) {
-                            return
-                        }
-                        if (!store.loggedIn && (item.loggedIn === true)) {
-                            return
-                        }
-                        if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
-                            return
-                        }
-                        if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
-                            return
+                    {nav.filter(r => r.text).map(item => {
+                        // Filtering logic
+                        if (
+                            (store.loggedIn && !item.loggedIn) ||
+                            (!store.loggedIn && item.loggedIn) ||
+                            (store.adminLoggedIn && !item.adminLoggedIn) ||
+                            (!store.adminLoggedIn && item.adminLoggedIn)
+                        ) {
+                            return null;
                         }
                         return (
-                        <li key={item.to}>
-                            <Link to={item.to}>{item.text}</Link>
-                        </li>
-                        )
+                            <li key={item.to}>
+                                <Link to={item.to} onClick={handleLinkClick}>
+                                    {item.text}
+                                </Link>
+                            </li>
+                        );
                     })}
-                    {/* The Cart link is rendered differently than the other links, so I do it separately here, because it should also show the length of the cart. */}
                     <li>
-                        <Link to="/cart" className='cart-icon'>
-                            <ShoppingCartIcon /> 
-                            <div className='badge'>
-                                {store.cart && store.cart.length}
-                            </div>
+                        <Link to="/cart" className='cart-icon' onClick={handleLinkClick}>
+                            <ShoppingCartIcon />
+                            <div className='badge'>{store.cart && store.cart.length}</div>
                         </Link>
                     </li>
                 </ul>
             </nav>
 
             {/* MOBILE VERSION */}
-
             <nav className="mobile">
-                <div className="icon">
+                <div className="icon" onClick={handleMenuToggle}>
                     <MenuIcon />
                 </div>
-                <div className="menu">
-                    <ul>
-
-                        {nav.filter(r => r.text).map(function(item){
-                            if (store.loggedIn && (item.loggedIn === false)) {
-                                return
-                            }
-                            if (!store.loggedIn && (item.loggedIn === true)) {
-                                return
-                            }
-                            if (store.adminLoggedIn && (item.adminLoggedIn === false)) {
-                                return
-                            }
-                            if (!store.adminLoggedIn && (item.adminLoggedIn === true)) {
-                                return
-                            }
-                            return (
-                            <li key={item.to}>
-                                <Link to={item.to}>{item.text}</Link>
+                {isMenuOpen && (
+                    <div className="menu">
+                        <ul>
+                            {nav.filter(r => r.text).map(item => {
+                                // Filtering logic
+                                if (
+                                    (store.loggedIn && !item.loggedIn) ||
+                                    (!store.loggedIn && item.loggedIn) ||
+                                    (store.adminLoggedIn && !item.adminLoggedIn) ||
+                                    (!store.adminLoggedIn && item.adminLoggedIn)
+                                ) {
+                                    return null;
+                                }
+                                return (
+                                    <li key={item.to}>
+                                        <Link to={item.to} onClick={handleLinkClick}>
+                                            {item.text}
+                                        </Link>
+                                    </li>
+                                );
+                            })}
+                            <li>
+                                <Link to="/cart" className='cart-icon' onClick={handleLinkClick}>
+                                    <ShoppingCartIcon />
+                                    <div className='badge'>{store.cart && store.cart.length}</div>
+                                </Link>
                             </li>
-                            )
-                        })}
-
-                        <li>
-                            <Link to="/cart" className='cart-icon'>
-                                <ShoppingCartIcon /> 
-                                <div className='badge'>
-                                    {store.cart && store.cart.length}
-                                </div>
-                            </Link>
-                        </li>
-                    </ul>
-                </div>
+                        </ul>
+                    </div>
+                )}
             </nav>
-            </header>
-        </>
-    )
+        </header>
+    );
 }

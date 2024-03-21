@@ -442,12 +442,13 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                         </div>
                                         <div className="right" style={{ padding: '12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                                             <div>{p.productName}</div>
-                                            <div>{window.innerWidth > 768 ? `Kr${p.productPrice.toFixed(2)}` : p.productPrice.toFixed(2)}</div> {/* Displaying price with "Kr" for normal screens */}
-                                            {window.innerWidth <= 768 && <span className="remove-icon" onClick={remove}>×</span>} {/* Added an "×" icon for mobile screens */}
+                                            <div>{window.innerWidth > 600 ? `Kr${p.productPrice.toFixed(2)}` : p.productPrice.toFixed(2)}</div> {/* Displaying price with "Kr" for normal screens */}
+                                            {window.innerWidth <= 600 && <span className="remove-icon" onClick={remove}>×</span>} {/* Added an "×" icon for mobile screens */}
                                             <button onClick={remove} type="button">
                                                 Remove
                                             </button>
                                         </div>
+
 
                                     </div>
                                 );
