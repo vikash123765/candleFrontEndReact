@@ -91,15 +91,14 @@
         color: #3498db;
     }
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .product-card {
-        padding: 20px; /* Adjust padding for smaller cards */
+        padding: 2px; /* Adjust padding for smaller cards */
     }
 
     .product-image {
         width: 100%; /* Make image take full width of the card */
-        height: auto; /* Ensure image maintains aspect ratio */
-        border-radius: 0.5rem;
+     
     }
 
     .info {
