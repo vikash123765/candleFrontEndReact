@@ -49,7 +49,11 @@
 @media screen and (max-width: 600px) {
     .product-card {
         max-width: calc(50% - 15px); /* Adjust the width to fit two cards per row with spacing */
+<<<<<<< HEAD
         margin: 0 0 15px 0; /* Add spacing between the cards */
+=======
+        margin: 0 0 14px 0; /* Add spacing between the cards */
+>>>>>>> 4bad675e6bc8a68f134258780a2b6bf73338df17
     }
 }
 
