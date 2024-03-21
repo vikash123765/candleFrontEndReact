@@ -27,13 +27,7 @@ export default function Profile() {
             return;
         }
     
-        // Validate phone number format
-        
-       if (!phoneRegex.test(data.phoneNumber)) {
-            alert('Please enter a valid phone number,country and number no spaces or + please');
-            return;
-        }
-    
+   
         // Update profile information
         try {
             const parsedResult = await alterInfo(data);
