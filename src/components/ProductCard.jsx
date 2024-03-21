@@ -52,12 +52,12 @@ export default function ProductCard({ p }) {
     23:iphone15print1,
     24:iphone15print2,
     25:iphone15print3,
-    26:s23print1,
-    27:s23print2,
-    28:s23print3,
-    30:s23blue,
-    31:s23Black,
-    32:s23white,
+    34:s23print1,
+    35:s23print2,
+    36:s23print3,
+    37:s23blue,
+    38:s23Black,
+    39:s23white,
     33:s23plain,
 
     // Add more entries as needed
