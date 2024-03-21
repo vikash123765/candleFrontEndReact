@@ -13,3 +13,29 @@
         height:1px;/* Adjust width for mobile screens */
     }
 }
+
+/* Add this CSS to your existing styles */
+
+.mobile {
+    position: fixed;
+    top: 0; /* Position it at the top of the viewport */
+    left: 0; /* Align it with the left side of the viewport */
+    width: 100%; /* Take the full width of the viewport */
+    height: 100%; /* Take the full height of the viewport */
+    background-color: #fff; /* Set background color */
+    z-index: 1000; /* Ensure it appears above other elements */
+    overflow-y: auto; /* Allow vertical scrolling if the menu content exceeds viewport height */
+    padding-top: 50px; /* Adjust padding to accommodate fixed header */
+}
+
+.menu {
+    padding-top: 20px; /* Adjust padding to provide space for the menu icon */
+}
+
+/* Adjust styles for the menu icon */
+.icon {
+    position: fixed;
+    top: 10px; /* Adjust top position */
+    left: 10px; /* Adjust left position */
+    z-index: 1001; /* Ensure it appears above the menu content */
+}
