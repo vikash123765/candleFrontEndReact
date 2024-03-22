@@ -100,44 +100,50 @@ function getCookie(cname) {
 
 function getToken() {
     return getCookie('token')
+
+
 }
-async function handleFetch(endpoint, options = {}, routeName, textResponse) {
+
+async function handleFetch(endpoint, options = {}) {
     options.mode = 'cors';
 
     try {
         const res = await fetch(ROOT + endpoint, options);
 
-        console.log(res, "ressss");
+        console.log("Response:", res);
+        console.log("Response Status:", res.status);
+        console.log("Response OK:", res.ok);
 
         if (options.responseHandlers) {
             options.responseHandlers[res.ok ? 'good' : 'bad'](res);
         }
 
         if (options.logging) {
-            console.log(options.logging);
+            console.log("Logging:", options.logging);
         }
 
-        if (!res.ok) {
-            console.log(`
-                Error fetching from ${endpoint}
-                Route: ${routeName}
-            `);
-            console.log(res);
-            return;
-        }
-
-        if (textResponse) {
-            return await res.text();
+        let responseBody;
+        if (res.ok) {
+            if (options.textResponse) {
+                responseBody = await res.text();
+            } else {
+                responseBody = await res.json();
+            }
         } else {
-            return await res.json();
+            responseBody = await res.json();
         }
 
-        return res;
+        console.log("Response Body:", responseBody);
+        return responseBody;
+
     } catch (error) {
         console.error("Error in handleFetch:", error);
         throw error;
     }
 }
+
+
+
 
 
 
@@ -238,7 +244,7 @@ async function changePassword(oldPassword, newPassword, responseHandlers) {
 
 async function signUpUser(data) {
     try {
-        const response = await handleFetch('/user/signUp', {
+        const responseData = await handleFetch('/user/signUp', {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -246,30 +252,29 @@ async function signUpUser(data) {
             }
         });
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const responseText = await response.text(); // Get the response body as text
-        console.log("Response Text:", responseText); // Log the response text
-
-        const responseData = JSON.parse(responseText); // Try parsing the response text as JSON
-
         if (responseData.error) {
             alert("Error during signup, please try again");
-        } else {
+        } else if (responseData.message === 'account_created') {
             alert("Account created!!");
         }
+         else if (responseData.message === 'registered_user') {
+        alert("Account already registered please sign in!");
+        }
+        else if (responseData.message === 'guest_user') {
+            alert("This email has been used for prevoius guest orders please use unsed one!");
+            }
+
 
         return responseData;
     } catch (error) {
-        console.error("error during signUp", error);
+        console.error("Error during signUp:", error);
         alert("Error during signup, please try again");
         return {
             error: "Error during signup"
         };
     }
 }
+
 
 
 
