@@ -101,42 +101,44 @@ function getCookie(cname) {
 function getToken() {
     return getCookie('token')
 }
-
 async function handleFetch(endpoint, options = {}, routeName, textResponse) {
     options.mode = 'cors';
 
-    const res = await fetch(
-        ROOT + endpoint, options,
-        (response) => {
-            console.log(response, "vikasssss");
+    try {
+        const res = await fetch(ROOT + endpoint, options);
+
+        console.log(res, "ressss");
+
+        if (options.responseHandlers) {
+            options.responseHandlers[res.ok ? 'good' : 'bad'](res);
         }
-    );
-    console.log(res, "ressss")
 
-    if (options.responseHandlers) {
-        options.responseHandlers[res.ok ? 'good' : 'bad'](res);
-    }
-    if (options.logging) {
-        console.log(options.logging);
-    }
-    if (!res.ok) {
-        console.log(`
-            Error fetching from ${endpoint}
-            Route: ${routeName}
-        `);
-        console.log(res);
-        return;
-    }
-    if (textResponse) {
+        if (options.logging) {
+            console.log(options.logging);
+        }
 
-        return await res.text();
-    } else {
+        if (!res.ok) {
+            console.log(`
+                Error fetching from ${endpoint}
+                Route: ${routeName}
+            `);
+            console.log(res);
+            return;
+        }
 
-        return await res.json();
+        if (textResponse) {
+            return await res.text();
+        } else {
+            return await res.json();
+        }
+
+        return res;
+    } catch (error) {
+        console.error("Error in handleFetch:", error);
+        throw error;
     }
-
-    return res;
 }
+
 
 
 
@@ -235,7 +237,6 @@ async function changePassword(oldPassword, newPassword, responseHandlers) {
 }
 
 async function signUpUser(data) {
-    debugger
     try {
         const response = await handleFetch('/user/signUp', {
             method: 'POST',
@@ -243,19 +244,34 @@ async function signUpUser(data) {
             headers: {
                 'Content-Type': 'application/json'
             }
-        })
-        const reponseData = await response
+        });
 
-        console.log(reponseData, "response data")
-        return response;
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const responseText = await response.text(); // Get the response body as text
+        console.log("Response Text:", responseText); // Log the response text
+
+        const responseData = JSON.parse(responseText); // Try parsing the response text as JSON
+
+        if (responseData.error) {
+            alert("Error during signup, please try again");
+        } else {
+            alert("Account created!!");
+        }
+
+        return responseData;
     } catch (error) {
         console.error("error during signUp", error);
+        alert("Error during signup, please try again");
         return {
-            error: "Error durng signup"
-        }
+            error: "Error during signup"
+        };
     }
-
 }
+
+
 
 
 

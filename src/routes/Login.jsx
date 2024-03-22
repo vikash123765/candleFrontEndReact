@@ -111,20 +111,10 @@ export default function Login() {
             return;
         }
 
-        try {
-            const result = await signUpUser(data);
-            console.log(result);
-            alert("account created!! ")
+        await signUpUser(data);
 
-            form.reset();
-
-
-        } catch (error) {
-            console.error('Error during signup:', error);
-            alert("Error during signp please try again")
-        }finally {
-            setLoading(false); // Set loading to false after signup attempt
-        }
+        form.reset();
+        setLoading(false); // Set loading to false after signup attempt
     }
 // Update the component code
 return (
