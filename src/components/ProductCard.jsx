@@ -19,7 +19,7 @@ import iphone15print3 from "../ProductImages/iphone15print1.jpeg"
 
 import s23plain from "../ProductImages/s23plain.webp"
 import s23Black from "../ProductImages/s23Black.jpeg"
-import s23white from "../ProductImages/iphone15white.webp"
+import s23white from "../ProductImages/s23White.jpeg"
 import s23blue from "../ProductImages/s23blue.jpeg"
 
 import s23print1 from "../ProductImages/s23print1.jpg"
