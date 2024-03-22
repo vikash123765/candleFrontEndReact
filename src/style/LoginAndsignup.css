@@ -22,11 +22,10 @@
 .custom-login-form,
 .custom-signup-form {
   width: 100%;
-  max-width: 400px; /* Adjust maximum width of the forms */
 }
 
 .custom-form-field {
-  margin-bottom: 20px; /* Adjust spacing between form fields */
+  margin-bottom: 10px; /* Adjust spacing between form fields */
 }
 
 .custom-form-field select {
