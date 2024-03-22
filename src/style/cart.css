@@ -184,3 +184,23 @@ nav.mobile {
         display: none;
     }
 }
+
+.centered-paypal-button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; 
+
+    
+    
+}
+
+
+/* Increased size for PayPal button */
+@media (min-width: 769px) {
+    .centered-paypal-button .paypal-button-container {
+        width: 200px;
+        height: 600px;
+    }
+}
+
+

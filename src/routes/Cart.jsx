@@ -526,7 +526,8 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                     )}
               
                     <>
-                        <div className="custom-paypal-buttons" >
+                    <div className={`custom-paypal-buttons ${store.loggedIn && window.innerWidth > 768 ? 'centered-paypal-button' : ''}`}>
+    
                             <PayPalScriptProvider options={payPalOptions}>
                                 <PayPalButtons
                                
