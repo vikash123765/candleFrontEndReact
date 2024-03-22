@@ -16,7 +16,7 @@
 .custom-login-form-container,
 .custom-signup-form-container {
   flex: 1;
-  margin-right: 40px; /* chnagin horizontla gap between forms*/  
+  margin-right: 30px; /* chnagin horizontla gap between forms*/  
 }
 
 .custom-login-form,
