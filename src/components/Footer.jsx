@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';  // Updated import
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 import logoImage from '../Logo/postnord.png';
 import paypal from '../Logo/paypal.png';
 
@@ -17,6 +18,10 @@ const social = [
   },
   {
     icon: <WhatsAppIcon style={{ fontSize: '64px' }} />,
+    href: "#"
+  },
+  {
+    icon: <YouTubeIcon style={{ fontSize: '64px' }} />,
     href: "#"
   },
 ];
