@@ -2,13 +2,12 @@ import { getAllProducts } from "../lib/api";
 import { useEffect, useState, useRef } from "react";
 import ProductCard from "../components/ProductCard";
 
-
-
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [types, setTypes] = useState([]);
   const [priceRangeValues, setPriceRangeValues] = useState([0, 300]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
 
   useEffect(() => {
@@ -23,11 +22,11 @@ export default function Products() {
       .catch(err => {
         console.log(err);
       });
-  }, []); // Empty dependency array ensures this effect runs only once
+  }, []); 
 
   useEffect(() => {
     setProductRange();
-  }, [priceRangeValues, products]); // Updated dependency array
+  }, [priceRangeValues, products]);
 
   function createProductDTOs(pdx) {
     return pdx.map(p => {
@@ -36,26 +35,20 @@ export default function Products() {
     });
   }
 
-  function filterByType(e) {
-    const val = e.target.value;
-    if (val === 'all') {
-      setFilteredProducts([]);
-      return;
-    }
-
-    setFilteredProducts(products.filter(p => p.productType === val));
+  function filterProducts() {
+    setSearchQuery(searchRef.current.value.toLowerCase());
   }
 
-  function searchByName() {
-    const query = searchRef.current.value.toLowerCase();
-    setFilteredProducts(products.filter(p => {
-      const words = p.productName.split(' ').map(w => w.toLowerCase());
-      return words.includes(query) || query === p.productName.toLowerCase();
-    }));
+  function setProductRange() {
+    const [rangeMin, rangeMax] = priceRangeValues;
+    const uniqueFilteredProducts = products.filter(p => (
+      p.productPrice >= rangeMin && p.productPrice <= rangeMax
+    ));
+    setFilteredProducts(uniqueFilteredProducts);
   }
 
-  function resetProducts() {
-    setFilteredProducts([]);
+  function handlePriceRangeSlider(e, values) {
+    setPriceRangeValues(values);
   }
 
   function sortProducts(e) {
@@ -78,20 +71,24 @@ export default function Products() {
   
     setFilteredProducts(sortedProducts);
   }
-  
 
-  function handlePriceRangeSlider(e, values) {
-    setPriceRangeValues(values);
-  }
+  function handleSearch() {
+    const query = searchQuery;
+    let filtered = products;
 
-  function setProductRange() {
-    const [rangeMin, rangeMax] = priceRangeValues;
+    if (query) {
+      filtered = products.filter(p => {
+        const words = p.productName.split(' ').map(w => w.toLowerCase());
+        return words.includes(query) || query === p.productName.toLowerCase();
+      });
+    }
 
-    const uniqueFilteredProducts = new Set(products.filter(p => (
-      p.productPrice >= rangeMin && p.productPrice <= rangeMax
-    )));
+    const selectedType = document.getElementById("typeFilter").value;
+    if (selectedType !== 'all') {
+      filtered = filtered.filter(p => p.productType === selectedType);
+    }
 
-    setFilteredProducts([...uniqueFilteredProducts]);
+    setFilteredProducts(filtered);
   }
 
   return (
@@ -99,10 +96,8 @@ export default function Products() {
       <div id="product-filters">
         <div>
           Type
-          <select onChange={filterByType}>
-            <option value="all">
-              All
-            </option>
+          <select id="typeFilter" onChange={handleSearch}>
+            <option value="all">All</option>
             {types.map(type => (
               <option value={type} key={type}>
                 {type.toLowerCase().replaceAll('_', ' ')}
@@ -111,11 +106,9 @@ export default function Products() {
           </select>
         </div>
         <div>
-          Name
-          <input type="search" ref={searchRef} />
-          <button onClick={searchByName}>
-            Search
-          </button>
+          Search
+          <input type="search" ref={searchRef} onChange={filterProducts} />
+          <button onClick={handleSearch}>Search</button>
         </div>
         <div>
           Sort by
@@ -125,11 +118,10 @@ export default function Products() {
             <option value="price-a">Price (ascending)</option>
           </select>
         </div>
-
       </div>
       <div id="products">
-        {(filteredProducts.length > 0 ? Array.from(filteredProducts) : products).map(p => (
-          <ProductCard key={`pcard-${p.productId}`} p={p} filteredProducts={filteredProducts} />
+        {filteredProducts.map(p => (
+          <ProductCard key={`pcard-${p.productId}`} p={p} />
         ))}
       </div>
     </>
