@@ -193,7 +193,7 @@ const handleFormChange = () => {
                 const { shippingCost, message } = result;
 
                 if (typeof shippingCost === 'number' && !isNaN(shippingCost)) {
-                    console.log('Shipping Price:', shippingCost);
+                    console.log('Shipping Pricee:', shippingCost);
                     console.log('Shipping Message:', message);
 
                     // Calculate the new totalWithShipping
