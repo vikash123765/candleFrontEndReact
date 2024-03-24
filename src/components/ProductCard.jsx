@@ -87,7 +87,7 @@ export default function ProductCard({ p }) {
   return (
     <>
       <button className="product-card" onClick={handleClick}>
-      {image && <img src={image} alt={image} style={{ width: '100%', height: '250px',  objectFit: 'cover', borderRadius: '0.5rem' }} />}
+      {image && <img src={image} alt={image} style={{ width: '100%', height: '300px',  objectFit: 'cover', borderRadius: '0.5rem' }} />}
 
 
 

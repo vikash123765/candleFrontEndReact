@@ -65,8 +65,8 @@
 @media screen and (max-width: 600px) {
     .price-mobile {
       position: absolute;
-      bottom:-9px;
-      right: 1px; /* Adjust the value as needed */
+      bottom:-19px;
+      right: 3px; /* Adjust the value as needed */
     }
   }
 

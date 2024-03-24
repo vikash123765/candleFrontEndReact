@@ -70,7 +70,7 @@
     cursor: pointer;
     transition: transform 125ms;
     color: #3e3939;
-    padding: 15px;
+    padding: 1px;
     font-family: var(--font-main);
     /* Apply the custom font family */
 
