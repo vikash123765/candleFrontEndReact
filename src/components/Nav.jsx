@@ -76,7 +76,7 @@ export default function Nav() {
                                 )
                             })}
                             <li>
-                                <Link to="/cart" className='cart-icon'>
+                                <Link to="/cart" className='cart-icon' onClick={closeMobileMenu}>
                                     <ShoppingCartIcon />
                                     <div className='badge'>
                                         {store.cart && store.cart.length}
