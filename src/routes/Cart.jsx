@@ -259,7 +259,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
         setIsPlacingOrder(true); // Set loading state
         try {
             const order = await actions.order.capture();
-            console.log('Order:', order);
+            console.log('Oorder:', order);
 
             const res = await fetch(ROOT + '/finalizeOrder', {
                 method: 'POST',
