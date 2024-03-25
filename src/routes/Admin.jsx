@@ -4,7 +4,7 @@ const ROOT = "https://api.vtscases.com";
 
 const Admin = () => {
   const [adminEmail, setAdminEmail] = useState(""); // Input for admin email (authentication)
-  const [authToken, setAuthToken] = useState(""); // Input for authentication token
+ // const [authToken, setAuthToken] = useState(""); // Input for authentication token
   const [orderNrCancel, setOrderNrCancel] = useState(""); // Input for order number to cancel
   const [orderNrSent, setOrderNrSent] = useState(""); // Input for order number to mark as sent
   const [trackingId, setTrackingId] = useState(""); // Input for tracking ID when marking as sent
@@ -26,7 +26,7 @@ const Admin = () => {
         headers: {
           'Content-Type': 'application/json',
           'email': adminEmail, // Use the provided admin email for authentication
-          'x-auth-token': authToken,
+          'x-auth-token': getCookie('token'),
         },
         mode: 'cors', // Include 'mode: cors' for CORS
       });
@@ -57,14 +57,15 @@ const Admin = () => {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': authToken,
+                'x-auth-token': getCookie('token'),
             },mode: 'cors' // Include 'mode: cors' for CORS
         });
 
         if (response.ok) {
             console.log("Admin logged out successfully");
             alert("Admin logged out successfully")
-            localStorage.removeItem("tokenA");
+            document.cookie = "tokenA=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";  // Remove token from cookies
+            document.cookie = ""
             // Redirect to the login page or another appropriate page
             window.location.href = '/login'; // Example: Redirect to the login page
         } else {
@@ -87,7 +88,7 @@ const handleMarkSent = async () => {
       headers: {
         'Content-Type': 'application/json',
         'email': adminEmail,
-        'x-auth-token': authToken,
+        'x-auth-token': getCookie('token'),
       },mode: 'cors' // Include 'mode: cors' for CORS
     });
 
@@ -125,7 +126,7 @@ const handleMarkSent = async () => {
         headers: {
           'Content-Type': 'application/json',
           'email': adminEmail, // Use the provided admin email for authentication
-          'x-auth-token': authToken,
+          'x-auth-token': getCookie('token'),
         },mode: 'cors' // Include 'mode: cors' for CORS
       });
 
@@ -158,14 +159,14 @@ const handleMarkSent = async () => {
           onChange={(e) => setAdminEmail(e.target.value)}
           placeholder="Enter Admin Email"
         />
-        <label htmlFor="authToken">Authentication Token:</label>
+     {/*    <label htmlFor="authToken">Authentication Token:</label>
         <input
           type="text"
           id="authToken"
           value={authToken}
           onChange={(e) => setAuthToken(e.target.value)}
           placeholder="Enter Authentication Token"
-        />
+        /> */}
       </div>
 
       {/* Remove/Cancel an Order */}

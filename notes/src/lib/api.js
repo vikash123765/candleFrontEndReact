@@ -3,15 +3,20 @@ const ROOT = DEV ? "https://api.vtscases.com" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""
-    const token = getCookie('token')
-    if (!token) return {} // this function should always return an object
+    const token = getCookie('token');
+      console.log("Token:", token);
+    if (!token) return {}; // this function should always return an object
 
-    // make the API call wit hthe token on the headers
+    // make the API call with the token in the headers
     const res = await fetch(ROOT + `/user/loggedIn/info`, {
         headers: {
-            token
+            "token": token
+            
         }
-    })
+    });
+  
+
+
 
     // handle bad request
     if (!res.ok) {

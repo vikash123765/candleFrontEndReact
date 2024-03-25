@@ -3,6 +3,7 @@ import Footer from "./components/Footer"
 import { Routes, Route } from 'react-router-dom'
 import { nav } from './lib/nav'
 import { useState, useEffect } from "react"
+import { getCookie } from "./lib/api";
 import { signOutUser, isLoggedIn, getOrders,isAdminLoggedIn } from "./lib/api"
 import Login from "./routes/Login.jsx"; // Replace "path-to-your" with the actual path
 import Admin from "./routes/Admin.jsx"; // Replace "path
@@ -53,11 +54,15 @@ function App() {
 
 
   async function fetchOrders() {
-    getOrders()
+    const token = getCookie('token'); 
+    console.log("token",token)
+    getOrders(token)
     .then(orders => {
       updateStore(setStore, {orders})
     }) 
   }
+  const token = getCookie('token'); 
+  console.log("token",token)
 
   // useEffect with an empty array as the 2nd argument, will only run on the component mount
   useEffect(()=>{
@@ -105,10 +110,13 @@ function App() {
 
   function logOut() {
     localStorage.removeItem('guest-cart')
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     signOutUser()
     setUser({})
+
     setLoggedIn(false)
   }
+
 
   return (
     <>

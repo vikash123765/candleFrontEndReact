@@ -3,13 +3,14 @@ const ROOT = DEV ? "https://api.vtscases.com" : ""
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""
-    const token = getCookie('token')
+    const token = getCookie('token');
+    console.log(token)
     if (!token) return {} // this function should always return an object
 
     // make the API call wit hthe token on the headers
     const res = await fetch(ROOT + `/user/loggedIn/info`, {
         headers: {
-            token
+            token:token,
         }
     })
 
@@ -45,7 +46,7 @@ async function isLoggedIn() {
 
 async function isAdminLoggedIn() {
     // get token. if there is none, it will be ""
-    const token = localStorage.getItem('tokenA');
+    const token = getCookie('tokenA'); //
     if (!token) {
         return false;
     } else {
@@ -99,9 +100,15 @@ function getCookie(cname) {
 }
 
 function getToken() {
-    return getCookie('token')
+    return getCookie('token'); 
 
 
+}
+function setCookie(cname, cvalue, exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+    const expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;Secure;HttpOnly";
 }
 
 async function handleFetch(endpoint, options = {}) {
@@ -286,6 +293,7 @@ export {
     signOutUser,
     isLoggedIn,
     isAdminLoggedIn,
+    setCookie,
     ROOT,
     getCookie,
     getToken,

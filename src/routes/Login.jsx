@@ -1,7 +1,7 @@
 // Import necessary modules
 import React, { useState } from "react";
 import FormField from "../components/FormField";
-import { signUpUser } from "../lib/api";
+import { signUpUser,setCookie} from "../lib/api";
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -34,9 +34,9 @@ export default function Login() {
 
             if (adminRes.status == '200') {
                 const headers = adminRes.headers;
-                const mockCookie = headers.get('X-Token')
-                localStorage.setItem("tokenA", mockCookie);
-                document.cookie = mockCookie + ";SameSite=Lax";
+                const token = headers.get('X-Token')
+                
+                setCookie('token', token, 1);
                 alert("sign in sucessfull !")
                 window.location.href = '/admin';
                 return;
@@ -58,9 +58,8 @@ export default function Login() {
 
             if (userRes.ok) {
                 const headers = userRes.headers;
-                const mockCookie = headers.get('X-Token');
-                console.log("User mockCookie:", mockCookie);
-                document.cookie = mockCookie + ";SameSite=Lax";
+                const token = headers.get('X-Token');
+                setCookie('token', token, 1);
                 alert("sign in sucessfull !")
                 window.location.href = '/';
                 return;

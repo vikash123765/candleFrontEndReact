@@ -1,11 +1,12 @@
 import { useAtom } from 'jotai';
 import { storeAtom } from '../lib/store';
-import { ROOT, getToken } from '../lib/api.js';
+import { ROOT, getToken } from '../lib/api.js'; 
 import { clearCart } from '../lib/cart.js';
 import { useNavigate } from 'react-router-dom';
 import GuestCheckoutForm from '../components/GuestCheckoutForm.jsx';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState, useEffect, useRef } from 'react';
+
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Declare shippingCost state
@@ -265,7 +266,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    token: getToken(),
+                    token: getToken(),  
                 },
                 body: JSON.stringify(store.cart.map((p) => p.productId)),
             });
