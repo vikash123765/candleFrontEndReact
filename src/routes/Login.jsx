@@ -1,7 +1,7 @@
 // Import necessary modules
 import React, { useState } from "react";
 import FormField from "../components/FormField";
-import { signUpUser } from "../lib/api";
+import { signUpUser,signOutUser } from "../lib/api";
 import axios from 'axios';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
@@ -12,6 +12,8 @@ export default function Login() {
     const [error, setError] = useState("");
     const [signupError, setSignupError] = useState("");
     const [loading, setLoading] = useState(false); // Introduce loading state for both login and signup
+    const [signOutTimer, setSignOutTimer] = useState(null);
+
 
 
     async function handleLogin(e) {
@@ -55,13 +57,26 @@ export default function Login() {
                     "password": formData.password,
                 },
             });
-
             if (userRes.ok) {
                 const headers = userRes.headers;
                 const mockCookie = headers.get('X-Token');
-                
                 document.cookie = mockCookie + ";SameSite=Lax";
-                alert("sign in sucessfull !")
+                alert("Sign in successful!");
+                
+                // Clear previous timer
+                if (signOutTimer) {
+                    clearTimeout(signOutTimer);
+                }
+            
+                // Set new timer to sign out user after 5 minutes
+                const timer = setTimeout(() => {
+                    document.cookie = "";
+                    setLoggedIn(false);
+                    setUser(null);
+                }, 5 * 60 * 1000); // 5 minutes in milliseconds
+            
+                setSignOutTimer(timer);
+                
                 window.location.href = '/';
                 return;
             }

@@ -1,6 +1,6 @@
 import Nav from "./components/Nav"
 import Footer from "./components/Footer"
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route,useNavigate  } from 'react-router-dom'
 import { nav } from './lib/nav'
 import { useState, useEffect } from "react"
 import { signOutUser, isLoggedIn, getOrders,isAdminLoggedIn } from "./lib/api"
@@ -44,12 +44,11 @@ function App() {
   */
 
   const [store, setStore] = useAtom(storeAtom)
-
-  // when the app starts up, check localStorage for a cart
-
   const [user, setUser] = useState({})
-  const [loggedIn, setLoggedIn] = useState(false)
   const [adminLoggedIn, setAdminLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [logoutTimer, setLogoutTimer] = useState(null);
+
 
 
   async function fetchOrders() {
@@ -60,55 +59,93 @@ function App() {
   }
 
   // useEffect with an empty array as the 2nd argument, will only run on the component mount
-  useEffect(()=>{
-    // gets the cart from local storage and puts it in the store
-    // calls the isLoggedIn function to see if you're logged in
-    isLoggedIn()
-      .then(userRes => {
-        // if logged in, we will have a userame property
-        if (userRes.userName) {
-          // set the user state to the user object, and the logged-in state to true
-          setUser(userRes)
-          setLoggedIn(true)
-          updateStore(setStore, {
-            cart: getCart_localStorage(true),
-            user: userRes,
-            loggedIn: true
-          })
-          fetchOrders()
-        } else {
-          updateStore(setStore, {
-            cart: getCart_localStorage()
-          })
-        }
-      })
+  const checkSession = async () => {
+    const userRes = await isLoggedIn();
+    if (userRes.userName || userRes.token) {
+      setUser(userRes);
+      setLoggedIn(true);
+      updateStore(setStore, {
+        cart: getCart_localStorage(true),
+        user: userRes,
+        loggedIn: true
+      });
+      fetchOrders();
+    // Calculate time since token creation on frontend
+    const tokenCreationTimeFrontend = new Date(userRes.tokenCreationDateTime).getTime();
 
-      isAdminLoggedIn().then((adminValue)=>{
-        if(adminValue){
-          setAdminLoggedIn(true);
-          updateStore(setStore, {
-       
-            adminLoggedIn: true
-          })
-        }else{
-          setAdminLoggedIn(false);
-          updateStore(setStore, {
-       
-            adminLoggedIn: false
-          })
-        }
-      })
+    // Adjust token creation time based on time zone difference (8 hours in this case)
+    const tokenCreationTimeBackend = tokenCreationTimeFrontend + (8 * 60 * 60 * 1000);
+
+    const currentTime = new Date().getTime();
+    const timeSinceTokenCreation = currentTime - tokenCreationTimeBackend;
+
+    // Check if user has been logged in for more than 2 minutes
+    if (timeSinceTokenCreation > 2 * 60 * 1000) {
+      const timeUntilNext2Minutes = 2 * 60 * 1000 - (timeSinceTokenCreation % (2 * 60 * 1000));
+
+      // Set timer for auto-logout after 2 minutes from token creation time
+      const timer = setTimeout(() => {
+        logOut();
+      }, timeUntilNext2Minutes);
+
+      setLogoutTimer(timer);
+    } else {
+      // If less than 2 minutes, set the timer for 2 minutes from token creation
+      const timer = setTimeout(() => {
+        logOut();
+      }, 2 * 60 * 1000 - timeSinceTokenCreation);
+
+      setLogoutTimer(timer);
+    }
+    } else {
+      updateStore(setStore, {
+        cart: getCart_localStorage()
+      });
+    }
+  };
+const currentDate = new Date();
+console.log(currentDate);
+  useEffect(() => {
+    checkSession();
+
+    // Cleanup
+    return () => {
+      if (logoutTimer) {
+        clearTimeout(logoutTimer);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    isAdminLoggedIn().then((adminValue)=>{
+      if(adminValue){
+        setAdminLoggedIn(true);
+        updateStore(setStore, {
+     
+          adminLoggedIn: true
+        })
+      }else{
+        setAdminLoggedIn(false);
+        updateStore(setStore, {
+     
+          adminLoggedIn: false
+        })
+      }
+    })
 
 
 
-  }, [])
+}, [])
 
   function logOut() {
-    localStorage.removeItem('guest-cart')
-    signOutUser()
-    setUser({})
-    setLoggedIn(false)
+    localStorage.removeItem('guest-cart');
+    setUser({});
+    setLoggedIn(false);
+    document.cookie = ""; // Clear cookies here
+    clearTimeout(logoutTimer);
+    setLogoutTimer(null);
   }
+
 
   return (
     <>
