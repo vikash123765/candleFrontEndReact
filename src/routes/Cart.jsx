@@ -300,7 +300,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
         try {
 
 
-            console.log("Body", JSON.stringify({
+            console.log("Bdody", JSON.stringify({
                 jsonPayload: JSON.stringify(store.cart.map((p) => p.productId)),
                 guestOrderRequest: e,
             }))
