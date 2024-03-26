@@ -35,7 +35,7 @@ export default function Login() {
             if (adminRes.status == '200') {
                 const headers = adminRes.headers;
                 const mockCookie = headers.get('X-Token')
-                localStorage.setItem("tokenA", mockCookie);
+                
                 document.cookie = mockCookie + ";SameSite=Lax";
                 alert("sign in sucessfull !")
                 window.location.href = '/admin';
@@ -59,7 +59,6 @@ export default function Login() {
             if (userRes.ok) {
                 const headers = userRes.headers;
                 const mockCookie = headers.get('X-Token');
-                console.log("User mockCookie:", mockCookie);
                 document.cookie = mockCookie + ";SameSite=Lax";
                 alert("sign in sucessfull !")
                 window.location.href = '/';

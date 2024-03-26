@@ -45,7 +45,7 @@ async function isLoggedIn() {
 
 async function isAdminLoggedIn() {
     // get token. if there is none, it will be ""
-    const token = localStorage.getItem('tokenA');
+    const token = getCookie('adminToken')
     if (!token) {
         return false;
     } else {

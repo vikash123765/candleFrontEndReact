@@ -64,7 +64,8 @@ const Admin = () => {
         if (response.ok) {
             console.log("Admin logged out successfully");
             alert("Admin logged out successfully")
-            localStorage.removeItem("tokenA");
+            document.cookie = ""
+           
             // Redirect to the login page or another appropriate page
             window.location.href = '/login'; // Example: Redirect to the login page
         } else {
