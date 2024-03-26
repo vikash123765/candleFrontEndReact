@@ -44,9 +44,6 @@ function App() {
   */
 
   const [store, setStore] = useAtom(storeAtom)
-
-  // when the app starts up, check localStorage for a cart
-
   const [user, setUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
   const [adminLoggedIn, setAdminLoggedIn] = useState(false)

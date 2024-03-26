@@ -1,4 +1,7 @@
 // Import necessary modules
+import { useAtom } from 'jotai';
+import { storeAtom, updateStore } from './path-to-storeAtom-file';
+
 import React, { useState } from "react";
 import FormField from "../components/FormField";
 import { signUpUser } from "../lib/api";
@@ -12,7 +15,8 @@ export default function Login() {
     const [error, setError] = useState("");
     const [signupError, setSignupError] = useState("");
     const [loading, setLoading] = useState(false); // Introduce loading state for both login and signup
-
+// Inside your login function or component
+     const [store, setStore] = useAtom(storeAtom);
 
     async function handleLogin(e) {
         e.preventDefault();
@@ -35,8 +39,9 @@ export default function Login() {
             if (adminRes.status == '200') {
                 const headers = adminRes.headers;
                 const mockCookie = headers.get('X-Token')
-                localStorage.setItem("tokenA", mockCookie);
-                document.cookie = mockCookie + ";SameSite=Lax";
+                document.cookie = ("tokenA", mockCookie)+ ";SameSite=Lax";
+                const adminEmail = formData.email;
+                updateStore(setStore, { adminEmail: adminEmail });
                 alert("sign in sucessfull !")
                 window.location.href = '/admin';
                 return;

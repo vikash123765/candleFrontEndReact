@@ -1,5 +1,7 @@
 const DEV = true
 const ROOT = DEV ? "https://api.vtscases.com" : ""
+import { useAtom } from 'jotai';
+import { storeAtom } from "../lib/store"
 
 async function isLoggedIn() {
     // get token. if there is none, it will be ""
@@ -41,18 +43,38 @@ async function isLoggedIn() {
 
 }
 
-
-
-async function isAdminLoggedIn() {
-    // get token. if there is none, it will be ""
-    const token = localStorage.getItem('tokenA');
-    if (!token) {
-        return false;
-    } else {
+async function isAdminLoggedIn(store) {
+    console.log(store);
+    const adminEmail = "abc@gmail.com";
+    
+    const token = getCookie('tokenA');
+    
+    if (token) {
         return true;
     }
+   
 
+    try {
+        const data = await fetch('https://api.vtscases.com/admin/loggedInOrNot', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'adminEmail': adminEmail
+            },
+           
+            mode: 'cors'  // Moved mode here
+        });
+
+        return data;
+    } catch (error) {
+        console.error("Error checking admin login:", error);
+        return false;
+    }
 }
+
+
+
+
 
 async function alterInfo(data) {
     return await handleFetch('/user/alterInfo', {
@@ -141,6 +163,10 @@ async function handleFetch(endpoint, options = {}) {
         throw error;
     }
 }
+
+
+    
+
 
 
 
@@ -287,6 +313,7 @@ export {
     isLoggedIn,
     isAdminLoggedIn,
     ROOT,
+    
     getCookie,
     getToken,
     alterInfo,

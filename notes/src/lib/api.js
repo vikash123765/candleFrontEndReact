@@ -43,16 +43,6 @@ async function isLoggedIn() {
 
 
 
-async function isAdminLoggedIn() {
-    // get token. if there is none, it will be ""
-    const token = localStorage.getItem('tokenA');
-    if (!token) {
-        return false;
-    } else {
-        return true;
-    }
-
-}
 
 async function alterInfo(data) {
     return await handleFetch('/user/alterInfo', {
@@ -101,6 +91,10 @@ function getCookie(cname) {
 function getToken() {
     return getCookie('token')
 }
+function removeCookie(cname) {
+    document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+}
+
 
 async function handleFetch(endpoint, options = {}, routeName, textResponse) {
     options.mode = 'cors';

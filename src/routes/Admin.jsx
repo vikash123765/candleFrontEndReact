@@ -1,3 +1,8 @@
+
+import { useAtom } from 'jotai';
+import { storeAtom } from "../lib/store";
+
+
 import React, { useState } from "react";
 import '../style/Admin.css';
 const ROOT = "https://api.vtscases.com";
@@ -9,7 +14,7 @@ const Admin = () => {
   const [orderNrSent, setOrderNrSent] = useState(""); // Input for order number to mark as sent
   const [trackingId, setTrackingId] = useState(""); // Input for tracking ID when marking as sent
   const [orderNrDelivered, setOrderNrDelivered] = useState(""); // Input for order number to mark as delivered
-
+const [store, setStore] = useAtom(storeAtom);
   const [loading, setLoading] = useState(false); // Introduce loading state
 
   const [formState, setFormState] = useState({
@@ -64,7 +69,9 @@ const Admin = () => {
         if (response.ok) {
             console.log("Admin logged out successfully");
             alert("Admin logged out successfully")
-            localStorage.removeItem("tokenA");
+            removeCookie()
+            
+
             // Redirect to the login page or another appropriate page
             window.location.href = '/login'; // Example: Redirect to the login page
         } else {
@@ -78,6 +85,7 @@ const Admin = () => {
       setLoading(false); // Set loading back to false when operation completes
     }
 };
+
 
 const handleMarkSent = async () => {
   setLoading(true);

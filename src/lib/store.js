@@ -4,7 +4,9 @@ import { atom } from 'jotai'
 const storeAtom = atom({
     cart: [],
     guestCart: [],
-    orders: []
+    orders: [],
+    loggedIn: false,
+    adminLoggedIn: false // Add adminLoggedIn to the initial state
 })
 
 const updateStore = (setStore, obj) => {

@@ -49,7 +49,7 @@ function App() {
 
   const [user, setUser] = useState({})
   const [loggedIn, setLoggedIn] = useState(false)
-  const [adminLoggedIn, setAdminLoggedIn] = useState(false)
+
 
 
   async function fetchOrders() {
@@ -58,50 +58,51 @@ function App() {
       updateStore(setStore, {orders})
     }) 
   }
+// useEffect with an empty array as the 2nd argument, will only run on the component mount
+useEffect(() => {
+  // gets the cart from local storage and puts it in the store
+  // calls the isLoggedIn function to see if you're logged in
+  isLoggedIn()
+    .then(userRes => {
+      // if logged in, we will have a userame property
+      if (userRes.userName) {
+        // set the user state to the user object, and the logged-in state to true
+        setUser(userRes)
+        setLoggedIn(true)
+        updateStore(setStore, {
+          cart: getCart_localStorage(true),
+          user: userRes,
+          loggedIn: true
+        })
+        fetchOrders()
+      } else {
+        updateStore(setStore, {
+          cart: getCart_localStorage()
+        })
+      }
+    });
 
-  // useEffect with an empty array as the 2nd argument, will only run on the component mount
-  useEffect(()=>{
-    // gets the cart from local storage and puts it in the store
-    // calls the isLoggedIn function to see if you're logged in
-    isLoggedIn()
-      .then(userRes => {
-        // if logged in, we will have a userame property
-        if (userRes.userName) {
-          // set the user state to the user object, and the logged-in state to true
-          setUser(userRes)
-          setLoggedIn(true)
-          updateStore(setStore, {
-            cart: getCart_localStorage(true),
-            user: userRes,
-            loggedIn: true
-          })
-          fetchOrders()
-        } else {
-          updateStore(setStore, {
-            cart: getCart_localStorage()
-          })
-        }
-      })
+  // Check admin login status
+  isAdminLoggedIn().then((adminValue) => {
+    const updatedNav = nav.map((item) => {
+      if (item.text === "Admin") {
+        return {
+          ...item,
+          component: adminValue ? <Admin /> : null,
+        };
+      }
+      return item;
+    });
 
-      isAdminLoggedIn().then((adminValue)=>{
-        if(adminValue){
-          setAdminLoggedIn(true);
-          updateStore(setStore, {
-       
-            adminLoggedIn: true
-          })
-        }else{
-          setAdminLoggedIn(false);
-          updateStore(setStore, {
-       
-            adminLoggedIn: false
-          })
-        }
-      })
+    setStore(updatedNav); // Update the global store with the new nav array
+    updateStore(setStore, {
+      adminLoggedIn: adminValue,
+    });
+  });
+}, []);
 
 
-
-  }, [])
+  
 
   function logOut() {
     localStorage.removeItem('guest-cart')
