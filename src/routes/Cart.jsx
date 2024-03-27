@@ -213,7 +213,7 @@ const handleFormChange = () => {
                 console.error('Error calculating shipping rates');
             }
         } catch (error) {
-            console.error('Errrrror in handleCalculateShipping:', error);
+            console.error('Errrrrror in handleCalculateShipping:', error);
         } finally {
             setIsCalculatingShipping(false);
         }
