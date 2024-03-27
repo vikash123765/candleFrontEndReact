@@ -32,6 +32,7 @@ import s23print3 from "../ProductImages/s23print3.jpeg"
 
 
 export default function ProductCard({ p }) {
+  const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
   console.log("vikasproducts", parseFloat)
   const [image, setImage] = useState("");
   const [modalShown, setModalShown] = useState(false);
@@ -84,20 +85,49 @@ export default function ProductCard({ p }) {
 
   console.log("Rendering with Image:", image);
 
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 600) {
+        setImageHeight('200px'); // Set height to 200px for mobile screens
+      } else {
+        setImageHeight('300px'); // Set height to 300px for larger screens
+      }
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Call handleResize initially to set the correct height on component mount
+    handleResize();
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <>
       <button className="product-card" onClick={handleClick}>
-      {image && <img src={image} alt={image} style={{ width: '100%', height: '300px',  objectFit: 'cover', borderRadius: '0.5rem' }} />}
+        {image && (
+          <img 
+            src={image} 
+            alt={image} 
+            style={{ 
+              width: '100%', 
+              height: imageHeight, 
+              objectFit: 'cover', 
+              borderRadius: '0.5rem' 
+            }} 
+          />
+        )}
 
-
-
-   
-
-   
         <div className="info">
           <h3>{p.productName}</h3>
           <div className="price">
-            SEK{displayPrice}</div>
+            SEK{displayPrice}
+          </div>
         </div>
       </button>
       {modalShown && <ProductModal p={updatedProduct} image={image} setModalShown={setModalShown} />}
