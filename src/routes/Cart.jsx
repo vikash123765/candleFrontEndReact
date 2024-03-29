@@ -504,7 +504,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                     Non-Traceable
                                 </label>
                             </div>
-                            Always reselect shipping options if you alter the products in the cart 
+                            <p>Always reselect shipping options if you alter the products in the cart </p>
                             <button
                                 type="button"
                                 
