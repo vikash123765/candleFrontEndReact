@@ -86,51 +86,61 @@ export default function ProductCard({ p }) {
   console.log("Rendering with Image:", image);
 
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth <= 600) {
-        setImageHeight('200px'); // Set height to 200px for mobile screens
-      } else {
-        setImageHeight('300px'); // Set height to 300px for larger screens
-      }
-    };
+   
+useEffect(() => {
+  const handleResize = () => {
+    if (window.innerWidth <= 600) {
+      setImageHeight('200px'); // Set height to 200px for mobile screens
+    } else {
+      setImageHeight('300px'); // Set height to 300px for larger screens
+    }
+  };
 
-    // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
+  window.addEventListener('resize', handleResize);
+  handleResize();
 
-    // Call handleResize initially to set the correct height on component mount
-    handleResize();
+  return () => {
+    window.removeEventListener('resize', handleResize);
+  };
+}, []);
 
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
+return (
+  <>
+    <button 
+      className="product-card" 
+      onClick={handleClick} 
+      style={{ 
+        width: '100%', 
+        height: 'auto', 
+        padding: '0', 
+        display: 'flex', 
+        flexDirection: 'column', 
+        justifyContent: 'space-between'
+      }}
+    >
+      {image && (
+        <img 
+          src={image} 
+          alt={image} 
+          style={{ 
+            width: '100%', 
+            height: imageHeight, 
+            objectFit: 'cover', 
+            borderRadius: '0.5rem',
+            display: 'block'
+          }} 
+        />
+      )}
 
-  return (
-    <>
-      <button className="product-card" onClick={handleClick}>
-        {image && (
-          <img 
-            src={image} 
-            alt={image} 
-            style={{ 
-              width: '100%', 
-              height: imageHeight, 
-              objectFit: 'cover', 
-              borderRadius: '0.5rem' 
-            }} 
-          />
-        )}
-
-        <div className="info">
-          <h3>{p.productName}</h3>
-          <div className="price">
-            SEK{displayPrice}
-          </div>
+      <div className="info">
+        <h3>{p.productName}</h3>
+        <div className="price">
+          SEK{displayPrice}
         </div>
-      </button>
-      {modalShown && <ProductModal p={updatedProduct} image={image} setModalShown={setModalShown} />}
-    </>
-  );
+      </div>
+    </button>
+
+    {modalShown && <ProductModal p={updatedProduct} image={image} setModalShown={setModalShown} />}
+  </>
+);
 }
