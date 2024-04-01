@@ -73,23 +73,24 @@ export default function Products() {
   }
 
   function handleSearch() {
-    const query = searchQuery;
+    const query = searchQuery.trim().toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
     let filtered = products;
-
+  
     if (query) {
       filtered = products.filter(p => {
-        const words = p.productName.split(' ').map(w => w.toLowerCase());
-        return words.includes(query) || query === p.productName.toLowerCase();
+        const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
+        return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
       });
     }
-
+  
     const selectedType = document.getElementById("typeFilter").value;
     if (selectedType !== 'all') {
       filtered = filtered.filter(p => p.productType === selectedType);
     }
-
+  
     setFilteredProducts(filtered);
   }
+  
 
   return (
     <>
