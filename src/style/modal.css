@@ -78,8 +78,8 @@
 }
 
 .product-modal_image {
-    width: 260px; /* Set your desired width */
-      height: 260px; /* Set your desired height */
+    width: 100%; /* Set your desired width */
+      height: 100%; /* Set your desired height */
       object-fit: contain;
   
     
@@ -87,7 +87,7 @@
 
   
   /* Styles for screens larger than mobile */
-  @media (min-width: 600px) {
+  @media (min-width: 800px) {
     .product-modal_image {
       width: 400px; /* Set your desired width */
       height: 400px; /* Set your desired height */
