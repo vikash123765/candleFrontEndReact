@@ -77,10 +77,11 @@
 }
 
 .product-modal_image {
-    width: 100%;
-    max-width: 100%; /* Ensure the image doesn't exceed its container */
-    border-radius: 0.5rem;
-}
+    width: 300px; /* Set your desired width */
+    height: 300px; /* Set your desired height */
+    object-fit: cover; /* This will make sure the image covers the dimensions without stretching */
+  }
+  
 
 @media screen and (max-width: 800px) {
     .product-modal {
