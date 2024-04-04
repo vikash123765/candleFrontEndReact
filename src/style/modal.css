@@ -19,7 +19,8 @@
     border-radius: 0.25rem;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
     max-height: 80vh; /* Set a maximum height */
-    overflow-y: auto; /* Allow vertical scrolling */
+    overflow-y: auto;  /* Enable vertical scrolling */
+    overflow-x: scroll;  /* Disable horizontal scrolling */
 }
 
 
@@ -77,11 +78,26 @@
 }
 
 .product-modal_image {
-    width: 300px; /* Set your desired width */
-    height: 300px; /* Set your desired height */
-    object-fit: cover; /* This will make sure the image covers the dimensions without stretching */
+    width: 260px; /* Set your desired width */
+      height: 260px; /* Set your desired height */
+      object-fit: contain;
+  
+    
+}
+
+  
+  /* Styles for screens larger than mobile */
+  @media (min-width: 600px) {
+    .product-modal_image {
+      width: 400px; /* Set your desired width */
+      height: 400px; /* Set your desired height */
+     
+      object-fit: contain;
+      
+    }
   }
   
+
 
 @media screen and (max-width: 800px) {
     .product-modal {
