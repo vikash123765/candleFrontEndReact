@@ -65,6 +65,16 @@ export default function ProductModal({ p, image, setModalShown }) {
   }
 
   const displayPrice = p.productPrice.toFixed(2)
+  let producttype= p.productType;
+ 
+
+  // Convert the productType string to display in title case
+  let formattedProductType = producttype.toLowerCase()
+      .split('_')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  
+
 
   return (
     <div className="product-modal_backdrop" onClick={closeModal}>
@@ -81,7 +91,7 @@ export default function ProductModal({ p, image, setModalShown }) {
           </div>
           <div className="right">
 
-            <div>{p.productType}</div>
+          <div>{formattedProductType}</div>
             <div>Description: {p.productDescription}</div>
               <div className="buttons-container">
 
