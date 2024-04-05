@@ -72,24 +72,27 @@ export default function Products() {
     setFilteredProducts(sortedProducts);
   }
 
-  function handleSearch() {
-    const query = searchQuery.trim().toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
-    let filtered = products;
-  
-    if (query) {
-      filtered = products.filter(p => {
-        const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
-        return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
-      });
+  function handleSearch(event) {
+    if (event.key === 'Enter' || event.keyCode === 13) { // Added this condition to check if Enter key is pressed
+      const query = searchQuery.trim().toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
+      let filtered = products;
+    
+      if (query) {
+        filtered = products.filter(p => {
+          const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, ''); // remove spaces and convert to lowercase
+          return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
+        });
+      }
+    
+      const selectedType = document.getElementById("typeFilter").value;
+      if (selectedType !== 'all') {
+        filtered = filtered.filter(p => p.productType === selectedType);
+      }
+    
+      setFilteredProducts(filtered);
     }
-  
-    const selectedType = document.getElementById("typeFilter").value;
-    if (selectedType !== 'all') {
-      filtered = filtered.filter(p => p.productType === selectedType);
-    }
-  
-    setFilteredProducts(filtered);
   }
+  
   
 
   return (
@@ -108,7 +111,7 @@ export default function Products() {
         </div>
         <div>
           Search
-          <input type="search" ref={searchRef} onChange={filterProducts} />
+          <input type="search" ref={searchRef}  onKeyDown={handleSearch} onChange={filterProducts} />
           <button onClick={handleSearch}>Search</button>
         </div>
         <div>
