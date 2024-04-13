@@ -30,8 +30,7 @@ import s23print3 from "../ProductImages/s23print3.jpeg"
 
 
 
-
-export default function ProductCard({ p }) {
+export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
   console.log("vikasproducts", parseFloat)
   const [image, setImage] = useState("");
@@ -76,7 +75,9 @@ export default function ProductCard({ p }) {
   const displayPrice = p.productPrice.toFixed(2);
 
   const handleClick = () => {
-    setModalShown(true);
+    if (!isSoldOut) {
+      setModalShown(true);
+    }
   };
 
   const closeModal = () => {
@@ -107,8 +108,9 @@ useEffect(() => {
 return (
   <>
     <button 
-      className="product-card" 
+      className={`product-card ${isSoldOut ? 'sold-out' : ''}`} 
       onClick={handleClick} 
+      disabled={isSoldOut}
       style={{ 
         width: '100%', 
         height: 'auto', 
@@ -127,7 +129,8 @@ return (
             height: imageHeight, 
             objectFit: 'cover', 
             borderRadius: '0.5rem',
-            display: 'block'
+            display: 'block',
+            opacity: isSoldOut ? '0.5' : '1'  // Dim the image for sold out products
           }} 
         />
       )}
@@ -135,7 +138,7 @@ return (
       <div className="info">
         <h3>{p.productName}</h3>
         <div className="price">
-          SEK{displayPrice}
+        SEK{displayPrice} {isSoldOut && '(Sold Out)'}
         </div>
       </div>
     </button>

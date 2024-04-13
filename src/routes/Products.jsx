@@ -1,4 +1,4 @@
-import { getAllProducts } from "../lib/api";
+import { getAllProducts,getProductsByIds } from "../lib/api";
 import { useEffect, useState, useRef } from "react";
 import ProductCard from "../components/ProductCard";
 
@@ -12,16 +12,33 @@ export default function Products() {
 
   useEffect(() => {
     // Fetch products and set types
-    getAllProducts()
-      .then(pdx => {
-        pdx = createProductDTOs(pdx);
-        setProducts(pdx);
-        let typesArr = pdx.map(p => p.productType);
+    async function fetchProducts() {
+      try {
+        const pdx = await getAllProducts();
+        const productsWithDTOs = createProductDTOs(pdx);
+        setProducts(productsWithDTOs);
+
+        const typesArr = productsWithDTOs.map(p => p.productType);
         setTypes([...new Set(typesArr)]);
-      })
-      .catch(err => {
+      } catch (err) {
         console.log(err);
-      });
+      }
+    }
+
+    fetchProducts();
+
+    // Mark products as sold out
+    async function markProductsSoldOut() {
+      try {
+        const soldOutProducts = await getProductsByIds([1, 4, 14]);
+        const ids = soldOutProducts.map(p => p.productId);
+        setSoldOutIds(ids);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    markProductsSoldOut();
   }, []); 
 
   useEffect(() => {
@@ -125,7 +142,7 @@ export default function Products() {
       </div>
       <div id="products">
         {filteredProducts.map(p => (
-          <ProductCard key={`pcard-${p.productId}`} p={p} />
+                  <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
         ))}
       </div>
     </>
