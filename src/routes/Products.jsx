@@ -9,6 +9,7 @@ export default function Products() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
+  const [soldOutIds, setSoldOutIds] = useState([]); 
 
   useEffect(() => {
     // Fetch products annd set types
