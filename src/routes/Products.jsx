@@ -11,7 +11,7 @@ export default function Products() {
   const searchRef = useRef(null);
 
   useEffect(() => {
-    // Fetch products and set types
+    // Fetch products annd set types
     async function fetchProducts() {
       try {
         const pdx = await getAllProducts();
