@@ -12,7 +12,7 @@ export default function Products() {
   const [soldOutIds, setSoldOutIds] = useState([]); 
 
   useEffect(() => {
-    // Fetch products and set types
+    // Fetch products annd set types
     async function fetchProducts() {
       try {
         const pdx = await getAllProducts();
@@ -143,7 +143,7 @@ export default function Products() {
       </div>
       <div id="products">
         {filteredProducts.map(p => (
-          <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
+                  <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
         ))}
       </div>
     </>
