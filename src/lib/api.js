@@ -198,7 +198,7 @@ async function getProductsByIds(ids) {
             body: JSON.stringify(ids),
             headers: {
                 'Content-Type': 'application/json',
-            },mode: 'cors' // Add mode: 'cors' here
+            },mode: 'no-cors' // Add mode: 'cors' here
         }, "get Prodcuts by IDs");
 
         return data;
