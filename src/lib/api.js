@@ -190,13 +190,12 @@ async function getAllProducts(limit = 3) {
 
 // example:     getProductsByIds([1, 2, 3])
 // api.js
+
 async function getProductsByIds(ids) {
     try {
-        const url = new URL('https://api.vtscases.com/products/ids');
-        url.searchParams.append('ids', JSON.stringify(ids));
-
-        const data = await handleFetch(url.toString(), {
+        const data = await handleFetch("/products/ids", {
             method: 'GET',
+            body: JSON.stringify(ids),
             headers: {
                 'Content-Type': 'application/json',
             },
