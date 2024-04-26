@@ -6,6 +6,10 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
+    z-index: 1000; /* High z-index to ensure it's above other elements */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .product-modal {
@@ -21,6 +25,7 @@
     max-height: 80vh; /* Set a maximum height */
     overflow-y: auto;  /* Enable vertical scrolling */
     overflow-x: scroll;  /* Disable horizontal scrolling */
+    z-index: 1001;
 }
 
 

@@ -176,7 +176,7 @@ const handleFormChange = () => {
                 return;
             }
 
-            const orderWeight = store.cart.length * 80;
+            const orderWeight = store.cart.length * 25;
 
             const response = await fetch(
                 `https://api.vtscases.com/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`,
@@ -533,7 +533,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                 <PayPalButtons
                                
                                     createOrder={(data, actions) => {
-                                        const orderWeight = store.cart.length * 80;
+                                        const orderWeight = store.cart.length * 25;
                                         const selectedIsSweden = isSwedenRef.current.toString();
                                         const selectedisTracable = isTracableRef.current.toString();
                                         const selectedisEurope = isEuropeRef.current.toString();
