@@ -194,12 +194,12 @@ async function getAllProducts(limit = 3) {
 async function getProductsByIds(ids) {
     try {
         const data = await handleFetch("/products/ids", {
-            method: 'GET',
+            method: 'POST',
             body: JSON.stringify(ids),
             headers: {
                 'Content-Type': 'application/json',
             },
-        }, "get Products by IDs");
+        }, "get Prodcuts by IDs");
 
         return data;
     } catch (error) {
@@ -207,6 +207,7 @@ async function getProductsByIds(ids) {
         return [];
     }
 }
+
 
 
 
