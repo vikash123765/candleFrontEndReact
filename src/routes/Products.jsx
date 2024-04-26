@@ -31,7 +31,7 @@ export default function Products() {
     // Mark products as sold out
     async function markProductsSoldOut() {
       try {
-        const soldOutProducts = await getProductsByIds([1, 4, 14]);
+        const soldOutProducts = await getProductsByIds([12, 34, 14]);
         const ids = soldOutProducts.map(p => p.productId);
         setSoldOutIds(ids);
       } catch (err) {
