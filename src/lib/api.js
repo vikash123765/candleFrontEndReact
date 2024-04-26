@@ -190,16 +190,17 @@ async function getAllProducts(limit = 3) {
 
 // example:     getProductsByIds([1, 2, 3])
 // api.js
-
 async function getProductsByIds(ids) {
     try {
-        const data = await handleFetch("/products/ids", {
-            method: 'POST',
-            body: JSON.stringify(ids),
+        const url = new URL('https://api.vtscases.com/products/ids');
+        url.searchParams.append('ids', JSON.stringify(ids));
+
+        const data = await handleFetch(url.toString(), {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             },
-        }, "get Prodcuts by IDs");
+        }, "get Products by IDs");
 
         return data;
     } catch (error) {
@@ -207,7 +208,6 @@ async function getProductsByIds(ids) {
         return [];
     }
 }
-
 
 
 
