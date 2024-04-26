@@ -64,15 +64,20 @@ export default function ProductCard({p, isSoldOut}) {
   };
 
   // Set image based on product ID
-  const newImage = imageMapping[p.productId];
-  console.log(p.productId, " p.productId", "newImage", newImage, "image", image)
-
+  useEffect(() => {
+    console.log("Product ID:", p.productId);
+    setImage(imageMapping[p.productId] || "");
+  }, [p.productId]);
+    const displayPrice = p.productPrice.toFixed(2);
   if (newImage !== image) {
     setImage(newImage);
   }
   // const updatedProduct = Object.assign({}, p, { image: newImage });
   const updatedProduct = { ...p, image: newImage };
-  const displayPrice = p.productPrice.toFixed(2);
+
+
+
+
 
   const handleClick = () => {
     if (!isSoldOut) {
@@ -84,7 +89,7 @@ export default function ProductCard({p, isSoldOut}) {
     setModalShown(false);
   };
 
-  console.log("Rendering with Image:", image);
+
 
 
    
@@ -107,43 +112,44 @@ useEffect(() => {
 
 return (
   <>
-    <button 
-      className={`product-card ${isSoldOut ? 'sold-out' : ''}`} 
-      onClick={handleClick} 
-      disabled={isSoldOut}
-      style={{ 
-        width: '100%', 
-        height: 'auto', 
-        padding: '0', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'space-between'
-      }}
-    >
-      {image && (
-        <img 
-          src={image} 
-          alt={image} 
-          style={{ 
-            width: '100%', 
-            height: imageHeight, 
-            objectFit: 'cover', 
-            borderRadius: '0.5rem',
-            display: 'block',
-            opacity: isSoldOut ? '0.5' : '1'  // Dim the image for sold out products
-          }} 
-        />
-      )}
+    {!modalShown && (
+      <button 
+        className={`product-card ${isSoldOut ? 'sold-out' : ''}`} 
+        onClick={handleClick} 
+        disabled={isSoldOut}
+        style={{ 
+          width: '100%', 
+          height: 'auto', 
+          padding: '0', 
+          display: 'flex', 
+          flexDirection: 'column', 
+          justifyContent: 'space-between'
+        }}
+      >
+        {image && (
+          <img 
+            src={image} 
+            alt={p.productName} 
+            style={{ 
+              width: '100%', 
+              height: imageHeight, 
+              objectFit: 'cover', 
+              borderRadius: '0.5rem',
+              display: 'block',
+              opacity: isSoldOut ? '0.5' : '1'  // Dim the image for sold out products
+            }} 
+          />
+        )}
 
       <div className="info">
         <h3>{p.productName}</h3>
         <div className="price">
         SEK{displayPrice} {isSoldOut && '(Sold Out)'}
         </div>
-      </div>
-    </button>
-
-    {modalShown && <ProductModal p={updatedProduct} image={image} setModalShown={setModalShown} />}
-  </>
-);
-}
+          </div>
+        </button>
+      )}
+      {modalShown && <ProductModal p={p} image={image} setModalShown={setModalShown} />}
+    </>
+  );
+}  

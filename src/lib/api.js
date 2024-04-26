@@ -148,6 +148,7 @@ async function handleFetch(endpoint, options = {}) {
 
 
 
+
 // async function handleFetch(endpoint, options = {}, routeName, textResponse) {
 
 //     const res = await fetch(
@@ -198,7 +199,7 @@ async function getProductsByIds(ids) {
             body: JSON.stringify(ids),
             headers: {
                 'Content-Type': 'application/json',
-            },mode: 'no-cors' // Add mode: 'cors' here
+            },
         }, "get Prodcuts by IDs");
 
         return data;
@@ -207,6 +208,8 @@ async function getProductsByIds(ids) {
         return [];
     }
 }
+
+
 
 
 

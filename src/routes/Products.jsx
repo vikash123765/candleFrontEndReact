@@ -12,20 +12,17 @@ export default function Products() {
   const [soldOutIds, setSoldOutIds] = useState([]); 
 
   useEffect(() => {
-    // Fetch products annd set types
+    // Fetch products and set types
     async function fetchProducts() {
       try {
-        console.log("Fetching products...");
         const pdx = await getAllProducts();
         const productsWithDTOs = createProductDTOs(pdx);
         setProducts(productsWithDTOs);
 
         const typesArr = productsWithDTOs.map(p => p.productType);
         setTypes([...new Set(typesArr)]);
-        console.log("Products fetched:", productsWithDTOs);
-        console.log("Types set:", types);
       } catch (err) {
-        console.log("Error fetching products:", err);
+        console.log(err);
       }
     }
 
@@ -34,14 +31,11 @@ export default function Products() {
     // Mark products as sold out
     async function markProductsSoldOut() {
       try {
-        console.log("Marking products as sold out...");
-        const soldOutProducts = await getProductsByIds([25, 35,19]);
+        const soldOutProducts = await getProductsByIds([1, 4, 14]);
         const ids = soldOutProducts.map(p => p.productId);
         setSoldOutIds(ids);
-        console.log("Sold out product IDs:", ids);
-        console.log("Products marked as sold out:", soldOutIds);
       } catch (err) {
-        console.log("Error marking products as sold out:", err);
+        console.log(err);
       }
     }
 
@@ -149,7 +143,7 @@ export default function Products() {
       </div>
       <div id="products">
         {filteredProducts.map(p => (
-                  <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
+          <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
         ))}
       </div>
     </>
