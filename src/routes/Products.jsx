@@ -15,14 +15,17 @@ export default function Products() {
     // Fetch products annd set types
     async function fetchProducts() {
       try {
+        console.log("Fetching products...");
         const pdx = await getAllProducts();
         const productsWithDTOs = createProductDTOs(pdx);
         setProducts(productsWithDTOs);
 
         const typesArr = productsWithDTOs.map(p => p.productType);
         setTypes([...new Set(typesArr)]);
+        console.log("Products fetched:", productsWithDTOs);
+        console.log("Types set:", types);
       } catch (err) {
-        console.log(err);
+        console.log("Error fetching products:", err);
       }
     }
 
@@ -31,11 +34,14 @@ export default function Products() {
     // Mark products as sold out
     async function markProductsSoldOut() {
       try {
-        const soldOutProducts = await getProductsByIds([15, 14]);
+        console.log("Marking products as sold out...");
+        const soldOutProducts = await getProductsByIds([25, 35,19]);
         const ids = soldOutProducts.map(p => p.productId);
         setSoldOutIds(ids);
+        console.log("Sold out product IDs:", ids);
+        console.log("Products marked as sold out:", soldOutIds);
       } catch (err) {
-        console.log(err);
+        console.log("Error marking products as sold out:", err);
       }
     }
 
