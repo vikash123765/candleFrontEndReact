@@ -133,8 +133,7 @@ return (
                 placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
                   type="textarea"
                   style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}/>
-                <p>Please enter country code and number with no spaces or + important!</p>
-                <FormField name="phoneNumber" label="Phone Number"  placeholder="country code and number no spaces or +"/>
+                <FormField name="phoneNumber" label="Phone Number"  placeholder="country code and number"/>
                 
                 <div className="custom-form-field">
                     <div>Gender</div>
@@ -143,8 +142,8 @@ return (
                         <option value="FEMALE">Female</option>
                     </select>
                 </div>
-                <FormField name="userPassword" label="Password" type="password" />
-                <FormField name="password2" label="Repeat password" type="password" />
+                <FormField name="userPassword" label="Password" type="password" placeholder="Enter your password" />
+                <FormField name="password2" label="Repeat password" type="password" placeholder="Repeat password" />
                 <button type="submit">Sign up</button>
                 {signupError && <span className="custom-error">{signupError}</span>}
             </form> 
@@ -153,8 +152,8 @@ return (
         </div>    <div className="custom-login-form-container">
             <form className="custom-login-form" onSubmit={handleLogin}>
                 <h2>Log in</h2>
-                <FormField name="email" label="Email" />
-                <FormField name="password" label="Password" type="password" />
+                <FormField name="email" label="Email" placeholder="Enter email"/>
+                <FormField name="password" label="Password" type="password" placeholder="Enter password" />
                 <a href="/forgot">Forgot password?</a><br />
                 <button type="submit">Log in</button>
                 {error && <span className="custom-error">{error}</span>}

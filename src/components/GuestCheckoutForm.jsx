@@ -134,6 +134,7 @@ const handleValidate = () => {
           label="Shipping address"
           name="shippingAddress"
           type="textarea"
+          placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
           onChange={(value) => handleInputChange('shippingAddress', value)}
           value={formData.shippingAddress}
           error={formErrors.shippingAddress} // Pass error message as a prop
