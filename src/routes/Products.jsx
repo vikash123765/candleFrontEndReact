@@ -89,9 +89,17 @@ function handleSearch(event) {
     let filtered = [...products]; // Make a copy of products array
 
     if (query) {
+      const searchTerms = query.split(" ");
       filtered = filtered.filter(p => {
         const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-        return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
+        const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
+        // Check if any search term appears anywhere in the product name or type
+        return searchTerms.every(term =>
+          productNameWithoutSpaces.includes(term) ||
+          typeWithoutSpaces.includes(term) ||
+          String(p.productPrice).includes(term) ||
+          String(p.productId).includes(term)
+        );
       });
     }
 
@@ -100,10 +108,12 @@ function handleSearch(event) {
       filtered = filtered.filter(p => p.productType === selectedType);
     }
 
+    // Set a state variable to indicate if no products were found
+    setNoProductsFound(filtered.length === 0);
+
     setFilteredProducts(filtered);
   }
 }
-
 
 function sortProducts(event) {
   const sortBy = event.target.value;
