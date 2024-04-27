@@ -133,7 +133,7 @@ return (
                 placeholder="Enter your complete address: Street Address, Postal Code, City, and Country. Please include Apartment or Floor Number."
                   type="textarea"
                   style={{ width: '100%', height: '8rem', boxSizing: 'border-box', resize: 'none' }}/>
-                <FormField name="phoneNumber" label="Phone Number"  placeholder="country code and number"/>
+                <FormField name="phoneNumber" label="Phone Number"  placeholder="Enter country code and number"/>
                 
                 <div className="custom-form-field">
                     <div>Gender</div>
