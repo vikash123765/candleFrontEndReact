@@ -10,6 +10,8 @@ export default function Products() {
   const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
   const [soldOutIds, setSoldOutIds] = useState([]); 
+  const [noProductsFound, setNoProductsFound] = useState(false);
+
 
   useEffect(() => {
     // Fetch products annd set types
@@ -115,6 +117,9 @@ function handleSearch(event) {
   }
 }
 
+
+
+
 function sortProducts(event) {
   const sortBy = event.target.value;
   let sortedProducts = [...filteredProducts]; // Use the currently filtered products
@@ -135,6 +140,7 @@ function sortProducts(event) {
   
 
   return (
+    
     <>
       <div id="product-filters">
         <div>
@@ -163,11 +169,14 @@ function sortProducts(event) {
         </div>
       </div>
       <div id="products">
-        {filteredProducts.map(p => (
-                  <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)}/>
-        ))}
+        {noProductsFound ? (
+          <div>Sorry, no products match your search.</div>
+        ) : (
+          filteredProducts.map(p => (
+            <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)} />
+          ))
+        )}
       </div>
     </>
   );
 }
-
