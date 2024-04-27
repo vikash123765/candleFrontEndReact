@@ -16,7 +16,7 @@ export default function Home() {
 
     const [products, setProducts] = useState([])
     useEffect(()=>{
-        getProductsByIds([15, 18,37])
+        getProductsByIds([15, 37,33])
             .then(p => {
                 setProducts(p)
             })
