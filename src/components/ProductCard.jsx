@@ -134,11 +134,40 @@ return (
           }} 
         />
       )}
-
-      <div className="info">
+  <div className="info">
         <h3>{p.productName}</h3>
         <div className="price">
-        SEK{displayPrice} {isSoldOut && '(Sold Out)'}
+        {isSoldOut ? (
+    <div>
+      {['14', '15', '16', '23', '24', '25','34', '35', '36'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK120</span>
+      )}
+      {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK110</span>
+      )}
+      {['12', '13', '33'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK100</span>
+      )}
+      {' '}SEK{displayPrice} (Sold Out)
+    </div>
+  ) : (
+    <div>
+      {['14', '15', '16', '23', '24', '25','34', '35', '36'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK120</span>
+      )}
+      {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK110</span>
+      )}
+      {['12', '13', '33'].includes(p.productId.toString()) && (
+        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK100</span>
+      )}
+      {' '}SEK{displayPrice}
+
+      </div>
+      
+
+    )}
+
         </div>
       </div>
     </button>
