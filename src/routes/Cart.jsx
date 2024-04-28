@@ -454,9 +454,29 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                         </div>
                         <div className="foot">
                         <h4 id="cart_total">
+                       
+
                                 Total: {store && store.cart ? `${totalWithShipping.toFixed(2)}SEK` : 'N/A'}
                             </h4>
                             <div>
+                            {Object.entries(store.cart.reduce((acc, cv) => {
+    if (!acc[cv.productName]) {
+        acc[cv.productName] = {
+            count: 1,
+            totalPrice: cv.productPrice,
+            individualPrice: cv.productPrice
+        };
+    } else {
+        acc[cv.productName].count++;
+        acc[cv.productName].totalPrice += cv.productPrice;
+    }
+    return acc;
+}, {})).map(([productName, { count, totalPrice, individualPrice }]) => (
+    <div key={productName}>
+        <p>{productName} {individualPrice.toFixed(2)} Kr x {count} = Kr{totalPrice.toFixed(2)} </p> <br></br>
+    </div>
+))}
+    <p>
     {Object.entries(store.cart.reduce((acc, cv) => {
         if (!acc[cv.productName]) {
             acc[cv.productName] = {
@@ -469,12 +489,17 @@ const isFormValidForLoggedInUser = validateForm(null, true);
             acc[cv.productName].totalPrice += cv.productPrice;
         }
         return acc;
-    }, {})).map(([productName, { count, totalPrice, individualPrice }]) => (
-        <div key={productName}>
-            <p>{productName} {individualPrice.toFixed(2)} Kr x {count} = Kr{totalPrice.toFixed(2)}</p>
-        </div>
-        
-    ))}
+    }, {})).reduce((output, [productName, { totalPrice }], index, array) => {
+        output += `Kr${totalPrice.toFixed(2)}`;
+        if (index !== array.length - 1) {
+            output += " + ";
+        }
+        return output;
+    }, "")}
+    {shippingPrice !== null ? ` + Shipping: Kr${shippingPrice.toFixed(2)}` : ""} = Total: {store && store.cart ? `${totalWithShipping.toFixed(2)} SEK` : 'N/A'}
+</p>
+
+<br></br>
                             {shippingPrice !== null && !isNaN(shippingPrice) && (
                                 <div>
                                     Shipping Cost: Kr{Number(shippingPrice).toFixed(2)}
@@ -483,17 +508,19 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                             )}
                             {isPlacingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
                             {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-                            {isCalculatingShipping && <div className="loading-icon">Calculating Shipping...</div>}
+                            <br></br>
+
 </div>
 
 
                             {store.loggedIn && store.user && (
-                                <div>
-                                    <strong>Shipping Address:</strong> {store.user.address}
-                                    <p>phone Number : </p> + {store.user.phoneNumber}
-                                    <p>Email: </p> {store.user.userEmail}
-                                    <p>Name: </p> {store.user.userName}
-                                </div>
+                              <div>
+                              <strong>Shipping Address:</strong>  <br /> {store.user.address}  <br /> 
+                              
+                              <strong>Phone Number:</strong> +  <br />{store.user.phoneNumber}  <br /> 
+                              <strong>Email:</strong><br />  {store.user.userEmail}  <br /> 
+                              <strong>Name:</strong> <br></br>{store.user.userName}
+                          </div>
                             )}
                             <div className="shipping-form">
                                 <label>
