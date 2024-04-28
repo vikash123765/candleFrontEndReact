@@ -453,19 +453,48 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                             })}
                         </div>
                         <div className="foot">
-                            <h4 id="cart_total">
-                                Total:  {store && store.cart ? `${totalWithShipping.toFixed(2)}SEK` : 'N/A'}
+                        <h4 id="cart_total">
+                                Total: {store && store.cart ? `${totalWithShipping.toFixed(2)}SEK` : 'N/A'}
                             </h4>
+                            <div>
+    {Object.entries(store.cart.reduce((acc, cv) => {
+        if (!acc[cv.productName]) {
+            acc[cv.productName] = {
+                count: 1,
+                totalPrice: cv.productPrice,
+                individualPrice: cv.productPrice
+            };
+        } else {
+            acc[cv.productName].count++;
+            acc[cv.productName].totalPrice += cv.productPrice;
+        }
+        return acc;
+    }, {})).map(([productName, { count, totalPrice, individualPrice }]) => (
+        <div key={productName}>
+            <p>{productName} {individualPrice.toFixed(2)} Kr x {count} = Kr{totalPrice.toFixed(2)}</p>
+        </div>
+        
+    ))}
+                            {shippingPrice !== null && !isNaN(shippingPrice) && (
+                                <div>
+                                    Shipping Cost: Kr{Number(shippingPrice).toFixed(2)}
+                                    {shippingCost && shippingCost.message && <span> ({shippingCost.message})</span>}
+                                </div>
+                            )}
+                            {isPlacingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                            {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
+                            {isCalculatingShipping && <div className="loading-icon">Calculating Shipping...</div>}
+</div>
+
+
                             {store.loggedIn && store.user && (
-                    <div>
-                        <strong>Shipping Address:</strong> {store.user.address}
-                        <p>phone Number : </p> + {store.user.phoneNumber}
-                        <p>Emaill  : </p>  {store.user.userEmail}
-                        <p>Name  : </p>  {store.user.userName}
-                     
-                        
-                    </div>
-                )}
+                                <div>
+                                    <strong>Shipping Address:</strong> {store.user.address}
+                                    <p>phone Number : </p> + {store.user.phoneNumber}
+                                    <p>Email: </p> {store.user.userEmail}
+                                    <p>Name: </p> {store.user.userName}
+                                </div>
+                            )}
                             <div className="shipping-form">
                                 <label>
                                     <input
@@ -505,21 +534,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                 </label>
                             </div>
                             <p>Always reselect shipping options if you alter the cart products </p>
-                            <button
-                                type="button"
-                                
-                            >
-                                Calculate Shipping Rates
-                            </button>
-                            {shippingPrice !== null && !isNaN(shippingPrice) && (
-                                <div>
-                                    Shipping Cost:  Kr{Number(shippingPrice).toFixed(2)}
-                                    {shippingCost && shippingCost.message && <span> ({shippingCost.message})</span>}
-                                </div>
-                            )}
-                            {isPlacingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-                            {isFinalizingOrder && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-                            {isCalculatingShipping && <div className="loading-icon">Calculating Shipping...</div>}
+                           
                         </div>
                     </form>
                     {store.cart.length > 0 && !store.loggedIn && (
