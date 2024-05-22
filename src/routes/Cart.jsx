@@ -10,7 +10,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Declare shippingCost state
 const payPalOptions = {
-    clientId: 'AW4rF3ytyCzS2oxIhUE_Ihw-ifEVIRKICnYfvZiUqi8-E_XJ-r2xyquy7H1XN0Z2GGEoUCLV_uEdec5_',
+    clientId: 'AV0M2rBqtYjM6MjDeL31vez-jyOjvQRZ8mHWO_svunBMxAk005tx2CsffnIautZsLfqcJkZJ3ftABVAb',
     currency: 'SEK',
     locale: "en_US"
 };
@@ -176,7 +176,38 @@ const handleFormChange = () => {
                 return;
             }
 
-            const orderWeight = store.cart.length * 25;
+            const weightMapping = {
+                12: 27, // Use the actual product ID here
+                13: 27, // Use the actual product ID here
+                14: 27,
+                15: 27,
+                16: 27,
+                17: 27,
+                18: 27,
+                19: 27,
+                22: 27,
+                23: 27,
+                24: 27,
+                25: 27,
+                34: 27,
+                35: 27,
+                36: 27,
+                37: 27,
+                38: 27,
+                39: 27,
+                33: 27,
+                41: 100
+            };
+
+            // Calculate the total order weight based on the weights of individual products in the cart
+            const orderWeight = store.cart.reduce((totalWeight, product) => {
+                const productId = product.productId; // Assuming product ID is stored in 'productId' property
+                const productWeight = weightMapping[productId] || 0; // Get weight from weightMapping
+                totalWeight += productWeight;
+                return totalWeight;
+            }, 0);
+
+            console.log(orderWeight);
 
             const response = await fetch(
                 `https://api.vtscases.com/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`,
@@ -575,7 +606,40 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                 <PayPalButtons
                                
                                     createOrder={(data, actions) => {
-                                        const orderWeight = store.cart.length * 25;
+                                        
+                                        const weightMapping = {
+                                            12: 27, // Use the actual product ID here
+                                            13: 27, // Use the actual product ID here
+                                            14: 27,
+                                            15: 27,
+                                            16: 27,
+                                            17: 27,
+                                            18: 27,
+                                            19: 27,
+                                            22: 27,
+                                            23: 27,
+                                            24: 27,
+                                            25: 27,
+                                            34: 27,
+                                            35: 27,
+                                            36: 27,
+                                            37: 27,
+                                            38: 27,
+                                            39: 27,
+                                            33: 27,
+                                            41: 100
+                                        };
+                                        
+                            
+                                        // Calculate the total order weight based on the weights of individual products in the cart
+                                        const orderWeight = store.cart.reduce((totalWeight, product) => {
+                                            const productId = product.productId; // Assuming product ID is stored in 'productId' property
+                                            const productWeight = weightMapping[productId] || 0; // Get weight from weightMapping
+                                            totalWeight += productWeight;
+                                            return totalWeight;
+                                        }, 0);
+                            
+                                        console.log(orderWeight);
                                         const selectedIsSweden = isSwedenRef.current.toString();
                                         const selectedisTracable = isTracableRef.current.toString();
                                         const selectedisEurope = isEuropeRef.current.toString();

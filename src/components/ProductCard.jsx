@@ -26,7 +26,7 @@ import s23print1 from "../ProductImages/s23print1.jpg"
 import s23print2 from "../ProductImages/s23print2.jpeg"
 import s23print3 from "../ProductImages/s23print3.jpeg"
 
-
+import rubberCaseiphone14 from "../ProductImages/iphone pro max rubber.jpg"
 
 
 
@@ -59,6 +59,8 @@ export default function ProductCard({p, isSoldOut}) {
     38:s23Black,
     39:s23white,
     33:s23plain,
+    41:rubberCaseiphone14
+
 
     // Add more entries as needed
   };
