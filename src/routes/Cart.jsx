@@ -196,7 +196,7 @@ const handleFormChange = () => {
                 38: 27,
                 39: 27,
                 33: 27,
-                41: 100
+                41: 47
             };
 
             // Calculate the total order weight based on the weights of individual products in the cart
@@ -213,7 +213,7 @@ const handleFormChange = () => {
                 `https://api.vtscases.com/calculate-shipping-rates/${isSweden.toString()}/${isEurope.toString()}/${isTracable.toString()}/${isNonTracable.toString()}/${orderWeight}`,
                 {
                     method: 'GET',
-                    mode: 'cors', // Include 'mode: cors' for CORS
+                    mode: 'cors', // Inclusde 'mode: cors' for CORS
                 }
             );
 
