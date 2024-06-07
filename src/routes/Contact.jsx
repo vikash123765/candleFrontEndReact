@@ -17,7 +17,7 @@ export default function Contact() {
     message: "",
   });
 const [loading, setLoading] = useState(false); // Introduce loading state
-  const navigate = useNavigate(); // Use useNavigate hook
+  const navigate = useNavigate(); // Use useNxavigate hook
 
   useEffect(() => {
     // Fetch user's email if logged in
