@@ -16,7 +16,7 @@ import s23UltraAnimatedTreePremiumRubber from "../ProductImages/animated tree  s
 
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
-  console.log("vikasproducts", parseFloat)
+  console.log("vikasproduscts", parseFloat)
   const [image, setImage] = useState("");
   const [modalShown, setModalShown] = useState(false);
 
