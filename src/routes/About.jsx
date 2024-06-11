@@ -51,10 +51,6 @@ const About = () => {
           <h3>Vikash Kosaraju</h3>
         </div>
         <div className="team-member">
-          <p>Co-founder</p>
-          <h3>Tural Noori</h3>
-        </div>
-        <div className="team-member">
           <p>Co-Founder</p>
           <h3>Stefanos Tzegay</h3>
         </div>
