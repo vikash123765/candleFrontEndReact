@@ -4,29 +4,7 @@ import ProductModal from "./ProductModal";
 import Iphone14ProMaxPlainCaseImage from "../ProductImages/iphone 14 pro max plain case slicone.jpg";
 import Iphone15PlainCover from "../ProductImages/iphone 15 plain case silicone.jpg";
 import a14premiumRubberPinkLotus from "../ProductImages/a14 premium rubber case pink lotus flower.jpg";
-import iphone14proMaxPrint2 from "../ProductImages/iphone14proMaxPrint2.webp";
-import iphone14proMaxPrint3 from "../ProductImages/iphone14proMaxPrint3.webp";
-import iphone14proMaxBlue from "../ProductImages/iphone14proMaxBlue.jpg";
-import iphone14proMaxBlack from "../ProductImages/iphone14proMaxBlack.jpg";
-import iphone15Black from "../ProductImages/iphone15Black.webp"
-import iphone14proMaxWhite from "../ProductImages/iphone14proMaxWhite.jpg"
-import iphone15White from "../ProductImages/iphone15white.webp"
-import iphone15blue from "../ProductImages/iphone15Blue.webp"
 
-import iphone15print1 from "../ProductImages/iphone15print3.jpeg"
-import iphone15print2 from "../ProductImages/iphone15print2.jpeg"
-import iphone15print3 from "../ProductImages/iphone15print1.jpeg"
-
-import s23plain from "../ProductImages/s23plain.webp"
-import s23Black from "../ProductImages/s23Black.jpeg"
-import s23white from "../ProductImages/s23White.jpeg"
-import s23blue from "../ProductImages/s23blue.jpeg"
-
-import s23print1 from "../ProductImages/s23print1.jpg"
-import s23print2 from "../ProductImages/s23print2.jpeg"
-import s23print3 from "../ProductImages/s23print3.jpeg"
-
-import rubberCaseS23 from "../ProductImages/rubbercaseprint.jpg"
 
 
 
@@ -43,25 +21,6 @@ export default function ProductCard({p, isSoldOut}) {
     9: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
     11: Iphone15PlainCover, // Use the actual product ID here
     10: a14premiumRubberPinkLotus,
-    8: iphone14proMaxPrint2,
-    9: iphone14proMaxPrint3,
-    15: iphone14proMaxBlue,
-    17: iphone14proMaxBlack,
-    16: iphone14proMaxWhite,
-    16:iphone15Black,
-    18:iphone15White,
-    29:iphone15blue,
-    20:iphone15print1,
-    21:iphone15print2,
-    22:iphone15print3,
-    23:s23print1,
-    24:s23print2,
-    25:s23print3,
-    27:s23blue,
-    28:s23Black,
-    39:s23white,
-    26:s23plain,
-    30:rubberCaseS23
 
     // Add more entries as needed
   };
