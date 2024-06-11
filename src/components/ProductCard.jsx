@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProductModal from "./ProductModal";
 
-import Iphone14ProMaxPlainCaseImage from "../iphone14ProMaxPlainCaseSlicone.jpg";
+import Iphone14ProMaxPlainCaseImage from "../ProductImages/iphone14ProMaxPlainCaseSlicone.jpg";
 import Iphone15PlainCover from "../ProductImages/iphone15PlainCaseSilicone.jpg";
 import siliconeSamuraiChnieaseLettersIphone14ProMax from "../ProductImages/iphone14ProMaxSamuraiChineaseLetters.jpg";
 import iphone14proMaxPrint2 from "../ProductImages/iphone14proMaxPrint2.webp";
@@ -35,9 +35,9 @@ export default function ProductCard({ p, isSoldOut }) {
 
   // Map product IDs to local storage image paths
   const imageMapping = {
-    6: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
-    7: Iphone15PlainCover, // Use the actual product ID here
-    8: siliconeSamuraiChnieaseLettersIphone14ProMax,
+    1: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
+    2: Iphone15PlainCover, // Use the actual product ID here
+    3: siliconeSamuraiChnieaseLettersIphone14ProMax,
     15: iphone14proMaxPrint2,
     16: iphone14proMaxPrint3,
     17: iphone14proMaxBlue,
