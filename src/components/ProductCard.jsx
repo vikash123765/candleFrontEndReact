@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from "react";
 import ProductModal from "./ProductModal";
 
-import Iphone14ProMaxPlainCaseImage from "../iphone 14 pro max plain case slicone.jpg";
-import Iphone15PlainCover from "../ProductImages/iphone 15 plain case silicone.jpg";
-import siliconeSamuraiChnieaseLettersIphone14ProMax from "../ProductImages/iphone 14 pro max silicone case red moon samurai chinease letters.jpg";
+import Iphone14ProMaxPlainCaseImage from "../iphone14ProMaxPlainCaseSlicone.jpg";
+import Iphone15PlainCover from "../ProductImages/iphone15PlainCaseSilicone.jpg";
+import siliconeSamuraiChnieaseLettersIphone14ProMax from "../ProductImages/iphone14ProMaxSamuraiChineaseLetters.jpg";
 import iphone14proMaxPrint2 from "../ProductImages/iphone14proMaxPrint2.webp";
 import iphone14proMaxPrint3 from "../ProductImages/iphone14proMaxPrint3.webp";
 import iphone14proMaxBlue from "../ProductImages/iphone14proMaxBlue.jpg";
