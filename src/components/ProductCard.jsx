@@ -4,10 +4,14 @@ import ProductModal from "./ProductModal";
 import Iphone14ProMaxPlainCaseImage from "../ProductImages/iphone 14 pro max plain case slicone.jpg";
 import Iphone15PlainCover from "../ProductImages/iphone 15 plain case silicone.jpg";
 import a14premiumRubberPinkLotus from "../ProductImages/a14 premium rubber case pink lotus flower.jpg";
+import iphone14ProMaxBLue from "../ProductImages/iphone 15 black silicone.jpg";
 
-
-
-
+import s23BlueMoon from "../ProductImages/blue moon sislicone case s23 ultra.jpg";
+import s23Blue from "../ProductImages/s23 ultra blue case sislicone.jpg";
+import s24PLain from "../ProductImages/s24 ultra plain case sislicone.jpg";
+import s23CrystalRosePremiumRubber from "../ProductImages/crystal rose red premium rubber samsung s23.jpg";
+import iphone15MountainLakePremiumRubber from "../ProductImages/iphone 15 gray mountain  lake premium rubber case.jpg";
+import s23UltraAnimatedTreePremiumRubber from "../ProductImages/animated tree  samsung s23 ultra premium rubber case .jpg";
 
 
 export default function ProductCard({p, isSoldOut}) {
@@ -21,6 +25,13 @@ export default function ProductCard({p, isSoldOut}) {
     9: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
     11: Iphone15PlainCover, // Use the actual product ID here
     10: a14premiumRubberPinkLotus,
+    12:iphone14ProMaxBLue,
+    13: s23BlueMoon,
+    14: s23Blue,
+    15:s24PLain ,
+    16:s23CrystalRosePremiumRubber,
+    17:iphone15MountainLakePremiumRubber,
+    18:s23UltraAnimatedTreePremiumRubber
 
     // Add more entries as needed
   };
