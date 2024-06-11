@@ -3,7 +3,7 @@ import ProductModal from "./ProductModal";
 
 import Iphone14ProMaxPlainCaseImage from "../ProductImages/iphone 14 pro max plain case slicone.jpg";
 import Iphone15PlainCover from "../ProductImages/iphone 15 plain case silicone.jpg";
-import premiumRubberPinkLotus from "../ProductImages/a14 premium rubber case pink lotus flower.jpg";
+import a14premiumRubberPinkLotus from "../ProductImages/a14 premium rubber case pink lotus flower.jpg";
 import iphone14proMaxPrint2 from "../ProductImages/iphone14proMaxPrint2.webp";
 import iphone14proMaxPrint3 from "../ProductImages/iphone14proMaxPrint3.webp";
 import iphone14proMaxBlue from "../ProductImages/iphone14proMaxBlue.jpg";
@@ -40,14 +40,14 @@ export default function ProductCard({p, isSoldOut}) {
 
   // Map product IDs to local storage image paths
   const imageMapping = {
-    6: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
-    7: Iphone15PlainCover, // Use the actual product ID here
-    8: premiumRubberPinkLotus,
+    9: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
+    11: Iphone15PlainCover, // Use the actual product ID here
+    10: a14premiumRubberPinkLotus,
     8: iphone14proMaxPrint2,
     9: iphone14proMaxPrint3,
-    10: iphone14proMaxBlue,
-    11: iphone14proMaxBlack,
-    12: iphone14proMaxWhite,
+    15: iphone14proMaxBlue,
+    17: iphone14proMaxBlack,
+    16: iphone14proMaxWhite,
     16:iphone15Black,
     18:iphone15White,
     29:iphone15blue,
