@@ -94,8 +94,8 @@
   /* Styles for screens larger than mobile */
   @media (min-width: 600px) {
     .product-modal_image {
-      width: 400px; /* Set your desired width */
-      height: 400px; /* Set your desired height */
+      width: 500px; /* Set your desired width */
+      height: 500px; /* Set your desired height */
      
       object-fit: contain;
       

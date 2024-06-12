@@ -12,8 +12,11 @@ import s24PLain from "../ProductImages/s24 ultra plain case sislicone.jpg";
 import s23CrystalRosePremiumRubber from "../ProductImages/crystal rose red premium rubber samsung s23.jpg";
 import iphone15MountainLakePremiumRubber from "../ProductImages/iphone 15 gray mountain  lake premium rubber case.jpg";
 import s23UltraAnimatedTreePremiumRubber from "../ProductImages/animated tree  samsung s23 ultra premium rubber case .jpg";
-
-
+import a14PLain from "../ProductImages/a14 sislicone case plain.jpg";
+import Iphone14ProMaxNightSkyMountainPremiumRubber from "../ProductImages/iphone 14 pro max premium rubber case  night sky mountain.jpg";
+import a14NorthernLights from "../ProductImages/samsung a14 preium rubber northen lights.jpg";
+import s23IndianCheif from "../ProductImages/s23 ultra  indian cheif premium rubber case.jpg";
+import s23PLain from "../ProductImages/s23 plain case silicone.jpg";
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
   console.log("vikasproduscts", parseFloat)
@@ -31,7 +34,13 @@ export default function ProductCard({p, isSoldOut}) {
     15:s24PLain ,
     16:s23CrystalRosePremiumRubber,
     17:iphone15MountainLakePremiumRubber,
-    18:s23UltraAnimatedTreePremiumRubber
+    18:s23UltraAnimatedTreePremiumRubber,
+    19:a14PLain,
+    20:s23PLain,
+    21:a14NorthernLights,
+    22:Iphone14ProMaxNightSkyMountainPremiumRubber,
+    23:s23IndianCheif
+
 
     // Add more entries as needed
   };
