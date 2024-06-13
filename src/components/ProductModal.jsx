@@ -75,52 +75,47 @@ export default function ProductModal({ p, image, setModalShown }) {
       .join(' ');
   
 
-
-  return (
-    <div className="product-modal_backdrop" onClick={closeModal}>
-      <div className="product-modal" onClick={(e) => e.stopPropagation()}>
-        <div className="modal-header">
-          <h3>{p.productName}</h3>
-          <button onClick={closeModal}>
-            <CloseIcon />
-          </button>
-        </div>
-        <div className="modal-body">
-          <div className="left">
-            {image && <img className="product-modal_image" src={image} alt="" />}
-          </div>
-          <div className="right">
-
-          <div>{formattedProductType}</div>
-            <div>Description: {p.productDescription}</div>
-              <div className="buttons-container">
-
-                <div className="buttons row">
-
-                  <div className='col-3'>
-                    <button onClick={removeFromStagedItems} className='remove'>
-                      <RemoveIcon />
-                    </button>
-                  </div>
-                  <div className='col-3'>
-                    <button onClick={addToStagedItems} className='add'>
-                      <AddIcon />
-                    </button>
-                  </div>
-                  <div className='cart col-3'>
-                    <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
-                      Add {stagedItems.length} to cart
-                    </button>
-
-                  </div>
-                  <div className='col-3'>
-                    <h4 className="price-mobile"> Kr{displayPrice}</h4>
+      return (
+        <div className="product-modal_backdrop" onClick={closeModal}>
+          <div className="product-modal" onClick={e => e.stopPropagation()}>
+            <div className="modal-header">
+              <h3>{p.productName}</h3>
+              <button onClick={closeModal}>
+                <CloseIcon />
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="left">
+                {image && <img className="product-modal_image" src={image} alt="" style={{ border: '1px solid #ccc', borderRadius: '0.5rem' }} />}
+              </div>
+              <div className="right">
+                <div>{formattedProductType}</div>
+                <div>Description: {p.productDescription}</div>
+                <div className="buttons-container">
+                  <div className="buttons row">
+                    <div className='col-3'>
+                      <button onClick={removeFromStagedItems} className='remove'>
+                        <RemoveIcon />
+                      </button>
+                    </div>
+                    <div className='col-3'>
+                      <button onClick={addToStagedItems} className='add'>
+                        <AddIcon />
+                      </button>
+                    </div>
+                    <div className='cart col-3'>
+                      <button disabled={stagedItems.length < 1} onClick={addStagedItemsToCart}>
+                        Add {stagedItems.length} to cart
+                      </button>
+                    </div>
+                    <div className='col-3'>
+                      <h4 className="price-mobile"> Kr{displayPrice}</h4>
+                    </div>
                   </div>
                 </div>
               </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  )
-}
+      );
+    }

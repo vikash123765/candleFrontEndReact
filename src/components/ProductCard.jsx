@@ -92,6 +92,7 @@ useEffect(() => {
     window.removeEventListener('resize', handleResize);
   };
 }, []);
+
 return (
   <>
     <button
@@ -118,6 +119,7 @@ return (
             height: imageHeight,
             objectFit: "cover",
             borderRadius: "0.5rem",
+            border: '1px solid #ccc',
             display: "block",
             opacity: isSoldOut ? "0.5" : "1", // Dim the image for sold out products
           }}
