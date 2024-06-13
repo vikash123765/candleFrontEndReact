@@ -17,6 +17,10 @@ import Iphone14ProMaxNightSkyMountainPremiumRubber from "../ProductImages/iphone
 import a14NorthernLights from "../ProductImages/samsung a14 preium rubber northen lights.jpg";
 import s23IndianCheif from "../ProductImages/s23 ultra  indian cheif premium rubber case.jpg";
 import s23PLain from "../ProductImages/s23 plain case silicone.jpg";
+import iphone15RedEyeWorrior from "../ProductImages/iphone 15 pro premium case red eye worrior.jpg";
+import s23OceanMountain from "../ProductImages/s23 ultra premium rubber case ocean mountain.jpg";
+import a14black from "../ProductImages/black silicone case samsung a14 .jpg";
+
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
   console.log("vikasproduscts", parseFloat)
@@ -39,8 +43,10 @@ export default function ProductCard({p, isSoldOut}) {
     20:s23PLain,
     21:a14NorthernLights,
     22:Iphone14ProMaxNightSkyMountainPremiumRubber,
-    23:s23IndianCheif
-
+    23:s23IndianCheif,
+    24:iphone15RedEyeWorrior,
+    25:s23OceanMountain,
+    26:a14black
 
     // Add more entries as needed
   };
