@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import FormField from '../components/FormField';
 
+
 export default function Forgot() {
   const [formState, setFormState] = useState({
     token: "",
     email: "",
     emailRecoveryFirst: ""
   });
+
+  const [loading, setLoading] = useState(false); // Introduce loading state
 
   const handleChange = (name, value) => {
     setFormState((prev) => ({
@@ -16,10 +19,11 @@ export default function Forgot() {
   };
 
   const handleRequestToken = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try {
       console.log('Email to send:', formState.emailRecoveryFirst);
-      const response = await fetch('https://api.vtscases.com/resetPasswordToken', {
+        const response = await fetch('https://api.vtscases.com/resetPasswordToken', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -30,18 +34,24 @@ export default function Forgot() {
       });
 
       if (response.status === 200) {
+        setLoading(false)
         alert('security key  was sent to your email');
         window.location.reload(); 
       } else {
+        
         const data = await response.text();
+        setLoading(false)
         alert(data || 'An error occurred');
       }
     } catch (error) {
+      setLoading(false)
       alert('An error occurred: ' + error.message);
     }
   };
 
+
   const handleResetPassword = async (e) => {
+    setLoading(true)
     e.preventDefault();
     try {
       console.log('Email to reset:', formState.email);
@@ -57,19 +67,24 @@ export default function Forgot() {
       });
 
       if (response.status === 200) {
-        alert('Password reset successfully. Log in with the temporary password and update it.');
-        window.location.reload(); 
+        alert('Temporary password sent yo you mail. Log in with the temporary password and update it in profile section');
+        setLoading(false)
+        window.location.href = '/login'; // Navigate to the login page after alert
       } else {
         const data = await response.text();
+        setLoading(false)
         alert(data || 'An error occurred');
       }
     } catch (error) {
+      setLoading(false)
       alert('An error occurred: ' + error.message);
     }
   };
 
   return (
-    <div>
+
+    <div>   
+       {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       <div>
         <h2>Security key generator</h2>
         <div>Security key will be sent to registered email.</div>

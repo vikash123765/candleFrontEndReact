@@ -62,7 +62,9 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       if (response.ok) {
         alert("Message sent successfully");
         // You can redirect the user to another page or do other actions
+        setLoading(false);
         navigate('/');
+
       } else {
         alert("Error sending message");
         setLoading(false);
