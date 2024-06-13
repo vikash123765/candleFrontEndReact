@@ -154,8 +154,8 @@ return (
                 <h2>Log in</h2>
                 <FormField name="email" label="Email" placeholder="Enter email"/>
                 <FormField name="password" label="Password" type="password" placeholder="Enter password" />
-                <a href="/forgot">Forgot password?</a><br />
-                <button type="submit">Log in</button>
+                <a href="/forgot" style={{ color: 'red' }}>Forgot password?</a><br />
+                 <button type="submit">Log in</button>
                 {error && <span className="custom-error">{error}</span>}
             </form>
         </div>
