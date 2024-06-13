@@ -1,4 +1,4 @@
-import { getAllProducts, getProductsByIds } from "../lib/api";
+import { getAllProducts,getProductsByIds } from "../lib/api";
 import { useEffect, useState, useRef } from "react";
 import ProductCard from "../components/ProductCard";
 
@@ -11,14 +11,12 @@ export default function Products() {
   const searchRef = useRef(null);
   const [soldOutIds, setSoldOutIds] = useState([]); 
   const [noProductsFound, setNoProductsFound] = useState(false);
-
-    
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10; // Number of products per page
 
   useEffect(() => {
-    // Fetch products and set types
+    // Fetch products annd set types
     async function fetchProducts() {
       try {
         const pdx = await getAllProducts();
@@ -46,16 +44,13 @@ export default function Products() {
     }
 
     markProductsSoldOut();
-  }, []);
+  }, []); 
 
   useEffect(() => {
     setProductRange();
   }, [priceRangeValues, products]);
 
   function createProductDTOs(pdx) {
-    if (!Array.isArray(pdx)) {
-      return [];
-    }
     return pdx.map(p => {
       p.type = p.productType.toLowerCase().replaceAll('_', ' ');
       return p;
@@ -72,91 +67,77 @@ export default function Products() {
       p.productPrice >= rangeMin && p.productPrice <= rangeMax
     ));
     setFilteredProducts(uniqueFilteredProducts);
-    setCurrentPage(1); // Reset to first page when price range changes
+  }
+function handleTypeChange(event) {
+  const selectedType = event.target.value;
+  let filtered = [...products]; // Make a copy of products array
+
+  const query = searchQuery.trim().toLowerCase();
+  if (query) {
+    filtered = filtered.filter(p => {
+      const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
+      return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
+    });
   }
 
-  function handleTypeChange(event) {
-    const selectedType = event.target.value;
-    let filtered = [];
+  if (selectedType !== 'all') {
+    filtered = filtered.filter(p => p.productType === selectedType);
+  }
 
-    if (Array.isArray(products)) {
-      filtered = [...products]; // Make a copy of products array
+  setFilteredProducts(filtered);
+}
 
-      const query = searchQuery.trim().toLowerCase();
-      if (query) {
-        filtered = filtered.filter(p => {
-          const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-          return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
-        });
-      }
+function handleSearch(event) {
+  if (event.key === 'Enter' || event.keyCode === 13 || event.target.id === 'searchButton' || event.type === 'click') {
+    const query = searchQuery.trim().toLowerCase();
+    let filtered = [...products]; // Make a copy of products array
 
-      if (selectedType !== 'all') {
-        filtered = filtered.filter(p => p.productType === selectedType);
-      }
+    if (query) {
+      const searchTerms = query.split(" ");
+      filtered = filtered.filter(p => {
+        const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
+        const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
+        // Check if any search term appears anywhere in the product name or type
+        return searchTerms.every(term =>
+          productNameWithoutSpaces.includes(term) ||
+          typeWithoutSpaces.includes(term) ||
+          String(p.productPrice).includes(term) ||
+          String(p.productId).includes(term)
+        );
+      });
     }
+
+    const selectedType = document.getElementById("typeFilter").value;
+    if (selectedType !== 'all') {
+      filtered = filtered.filter(p => p.productType === selectedType);
+    }
+
+    // Set a state variable to indicate if no products were found
+    setNoProductsFound(filtered.length === 0);
 
     setFilteredProducts(filtered);
-    setCurrentPage(1); // Reset to first page when price range changes
+  }
+}
+
+
+
+
+function sortProducts(event) {
+  const sortBy = event.target.value;
+  let sortedProducts = [...filteredProducts]; // Use the currently filtered products
+
+  if (sortBy === 'price-d') {
+    sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
+  } else if (sortBy === 'price-a') {
+    sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
+  } else if (sortBy === 'category') {
+    sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
+  } else if (sortBy === 'all') {
+    sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
   }
 
-  function handleSearch(event) {
-    if (event.key === 'Enter' || event.keyCode === 13 || event.target.id === 'searchButton' || event.type === 'click') {
-      const query = searchQuery.trim().toLowerCase();
-      let filtered = [];
-
-      if (Array.isArray(products)) {
-        filtered = [...products]; // Make a copy of products array
-
-        if (query) {
-          const searchTerms = query.split(" ");
-          filtered = filtered.filter(p => {
-            const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-            const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
-            // Check if any search term appears anywhere in the product name or type
-            return searchTerms.every(term =>
-              productNameWithoutSpaces.includes(term) ||
-              typeWithoutSpaces.includes(term) ||
-              String(p.productPrice).includes(term) ||
-              String(p.productId).includes(term)
-            );
-          });
-        }
-
-        const selectedType = document.getElementById("typeFilter").value;
-        if (selectedType !== 'all') {
-          filtered = filtered.filter(p => p.productType === selectedType);
-        }
-      }
-
-      // Set a state variable to indicate if no products were found
-      setNoProductsFound(filtered.length === 0);
-
-      setFilteredProducts(filtered);
-      setCurrentPage(1); // Reset to first page when price range changes
-    }
-  }
-
-  function sortProducts(event) {
-    const sortBy = event.target.value;
-    let sortedProducts = [];
-
-    if (Array.isArray(filteredProducts)) {
-      sortedProducts = [...filteredProducts]; // Use the currently filtered products
-
-      if (sortBy === 'price-d') {
-        sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
-      } else if (sortBy === 'price-a') {
-        sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
-      } else if (sortBy === 'category') {
-        sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
-      } else if (sortBy === 'all') {
-        sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
-      }
-    }
-
-    setFilteredProducts(sortedProducts);
-    setCurrentPage(1); // Reset to first page when price range changes
-  }
+  setFilteredProducts(sortedProducts);
+}
   
   // Calculate current products to display based on pagination
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -169,7 +150,10 @@ export default function Products() {
     window.scrollTo(0, 0); // Scroll to top when changing page
   };
 
+  
+
   return (
+    
     <>
       <div id="product-filters">
         <div>
@@ -216,6 +200,7 @@ export default function Products() {
           ))}
         </ul>
       </div>
+
     </>
   );
 }
