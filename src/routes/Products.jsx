@@ -68,24 +68,28 @@ export default function Products() {
     ));
     setFilteredProducts(uniqueFilteredProducts);
   }
-function handleTypeChange(event) {
-  const selectedType = event.target.value;
-  let filtered = [...products]; // Make a copy of products array
-
-  const query = searchQuery.trim().toLowerCase();
-  if (query) {
-    filtered = filtered.filter(p => {
-      const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-      return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
-    });
+  function handleTypeChange(event) {
+    const selectedType = event.target.value;
+    let filtered = [...products]; // Make a copy of products array
+  
+    // Filter based on search query
+    const query = searchQuery.trim().toLowerCase();
+    if (query) {
+      filtered = filtered.filter(p => {
+        const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
+        return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
+      });
+    }
+  
+    // Filter based on selected type
+    if (selectedType !== 'all') {
+      filtered = filtered.filter(p => p.productType === selectedType);
+    }
+  
+    // Set filtered products state
+    setFilteredProducts(filtered);
   }
-
-  if (selectedType !== 'all') {
-    filtered = filtered.filter(p => p.productType === selectedType);
-  }
-
-  setFilteredProducts(filtered);
-}
+  
 
 function handleSearch(event) {
   if (event.key === 'Enter' || event.keyCode === 13 || event.target.id === 'searchButton' || event.type === 'click') {
@@ -130,14 +134,12 @@ function sortProducts(event) {
     sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
   } else if (sortBy === 'price-a') {
     sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
-  } else if (sortBy === 'category') {
-    sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
-  } else if (sortBy === 'all') {
-    sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
   }
 
+  // Set sorted products state
   setFilteredProducts(sortedProducts);
 }
+
   
   // Calculate current products to display based on pagination
   const indexOfLastProduct = currentPage * productsPerPage;
