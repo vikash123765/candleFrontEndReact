@@ -125,18 +125,20 @@ function handleSearch(event) {
 
 
 
-
 function sortProducts(event) {
   const sortBy = event.target.value;
-  let sortedProducts = [...filteredProducts]; // Use the currently filtered products
+  let sortedProducts = [...products]; // Use the original products array
 
   if (sortBy === 'price-d') {
     sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
   } else if (sortBy === 'price-a') {
     sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
+  } else if (sortBy === 'category') {
+    sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
+  } else if (sortBy === 'all') {
+    sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
   }
 
-  // Set sorted products state
   setFilteredProducts(sortedProducts);
 }
 
