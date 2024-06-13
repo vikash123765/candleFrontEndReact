@@ -92,70 +92,86 @@ useEffect(() => {
     window.removeEventListener('resize', handleResize);
   };
 }, []);
-
 return (
   <>
-    <button 
-      className={`product-card ${isSoldOut ? 'sold-out' : ''}`} 
-      onClick={handleClick} 
+    <button
+      className={`product-card ${isSoldOut ? "sold-out" : ""}`}
+      onClick={handleClick}
       disabled={isSoldOut}
-      style={{ 
-        width: '100%', 
-        height: 'auto', 
-        padding: '0', 
-        display: 'flex', 
-        flexDirection: 'column', 
-        justifyContent: 'space-between'
+      style={{
+        width: "100%",
+        height: "auto",
+        padding: "0",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "flex-start", // Ensures items start from the top
+        border: "none",
+        backgroundColor: "transparent",
       }}
     >
       {image && (
-        <img 
-          src={image} 
-          alt={image} 
-          style={{ 
-            width: '100%', 
-            height: imageHeight, 
-            objectFit: 'cover', 
-            borderRadius: '0.5rem',
-            display: 'block',
-            opacity: isSoldOut ? '0.5' : '1'  // Dim the image for sold out products
-          }} 
+        <img
+          src={image}
+          alt={image}
+          style={{
+            width: "100%",
+            height: imageHeight,
+            objectFit: "cover",
+            borderRadius: "0.5rem",
+            display: "block",
+            opacity: isSoldOut ? "0.5" : "1", // Dim the image for sold out products
+          }}
         />
       )}
-  <div className="info">
-        <h3>{p.productName}</h3>
-        <div className="price">
-        {isSoldOut ? (
-    <div>
-      {['14', '15', '16', '23', '24', '25','34', '35', '36'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK120</span>
-      )}
-      {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK110</span>
-      )}
-      {['12', '13', '33'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK100</span>
-      )}
-      {' '}SEK{displayPrice} (Sold Out)
-    </div>
-  ) : (
-    <div>
-      {['14', '15', '16', '23', '24', '25','34', '35', '36'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK120</span>
-      )}
-      {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK110</span>
-      )}
-      {['12', '13', '33'].includes(p.productId.toString()) && (
-        <span style={{ textDecoration: 'line-through', color: '#FF6666' }}>SEK100</span>
-      )}
-      {' '}SEK{displayPrice}
-
-      </div>
-      
-
-    )}
-
+      <div
+        className="info"
+        style={{
+          padding: "0.5rem", // Ensure there is no extra margin or padding
+          textAlign: "left",
+          marginTop: "0",
+          flexGrow: 1, // Makes sure the div takes all available space
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-between",
+        }}
+      >
+        <h3 style={{ margin: "0 0 0.5rem 0" }}>{p.productName}</h3>
+        <div
+          className="price"
+          style={{
+            margin: "0",
+            alignSelf: "flex-end", // Aligns the price to the right
+            display: "flex",
+            justifyContent: "flex-end",
+          }}
+        >
+          {isSoldOut ? (
+            <div>
+              {['14', '15', '16', '23', '24', '25', '34', '35', '36'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK120</span>
+              )}
+              {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
+              )}
+              {['12', '13', '33'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
+              )}
+              {" "}SEK{displayPrice} (Sold Out)
+            </div>
+          ) : (
+            <div>
+              {['14', '15', '16', '23', '24', '25', '34', '35', '36'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK120</span>
+              )}
+              {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
+              )}
+              {['12', '13', '33'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
+              )}
+              {" "}SEK{displayPrice}
+            </div>
+          )}
         </div>
       </div>
     </button>
