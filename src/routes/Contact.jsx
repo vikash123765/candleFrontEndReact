@@ -70,7 +70,7 @@ const [loading, setLoading] = useState(false); // Introduce loading state
       }
     } else {
       // Call the API for guest users
-      const response = await fetch(`https:api.vtscases.com/guest/customerService/message`, {
+      const response = await fetch(`https://api.vtscases.com/guest/customerService/message`, {
         method: "POST",
         mode: 'cors', // Include 'mode: cors' for CORS
         headers: {
