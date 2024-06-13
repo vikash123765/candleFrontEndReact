@@ -1,6 +1,6 @@
+import { getAllProducts, getProductsByIds } from "../lib/api";
 import { useEffect, useState, useRef } from "react";
 import ProductCard from "../components/ProductCard";
-import { getAllProducts, getProductsByIds } from "../lib/api";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -9,15 +9,17 @@ export default function Products() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
-  const [soldOutIds, setSoldOutIds] = useState([]);
+  const [soldOutIds, setSoldOutIds] = useState([]); 
   const [noProductsFound, setNoProductsFound] = useState(false);
-  
+
+    
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10; // Number of products per page
 
   useEffect(() => {
-    async function fetchData() {
+    // Fetch products and set types
+    async function fetchProducts() {
       try {
         const pdx = await getAllProducts();
         const productsWithDTOs = createProductDTOs(pdx);
@@ -25,7 +27,16 @@ export default function Products() {
 
         const typesArr = productsWithDTOs.map(p => p.productType);
         setTypes([...new Set(typesArr)]);
+      } catch (err) {
+        console.log(err);
+      }
+    }
 
+    fetchProducts();
+
+    // Mark products as sold out
+    async function markProductsSoldOut() {
+      try {
         const soldOutProducts = await getProductsByIds([12, 34, 14]);
         const ids = soldOutProducts.map(p => p.productId);
         setSoldOutIds(ids);
@@ -34,21 +45,25 @@ export default function Products() {
       }
     }
 
-    fetchData();
+    markProductsSoldOut();
   }, []);
 
   useEffect(() => {
-    setFilteredProducts(products); // Initialize filtered products with all products
-  }, [products]);
+    setProductRange();
+  }, [priceRangeValues, products]);
 
   function createProductDTOs(pdx) {
     if (!Array.isArray(pdx)) {
       return [];
     }
-    return pdx.map(p => ({
-      ...p,
-      type: p.productType.toLowerCase().replaceAll('_', ' ')
-    }));
+    return pdx.map(p => {
+      p.type = p.productType.toLowerCase().replaceAll('_', ' ');
+      return p;
+    });
+  }
+
+  function filterProducts() {
+    setSearchQuery(searchRef.current.value.toLowerCase());
   }
 
   function setProductRange() {
@@ -62,79 +77,87 @@ export default function Products() {
 
   function handleTypeChange(event) {
     const selectedType = event.target.value;
-    let filtered = [...products];
+    let filtered = [];
 
-    const query = searchQuery.trim().toLowerCase();
-    if (query) {
-      const searchTerms = query.split(" ");
-      filtered = filtered.filter(p => {
-        const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-        const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
-        return searchTerms.every(term =>
-          productNameWithoutSpaces.includes(term) ||
-          typeWithoutSpaces.includes(term) ||
-          String(p.productPrice).includes(term) ||
-          String(p.productId).includes(term)
-        );
-      });
-    }
+    if (Array.isArray(products)) {
+      filtered = [...products]; // Make a copy of products array
 
-    if (selectedType !== 'all') {
-      filtered = filtered.filter(p => p.productType === selectedType);
+      const query = searchQuery.trim().toLowerCase();
+      if (query) {
+        filtered = filtered.filter(p => {
+          const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
+          return productNameWithoutSpaces.includes(query) || query === productNameWithoutSpaces;
+        });
+      }
+
+      if (selectedType !== 'all') {
+        filtered = filtered.filter(p => p.productType === selectedType);
+      }
     }
 
     setFilteredProducts(filtered);
-    setCurrentPage(1); // Reset to first page when type filter changes
+    setCurrentPage(1); // Reset to first page when price range changes
   }
 
   function handleSearch(event) {
     if (event.key === 'Enter' || event.keyCode === 13 || event.target.id === 'searchButton' || event.type === 'click') {
       const query = searchQuery.trim().toLowerCase();
-      let filtered = [...products];
+      let filtered = [];
 
-      if (query) {
-        const searchTerms = query.split(" ");
-        filtered = filtered.filter(p => {
-          const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-          const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
-          return searchTerms.every(term =>
-            productNameWithoutSpaces.includes(term) ||
-            typeWithoutSpaces.includes(term) ||
-            String(p.productPrice).includes(term) ||
-            String(p.productId).includes(term)
-          );
-        });
+      if (Array.isArray(products)) {
+        filtered = [...products]; // Make a copy of products array
+
+        if (query) {
+          const searchTerms = query.split(" ");
+          filtered = filtered.filter(p => {
+            const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
+            const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
+            // Check if any search term appears anywhere in the product name or type
+            return searchTerms.every(term =>
+              productNameWithoutSpaces.includes(term) ||
+              typeWithoutSpaces.includes(term) ||
+              String(p.productPrice).includes(term) ||
+              String(p.productId).includes(term)
+            );
+          });
+        }
+
+        const selectedType = document.getElementById("typeFilter").value;
+        if (selectedType !== 'all') {
+          filtered = filtered.filter(p => p.productType === selectedType);
+        }
       }
 
-      const selectedType = document.getElementById("typeFilter").value;
-      if (selectedType !== 'all') {
-        filtered = filtered.filter(p => p.productType === selectedType);
-      }
-
+      // Set a state variable to indicate if no products were found
       setNoProductsFound(filtered.length === 0);
+
       setFilteredProducts(filtered);
-      setCurrentPage(1); // Reset to first page when search changes
+      setCurrentPage(1); // Reset to first page when price range changes
     }
   }
 
   function sortProducts(event) {
     const sortBy = event.target.value;
-    let sortedProducts = [...filteredProducts];
+    let sortedProducts = [];
 
-    if (sortBy === 'price-d') {
-      sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
-    } else if (sortBy === 'price-a') {
-      sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
-    } else if (sortBy === 'category') {
-      sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
-    } else if (sortBy === 'all') {
-      sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
+    if (Array.isArray(filteredProducts)) {
+      sortedProducts = [...filteredProducts]; // Use the currently filtered products
+
+      if (sortBy === 'price-d') {
+        sortedProducts.sort((a, b) => b.productPrice - a.productPrice);
+      } else if (sortBy === 'price-a') {
+        sortedProducts.sort((a, b) => a.productPrice - b.productPrice);
+      } else if (sortBy === 'category') {
+        sortedProducts.sort((a, b) => a.productType.localeCompare(b.productType));
+      } else if (sortBy === 'all') {
+        sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
+      }
     }
 
     setFilteredProducts(sortedProducts);
-    setCurrentPage(1); // Reset to first page when sorting changes
+    setCurrentPage(1); // Reset to first page when price range changes
   }
-
+  
   // Calculate current products to display based on pagination
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -162,7 +185,7 @@ export default function Products() {
         </div>
         <div>
           Search
-          <input type="search" ref={searchRef} onKeyDown={handleSearch} onChange={handleSearch} />
+          <input type="search" ref={searchRef}  onKeyDown={handleSearch} onChange={filterProducts} />
           <button onClick={handleSearch}>Search</button>
         </div>
         <div>
@@ -171,8 +194,6 @@ export default function Products() {
             <option value=""></option>
             <option value="price-d">Price (High-low)</option>
             <option value="price-a">Price (Low-High)</option>
-            <option value="category">Category</option>
-            <option value="all">Alphabetical</option>
           </select>
         </div>
       </div>
@@ -180,13 +201,13 @@ export default function Products() {
         {noProductsFound ? (
           <div>Sorry, no products match your search.</div>
         ) : (
-          currentProducts.map(p => (
+          filteredProducts.map(p => (
             <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)} />
           ))
         )}
       </div>
-     {/* Pagination */}
-     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+       {/* Pagination */}
+       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
         <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center' }}>
           {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
             <li key={i} style={{ margin: '0 5px' }} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
