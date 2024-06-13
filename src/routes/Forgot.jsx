@@ -19,7 +19,7 @@ export default function Forgot() {
     e.preventDefault();
     try {
       console.log('Email to send:', formState.emailRecoveryFirst);
-      const response = await fetch('http://localhost:8080/resetPasswordToken', {
+      const response = await fetch('https://api.vtscases.com/resetPasswordToken', {
         method: 'POST',
         mode: 'cors',
         headers: {
@@ -45,7 +45,7 @@ export default function Forgot() {
     e.preventDefault();
     try {
       console.log('Email to reset:', formState.email);
-      const response = await fetch('http://localhost:8080/resetPassword', {
+      const response = await fetch('https://api.vtscases.com/resetPassword', {
         method: 'POST',
         mode: 'cors',
         headers: {
