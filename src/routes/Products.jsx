@@ -157,13 +157,12 @@ export default function Products() {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); // Scroll to top when changing page
   };
-
   return (
     <>
-      <div id="product-filters">
-        <div>
+      <div id="product-filters" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+        <div style={{ marginRight: '10px' }}>
           Type
-          <select id="typeFilter" onChange={handleTypeChange}>
+          <select id="typeFilter" onChange={handleTypeChange} style={{ marginLeft: '5px' }}>
             <option value="all">All</option>
             {types.map(type => (
               <option value={type} key={type}>
@@ -172,17 +171,18 @@ export default function Products() {
             ))}
           </select>
         </div>
-        <div>
-          Search
-          <input type="search" ref={searchRef} value={searchQuery} onChange={handleSearch} onKeyDown={handleSearch} />
-          <button onClick={handleSearch} id="searchButton">Search</button>
+        <div style={{ marginRight: '10px' }}>
+          <input type="search" ref={searchRef} onKeyDown={handleSearch} onChange={handleSearch} style={{ marginLeft: '5px' }} />
+          <button onClick={handleSearch}   onChange={handleSearch} onKeyDown={handleSearch}  style={{ marginLeft: '5px' }}>Search</button>
         </div>
         <div>
-          Sort by
-          <select onChange={sortProducts}>
+          
+          Filter
+          <select onChange={sortProducts} style={{ marginLeft: '5px' }}>
             <option value=""></option>
             <option value="price-d">Price (High-low)</option>
             <option value="price-a">Price (Low-High)</option>
+            
             <option value="all">Alphabetical</option>
           </select>
         </div>
