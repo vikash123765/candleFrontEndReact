@@ -129,3 +129,48 @@
     display: block; /* Ensure the image behaves as a block-level element */
 }
 
+/* Products.css */
+
+/* Media query for screens smaller than 600px (adjust breakpoint as needed) */
+@media screen and (max-width: 600px) {
+    /* Hide the search button */
+    #searchButton {
+      display: none;
+    }
+  
+    /* Style for the text next to the input */
+    #searchText {
+      display: inline; /* Display as inline element */
+      margin-left: 5px; /* Adjust margin as needed */
+      font-size: 14px; /* Adjust font size as needed */
+      color: #333; /* Text color */
+    }
+  }
+  .input-group {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+  }
+  
+  .input-group label {
+    margin-right: 5px;
+  }
+  
+  .input-group select,
+  .input-group input[type="search"],
+  .input-group button {
+    margin-left: 5px;
+  }
+
+  /* styles.css */
+.search-label {
+    display: block; /* By default, label is displayed as a block element */
+  }
+  
+  /* Media query for mobile screens */
+  @media only screen and (min-width: 320px) and (max-width: 767px) {
+    .search-label {
+      display: none; /* Hide label on mobile screens */
+    }
+  }
+  

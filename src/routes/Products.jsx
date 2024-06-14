@@ -11,7 +11,7 @@ export default function Products() {
   const searchRef = useRef(null);
   const [soldOutIds, setSoldOutIds] = useState([]);
   const [noProductsFound, setNoProductsFound] = useState(false);
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 10; // Number of products per page
@@ -88,14 +88,17 @@ export default function Products() {
   }
 
   function handleSearch(event) {
-    const query = event.target.value;
-    setSearchQuery(query);
+    // Check if Enter key was pressed (keyCode 13) or button was clicked
+    if (event.key === 'Enter' || event.type === 'click') {
+      const query = searchRef.current.value.trim().toLowerCase(); // Access input value using useRef
+      setSearchQuery(query);
 
-    if (event.key === 'Enter' || event.keyCode === 13 || event.target.id === 'searchButton' || event.type === 'click') {
       let filtered = [...products]; // Make a copy of products array
-  
+
+      // Perform filtering based on search query
       if (query) {
-        const searchTerms = query.trim().toLowerCase().split(" ");
+        const searchTerms = query.split(" ");
+
         filtered = filtered.filter(p => {
           const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
           const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
@@ -108,22 +111,25 @@ export default function Products() {
           );
         });
       }
-  
+
+      // Filter by selected type (if not 'all')
       const selectedType = document.getElementById("typeFilter").value;
       if (selectedType !== 'all') {
         filtered = filtered.filter(p => p.productType === selectedType);
       }
-  
-      // Set a state variable to indicate if no products were found
-      setNoProductsFound(filtered.length === 0);
-  
+
+      // Update state variables
       setFilteredProducts(filtered);
+      setCurrentPage(1); // Reset pagination to first page
+      setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
     }
   }
+
+
   function sortProducts(event) {
     const sortBy = event.target.value;
     let sortedProducts = [...filteredProducts];
-  
+
     if (sortBy === 'price-d') {
       sortedProducts.sort((a, b) => {
         if (b.productPrice === a.productPrice) {
@@ -141,11 +147,11 @@ export default function Products() {
     } else if (sortBy === 'all') {
       sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
     }
-  
+
     setFilteredProducts(sortedProducts);
     setCurrentPage(1); // Reset to first page when sorting changes
   }
-  
+
 
   // Calculate current products to display based on pagination
   const indexOfLastProduct = currentPage * productsPerPage;
@@ -157,12 +163,14 @@ export default function Products() {
     setCurrentPage(pageNumber);
     window.scrollTo(0, 0); // Scroll to top when changing page
   };
+
+
   return (
     <>
-      <div id="product-filters" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-        <div style={{ marginRight: '10px' }}>
-          Type
-          <select id="typeFilter" onChange={handleTypeChange} style={{ marginLeft: '5px' }}>
+      <div id="product-filters">
+        <div>
+          <label htmlFor="typeFilter">Type</label>
+          <select id="typeFilter" onChange={handleTypeChange}>
             <option value="all">All</option>
             {types.map(type => (
               <option value={type} key={type}>
@@ -171,18 +179,25 @@ export default function Products() {
             ))}
           </select>
         </div>
-        <div style={{ marginRight: '10px' }}>
-          <input type="search" ref={searchRef} onKeyDown={handleSearch} onChange={handleSearch} style={{ marginLeft: '5px' }} />
-          <button onClick={handleSearch}   onChange={handleSearch} onKeyDown={handleSearch}  style={{ marginLeft: '5px' }}>Search</button>
+        <div>
+        <label htmlFor="searchInput" className="search-label">Search</label>
+        <input
+            type="search"
+            id="searchInput"
+            ref={searchRef}
+            onKeyDown={handleSearch}
+            onChange={handleSearch}
+          />
+          <button onClick={handleSearch} id="searchButton">Search</button>
+
+
         </div>
         <div>
-          
-          Filter
-          <select onChange={sortProducts} style={{ marginLeft: '5px' }}>
+          <label htmlFor="sortFilter">Filter</label>
+          <select id="sortFilter" onChange={sortProducts}>
             <option value=""></option>
             <option value="price-d">Price (High-low)</option>
             <option value="price-a">Price (Low-High)</option>
-            
             <option value="all">Alphabetical</option>
           </select>
         </div>
@@ -196,12 +211,12 @@ export default function Products() {
           ))
         )}
       </div>
-     {/* Pagination */}
-     <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center' }}>
+      {/* Pagination */}
+      <div className="pagination">
+        <ul>
           {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
-            <li key={i} style={{ margin: '0 5px' }} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-              <button style={{ textDecoration: 'none', backgroundColor: '#f0f0f0', color: '#333', border: '1px solid #ccc', padding: '5px 10px', cursor: 'pointer' }} className="page-link" onClick={() => handlePageClick(i + 1)}>{i + 1}</button>
+            <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handlePageClick(i + 1)}>{i + 1}</button>
             </li>
           ))}
         </ul>
