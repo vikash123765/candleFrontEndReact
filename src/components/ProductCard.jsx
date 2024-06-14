@@ -20,6 +20,11 @@ import s23PLain from "../ProductImages/s23 plain case silicone.jpg";
 import iphone15RedEyeWorrior from "../ProductImages/iphone 15 pro premium case red eye worrior.jpg";
 import s23OceanMountain from "../ProductImages/s23 ultra premium rubber case ocean mountain.jpg";
 import a14black from "../ProductImages/black silicone case samsung a14 .jpg";
+import s23black from "../ProductImages/black s23 silicone case .jpg";
+import Iphone14proMaxBlue from "../ProductImages/iphone 14 pro max silicone blue.jpg";
+import iphone14promaxsamuraiLetters from "../ProductImages/iphone 14 pro max silicone case red moon samurai chinease letters.jpg";
+import s23UltraAstrounutMoon from "../ProductImages/s23 ultra sislicone astronaut moon.jpg";
+
 
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
@@ -46,7 +51,13 @@ export default function ProductCard({p, isSoldOut}) {
     23:s23IndianCheif,
     24:iphone15RedEyeWorrior,
     25:s23OceanMountain,
-    26:a14black
+    26:a14black,
+    27:s23black,
+    28:Iphone14proMaxBlue,
+    29:iphone14promaxsamuraiLetters,
+    30:s23UltraAstrounutMoon
+
+
 
     // Add more entries as needed
   };
