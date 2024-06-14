@@ -177,26 +177,24 @@ const handleFormChange = () => {
             }
 
             const weightMapping = {
-                12: 27, // Use the actual product ID here
-                13: 27, // Use the actual product ID here
+                9: 27, // Use the actual product ID here
+                11: 27, // Use the actual product ID here
+                10: 47,
+                12:27,
+                13: 27,
                 14: 27,
-                15: 27,
-                16: 27,
-                17: 27,
-                18: 27,
-                19: 27,
-                22: 27,
-                23: 27,
-                24: 27,
-                25: 27,
-                34: 27,
-                35: 27,
-                36: 27,
-                37: 27,
-                38: 27,
-                39: 27,
-                33: 27,
-                41: 47
+                15:27 ,
+                16:37,
+                17:37,
+                18:37,
+                19:27,
+                20:27,
+                21:47,
+                22:37,
+                23:37,
+                24:37,
+                25:37,
+                26:47
             };
 
             // Calculate the total order weight based on the weights of individual products in the cart
