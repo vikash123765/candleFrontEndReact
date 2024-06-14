@@ -60,13 +60,20 @@ export default function Products() {
     setCurrentPage(1); // Reset to first page when price range changes
   }
 
+ 
   function handleTypeChange(event) {
     const selectedType = event.target.value;
     let filtered = [...products];
 
+   
+
+     // Clear the search query when changing product type
+  setSearchQuery(''); // Reset search query to empty string
+   
+   if (searchQuery) {    
     const query = searchQuery.trim().toLowerCase();
-    if (query) {
       const searchTerms = query.split(" ");
+   
       filtered = filtered.filter(p => {
         const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
         const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
@@ -83,8 +90,10 @@ export default function Products() {
       filtered = filtered.filter(p => p.productType === selectedType);
     }
 
-    setFilteredProducts(filtered);
-    setCurrentPage(1); // Reset to first page when type filter changes
+     // Update state variables
+  setFilteredProducts(filtered);
+  setCurrentPage(1); // Reset pagination to first page
+  setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
   }
 
   function handleSearch(event) {
@@ -92,13 +101,13 @@ export default function Products() {
     if (event.key === 'Enter' || event.type === 'click') {
       const query = searchRef.current.value.trim().toLowerCase(); // Access input value using useRef
       setSearchQuery(query);
-
+  
       let filtered = [...products]; // Make a copy of products array
-
+  
       // Perform filtering based on search query
       if (query) {
         const searchTerms = query.split(" ");
-
+  
         filtered = filtered.filter(p => {
           const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
           const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
@@ -111,20 +120,20 @@ export default function Products() {
           );
         });
       }
-
+  
       // Filter by selected type (if not 'all')
       const selectedType = document.getElementById("typeFilter").value;
       if (selectedType !== 'all') {
         filtered = filtered.filter(p => p.productType === selectedType);
       }
-
+  
       // Update state variables
       setFilteredProducts(filtered);
       setCurrentPage(1); // Reset pagination to first page
       setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
     }
   }
-
+  
 
   function sortProducts(event) {
     const sortBy = event.target.value;
