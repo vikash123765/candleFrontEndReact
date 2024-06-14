@@ -180,8 +180,8 @@ export default function Products() {
           </select>
         </div>
         <div>
-        <label htmlFor="searchInput" className="search-label">Search</label>
-        <input
+          <label htmlFor="searchInput">Search</label>
+          <input
             type="search"
             id="searchInput"
             ref={searchRef}
@@ -211,12 +211,29 @@ export default function Products() {
           ))
         )}
       </div>
-      {/* Pagination */}
-      <div className="pagination">
-        <ul>
+       {/* Pagination */}
+       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center' }}>
           {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
-            <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
-              <button className="page-link" onClick={() => handlePageClick(i + 1)}>{i + 1}</button>
+            <li
+              key={i}
+              style={{ margin: '0 5px' }}
+              className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
+            >
+              <button
+                style={{
+                  textDecoration: 'none',
+                  backgroundColor: currentPage === i + 1 ? 'blue' : '#f0f0f0',
+                  color: currentPage === i + 1 ? 'white' : '#333',
+                  border: '1px solid #ccc',
+                  padding: '5px 10px',
+                  cursor: 'pointer'
+                }}
+                className="page-link"
+                onClick={() => handlePageClick(i + 1)}
+              >
+                {i + 1}
+              </button>
             </li>
           ))}
         </ul>
