@@ -36,6 +36,42 @@ import a14lion from "../ProductImages/a14lion.png";
 import iphon15lion from "../ProductImages/iphon15lion.png";
 import iphone14promaxlion from "../ProductImages/iphone14promaxlion.png";
 
+import a14AstronautMoon from "../ProductImages/a14AstronautMoon.png";
+import iphone15AstronautMoon from "../ProductImages/iphone15AstronautMoon.png";
+import Iphone14promaxAstronautMoon from "../ProductImages/Iphone14promaxAstronautMoon.png";
+
+import a14milkyway from "../ProductImages/a14milkyway.png";
+import iphone14promaxmilkyway from "../ProductImages/iphone14promax milky way.png";
+import iphone15milkyway from "../ProductImages/a14milkyway.png";
+import s23MilkyWay from "../ProductImages/s23MilkyWay.png";
+
+import iphone15TropicalIsland from "../ProductImages/iphone15TropicalIsland.png";
+import s23TropicalIsland from "../ProductImages/s23TropicalIsland.png";
+import a14tropicalIsland from "../ProductImages/a14tropicalIsland.png";
+
+import a14tajMahal from "../ProductImages/a14tajMahal.png";
+import iphone15tajmahal from "../ProductImages/iphone 15tajmahal.png";
+import s24tajmahal from "../ProductImages/s24tajmahal.png";
+
+import s23WaterFall from "../ProductImages/s23WaterFall.png";
+import iphone15waterfall from "../ProductImages/iphone15waterfall.png";
+import a14waterFall from "../ProductImages/a14waterFall.png";
+
+import a14Madlives from "../ProductImages/a14Madlives.png";
+import iphone15maldives from "../ProductImages/iphone 15 maldives.png";
+import iphone14ProMaxMaldives from "../ProductImages/iphone14ProMaxMaldives.png";
+
+import s23Mountainreflection from "../ProductImages/s23Mountainreflection.png";
+import a14mountainreflection from "../ProductImages/a14mountainreflection.png";
+import iphne14promaxmountainreflection from "../ProductImages/iphne14promaxmountainreflection.png";
+
+import iphone15redletterjapanse from "../ProductImages/iphone 15 red letter japanse.png";
+import s23redletterjap from "../ProductImages/s23 red letter jap.png";
+import moonEclipseamuraiIphone14ProMax from "../ProductImages/MoonEclipseamuraiIphone14ProMax.png";
+
+import iphone15Pinapple from "../ProductImages/iphone15Pinapple.png";
+import a14pinapple from "../ProductImages/a14pinapple.png";
+
 
 
 export default function ProductCard({p, isSoldOut}) {
@@ -77,7 +113,41 @@ export default function ProductCard({p, isSoldOut}) {
     38:s23lion,
     39:a14lion,
     40:iphon15lion,
-    41:iphone14promaxlion
+    41:iphone14promaxlion,
+    42:a14AstronautMoon,
+    43:iphone15AstronautMoon,
+    44:Iphone14promaxAstronautMoon,
+    45:a14milkyway,
+    46:iphone14promaxmilkyway,
+    47:iphone15milkyway,
+    48:s23MilkyWay,
+    49:iphone15TropicalIsland,
+    50:s23TropicalIsland,
+    51:a14tropicalIsland,
+    52:a14tajMahal,
+    53:iphone15tajmahal,
+    54:s24tajmahal,
+    56:s23WaterFall,
+    57:iphone15waterfall,
+    58:a14waterFall,
+    59:a14Madlives,
+    60:iphone15maldives,
+    61:iphone14ProMaxMaldives,
+    62:s23Mountainreflection,
+    63:a14mountainreflection,
+    64:iphne14promaxmountainreflection,
+    65:iphone15redletterjapanse,
+    66:s23redletterjap,
+    67:moonEclipseamuraiIphone14ProMax,
+    68:iphone15Pinapple,
+    69:a14pinapple
+
+
+
+
+
+
+
 
 
 
@@ -184,26 +254,28 @@ return (
         >
           {isSoldOut ? (
             <div>
-              {['14', '15', '16', '23', '24', '25', '34', '35', '36'].includes(p.productId.toString()) && (
-                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK120</span>
+              {['10', '16', '17', '18', '22', '23', '21', '25', '24'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK160</span>
               )}
-              {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+              {['26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69']
+                .includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
               )}
-              {['12', '13', '33'].includes(p.productId.toString()) && (
+              {['11', '15', '19','20', '14'].includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
               )}
               {" "}SEK{displayPrice} (Sold Out)
             </div>
           ) : (
             <div>
-              {['14', '15', '16', '23', '24', '25', '34', '35', '36'].includes(p.productId.toString()) && (
-                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK120</span>
+             {['10', '16', '17', '18', '22', '23', '21', '25', '24'].includes(p.productId.toString()) && (
+                <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK160</span>
               )}
-              {['20', '21', '22', '17', '18', '19', '37', '38', '39'].includes(p.productId.toString()) && (
+              {['26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50', '51', '52', '53', '54', '55', '56', '57', '58', '59', '60', '61', '62', '63', '64', '65', '66', '67', '68', '69']
+                .includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
               )}
-              {['12', '13', '33'].includes(p.productId.toString()) && (
+              {['11', '15', '19','20', '14'].includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
               )}
               {" "}SEK{displayPrice}

@@ -26,7 +26,7 @@ export default function Products() {
         const typesArr = productsWithDTOs.map(p => p.productType);
         setTypes([...new Set(typesArr)]);
 
-        const soldOutProducts = await getProductsByIds([12, 34, 14]);
+        const soldOutProducts = await getProductsByIds([]);
         const ids = soldOutProducts.map(p => p.productId);
         setSoldOutIds(ids);
       } catch (err) {
