@@ -33,13 +33,13 @@ const Admin = () => {
 
       if (response.ok) {
         console.log(`Order ${orderNrCancel} canceled successfully`);
-        alert("order was cancelled !");
+        alert("Order was cancelled !");
         setOrderNrCancel("");
        
 
       } else {
         console.error(`Failed to cancel order ${orderNrCancel}`);
-        alert("failed to cancel order please tryagain  !");
+        alert("Failed to cancel order please try again!");
       }
     } catch (error) {
       console.error("Error:", error);
@@ -98,7 +98,7 @@ const handleMarkSent = async () => {
       console.log(`Order ${orderNrSent} marked as sent successfully`);
       setOrderNrSent("");
       setTrackingId("");
-      alert(`${orderNrSent} marked as sent`);
+      alert(`${orderNrSent} Marked as sent`);
     } else {
       console.error(`Failed to mark order ${orderNrSent} as sent`);
       alert(`Failed to mark order ${orderNrSent} as sent`);
@@ -130,8 +130,8 @@ const handleMarkSent = async () => {
       });
 
       if (response.ok) {
-        console.log(`Order ${orderNrDelivered} marked as delivered successfully`);
-        alert(`Order ${orderNrDelivered} marked as delivered successfully`)
+        console.log(`Order ${orderNrDelivered} Marked as delivered successfully`);
+        alert(`Order ${orderNrDelivered} Marked as delivered successfully`)
         setOrderNrDelivered("");
   
       } else {

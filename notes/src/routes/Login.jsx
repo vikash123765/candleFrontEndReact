@@ -37,7 +37,7 @@ export default function Login() {
                 const mockCookie = headers.get('X-Token')
                 localStorage.setItem("tokenA", mockCookie);
                 document.cookie = mockCookie + ";SameSite=Lax";
-                alert("sign in sucessfull !")
+                alert("Sign in successful !")
                 window.location.href = '/admin';
                 return;
             }
@@ -61,16 +61,16 @@ export default function Login() {
                 const mockCookie = headers.get('X-Token');
                 console.log("User mockCookie:", mockCookie);
                 document.cookie = mockCookie + ";SameSite=Lax";
-                alert("sign in sucessfull !")
+                alert("Sign in successful !")
                 window.location.href = '/';
                 return;
             }
 
             console.error('Login failed:', userRes.statusText);
             setError("Login failed. Please check your credentials.");
-            alert("login faled please checkyou credentials! ")
+            alert("login failed please check your credentials! ")
         } catch (error) {
-            alert("login faled please try again")
+            alert("login failed please try again")
             console.error('Error during login:', error);
         }
         finally {
@@ -114,14 +114,14 @@ export default function Login() {
         try {
             const result = await signUpUser(data);
             console.log(result);
-            alert("account created!! ")
+            alert("Account created!! ")
 
             form.reset();
 
 
         } catch (error) {
             console.error('Error during signup:', error);
-            alert("Error during signp please try again")
+            alert("Error during signup please try again")
         }finally {
             setLoading(false); // Set loading to false after signup attempt
         }

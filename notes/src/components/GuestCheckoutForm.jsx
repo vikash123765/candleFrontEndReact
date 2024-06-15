@@ -85,11 +85,11 @@ const handleValidate = () => {
 
   if (formIsValid) {
     console.log("Form is successful");
-    alert("form values ar passed in correct")
+    alert("Form values are passed in correct")
     // You can perform further actions here if the form is successful
   } else {
     console.log("Form has validation errors");
-    alert("form values ar passed incorrect please dubble chaeck values")
+    alert("Form values are passed incorrect please doubble check values")
     // You can provide feedback to the user indicating validation errors here
   }
 };

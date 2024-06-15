@@ -281,7 +281,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
             console.log('Order finalized successfully');
 
             setIsPlacingOrder(false); // Set loading state
-            alert('order placed !!');
+            alert('Order placed !!');
 
             clearCart(setStore);
             navigate('/');
@@ -326,7 +326,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
 
             console.log('Guest order finalized successfully');
             setIsPlacingOrder(false); // Reset loading state
-            alert('order placed !!');
+            alert('Order placed !!');
             clearCart(setStore);
             console.log("response data", res)
             navigate('/');
