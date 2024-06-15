@@ -42,7 +42,7 @@ import Iphone14promaxAstronautMoon from "../ProductImages/Iphone14promaxAstronau
 
 import a14milkyway from "../ProductImages/a14milkyway.png";
 import iphone14promaxmilkyway from "../ProductImages/iphone14promax milky way.png";
-import iphone15milkyway from "../ProductImages/a14milkyway.png";
+import iphone15milkyway from "../ProductImages/iphone15milkyway.png";
 import s23MilkyWay from "../ProductImages/s23MilkyWay.png";
 
 import iphone15TropicalIsland from "../ProductImages/iphone15TropicalIsland.png";
@@ -127,20 +127,20 @@ export default function ProductCard({p, isSoldOut}) {
     52:a14tajMahal,
     53:iphone15tajmahal,
     54:s24tajmahal,
-    56:s23WaterFall,
-    57:iphone15waterfall,
-    58:a14waterFall,
-    59:a14Madlives,
-    60:iphone15maldives,
-    61:iphone14ProMaxMaldives,
-    62:s23Mountainreflection,
-    63:a14mountainreflection,
-    64:iphne14promaxmountainreflection,
-    65:iphone15redletterjapanse,
-    66:s23redletterjap,
-    67:moonEclipseamuraiIphone14ProMax,
-    68:iphone15Pinapple,
-    69:a14pinapple
+    55:s23WaterFall,
+    56:iphone15waterfall,
+    57:a14waterFall,
+    58:a14Madlives,
+    69:iphone15maldives,
+    60:iphone14ProMaxMaldives,
+    61:s23Mountainreflection,
+    62:a14mountainreflection,
+    63:iphne14promaxmountainreflection,
+    64:iphone15redletterjapanse,
+    65:s23redletterjap,
+    66:moonEclipseamuraiIphone14ProMax,
+    67:iphone15Pinapple,
+    68:a14pinapple
 
 
 
