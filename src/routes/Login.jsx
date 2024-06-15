@@ -140,7 +140,7 @@ return (
                     <select name="gender">
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
-                        <option value="OTHER">OTHER</option>
+                    
                     </select>
                 </div>
                 <FormField name="userPassword" label="Password" type="password" placeholder="Enter your password" />
