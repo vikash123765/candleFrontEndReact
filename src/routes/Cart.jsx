@@ -194,7 +194,21 @@ const handleFormChange = () => {
                 23:37,
                 24:37,
                 25:37,
-                26:47
+                26:47,
+                27:27,
+                28:27,
+                29:27,
+                30:27,
+                31:27,
+                32:27,
+                34:27,
+                35:28,
+                36:29,
+                37:28,
+                38:29,
+                39:28,
+                40:28,
+                41:28
             };
 
             // Calculate the total order weight based on the weights of individual products in the cart

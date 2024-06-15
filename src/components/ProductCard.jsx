@@ -24,6 +24,18 @@ import s23black from "../ProductImages/black s23 silicone case .jpg";
 import Iphone14proMaxBlue from "../ProductImages/iphone 14 pro max silicone blue.jpg";
 import iphone14promaxsamuraiLetters from "../ProductImages/iphone 14 pro max silicone case red moon samurai chinease letters.jpg";
 import s23UltraAstrounutMoon from "../ProductImages/s23 ultra sislicone astronaut moon.jpg";
+import s23Maldives from "../ProductImages/maldives s23  and s24 silicone case .jpg";
+import a14BlueMoon from "../ProductImages/a14 blue moon.png";
+import Iphone15BlueMoon from "../ProductImages/iphone15BlueMoon.png";
+import Iphone14proMaxBlueMoon from "../ProductImages/iphnew14promaxbluemoon.png";
+import iphone14ProMaxMoon from "../ProductImages/iphone14ProMaxMoon.png";
+
+import s23blumoon from "../ProductImages/s23 blue moon.png";
+import s23lion from "../ProductImages/s23lion.png";
+import a14lion from "../ProductImages/a14lion.png";
+import iphon15lion from "../ProductImages/iphon15lion.png";
+import iphone14promaxlion from "../ProductImages/iphone14promaxlion.png";
+
 
 
 export default function ProductCard({p, isSoldOut}) {
@@ -55,7 +67,19 @@ export default function ProductCard({p, isSoldOut}) {
     27:s23black,
     28:Iphone14proMaxBlue,
     29:iphone14promaxsamuraiLetters,
-    30:s23UltraAstrounutMoon
+    30:s23UltraAstrounutMoon,
+    31:s23Maldives,
+    32:a14BlueMoon,
+    34:Iphone15BlueMoon,
+    35:Iphone14proMaxBlueMoon,
+    36:iphone14ProMaxMoon,
+    37:s23blumoon,
+    38:s23lion,
+    39:a14lion,
+    40:iphon15lion,
+    41:iphone14promaxlion
+
+
 
 
 
