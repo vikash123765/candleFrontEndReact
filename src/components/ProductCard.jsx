@@ -132,15 +132,14 @@ export default function ProductCard({p, isSoldOut}) {
     57:a14waterFall,
     58:a14Madlives,
     59:iphone15maldives,
-    60:iphone14ProMaxMaldives,
-    62:s23Mountainreflection,
-    63:a14mountainreflection,
-    64:iphne14promaxmountainreflection,
-    65:iphone15redletterjapanse,
-    66:s23redletterjap,
-    67:moonEclipseamuraiIphone14ProMax,
-    68:iphone15Pinapple,
-    69:a14pinapple
+    60:s23Mountainreflection,
+    61:a14mountainreflection,
+    62:iphne14promaxmountainreflection,
+    63:iphone15redletterjapanse,
+    64:s23redletterjap,
+    65:moonEclipseamuraiIphone14ProMax,
+    66:iphone15Pinapple,
+    67:a14pinapple
 
 
 
