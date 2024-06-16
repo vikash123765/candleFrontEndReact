@@ -41,7 +41,7 @@ export default function ProductModal({ p, image, setModalShown }) {
   }
 
   function countInCart() {
-    // count the number of matching products
+    // count the number of matching prooducts
     let count = store.cart.filter(item => {
       return item.productName === p.productName
     }).length
