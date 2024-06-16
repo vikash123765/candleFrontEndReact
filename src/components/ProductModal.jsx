@@ -48,9 +48,45 @@ export default function ProductModal({ p, image, setModalShown }) {
     return count
   }
 
-  function addToStagedItems() {
-    setStagedItems([...stagedItems, p])
+  async function addStagedItemsToCart() {
+    // Calculate total items including staged items
+    const totalInCart = countInCart(p.productId) + stagedItems.length;
+
+
+
+    try {
+      // Make an API call to check product availability
+      const response = await fetch('https://api.vtscases.com/addToCartLimit', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'productId': p.productId, // Assuming p has a productId property
+          'count': totalInCart // Total items including staged items
+        }
+      });
+      console.log(p.productId)
+      console.log(totalInCart)
+
+      if (response.ok) {
+        // Add staged items to cart
+        for (let i = 0; i < stagedItems.length; i++) {
+          addToCart();
+        }
+        // Clear staged items and close modal
+        setStagedItems([]);
+        closeModal();
+      } else {
+        // Show error message
+        const result = await response.text(); // Assuming the response is plain text
+        setErrorMessage(result); // Set error message
+        setIsAddToCartDisabled(true); // Disable the add to cart button
+      }
+    } catch (error) {
+      console.error('Error adding product to cart:', error);
+      setErrorMessage("An error occurred while adding the product to the cart. Please try again later.");
+    }
   }
+ 
 
   function removeFromStagedItems() {
     setStagedItems([...stagedItems.slice(0, stagedItems.length - 1)])
