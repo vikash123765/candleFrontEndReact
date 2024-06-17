@@ -4,7 +4,7 @@ import ProductModal from "./ProductModal";
 import Iphone14ProMaxPlainCaseImage from "../ProductImages/iphone 14 pro max plain case slicone.jpg";
 import Iphone15PlainCover from "../ProductImages/iphone 15 plain case silicone.jpg";
 import a14premiumRubberPinkLotus from "../ProductImages/a14 premium rubber case pink lotus flower.jpg";
-import iphone14ProMaxBLue from "../ProductImages/iphone 15 black silicone.jpg";
+import iphone15black from "../ProductImages/iphone 15 black silicone.jpg";
 
 import s23BlueMoon from "../ProductImages/blue moon sislicone case s23 ultra.jpg";
 import s23Blue from "../ProductImages/s23 ultra blue case sislicone.jpg";
@@ -71,9 +71,9 @@ import moonEclipseamuraiIphone14ProMax from "../ProductImages/MoonEclipseamuraiI
 
 import iphone15Pinapple from "../ProductImages/iphone15Pinapple.png";
 import a14pinapple from "../ProductImages/a14pinapple.png";
+import iphone15Blue from "../ProductImages/iphone15Blue.png";
 
-
-
+iphone15Blue
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
   console.log("vikasproduscts", parseFloat)
@@ -85,7 +85,7 @@ export default function ProductCard({p, isSoldOut}) {
     9: Iphone14ProMaxPlainCaseImage, // Use the actual product ID here
     11: Iphone15PlainCover, // Use the actual product ID here
     10: a14premiumRubberPinkLotus,
-    12:iphone14ProMaxBLue,
+    12:iphone15black,
     13: s23BlueMoon,
     14: s23Blue,
     15:s24PLain ,
@@ -140,7 +140,8 @@ export default function ProductCard({p, isSoldOut}) {
     65:moonEclipseamuraiIphone14ProMax,
     66:iphone15Pinapple,
     67:a14pinapple,
-    68:iphone14ProMaxMaldives
+    68:iphone14ProMaxMaldives,
+    71:iphone15Blue
 
 
 

@@ -236,7 +236,8 @@ const handleFormChange = () => {
                 66: 27,
                 67: 27,
                 68: 27,
-                70:25
+                70:25,
+                71:27
                
 
             };
@@ -709,7 +710,8 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                                             66: 27,
                                             67: 27,
                                             68: 27,
-                                            70:25
+                                            70:25,
+                                            71:27
                                            
                             
                                         };
