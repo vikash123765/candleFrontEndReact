@@ -262,7 +262,7 @@ return (
                 .includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
               )}
-              {['11', '15', '19','20', '14'].includes(p.productId.toString()) && (
+              {['9','11', '15', '19','20', '14'].includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
               )}
               {" "}SEK{displayPrice} (Sold Out)
@@ -276,7 +276,7 @@ return (
                 .includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK110</span>
               )}
-              {['11', '15', '19','20', '14'].includes(p.productId.toString()) && (
+              {['9','11', '15', '19','20', '14'].includes(p.productId.toString()) && (
                 <span style={{ textDecoration: "line-through", color: "#FF6666" }}>SEK100</span>
               )}
               {" "}SEK{displayPrice}
