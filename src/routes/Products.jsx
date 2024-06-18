@@ -7,6 +7,7 @@ export default function Products() {
   const [types, setTypes] = useState([]);
   const [priceRangeValues, setPriceRangeValues] = useState([0, 300]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [displayedProducts, setDisplayedProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const searchRef = useRef(null);
   const [soldOutIds, setSoldOutIds] = useState([]);
@@ -14,7 +15,8 @@ export default function Products() {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const productsPerPage = 10; // Number of products per page
+  const productsPerPage = 10; // Number of products to load per page
+  const observerRef = useRef();
 
   useEffect(() => {
     async function fetchData() {
@@ -38,8 +40,27 @@ export default function Products() {
   }, []);
 
   useEffect(() => {
-    setFilteredProducts(products); // Initialize filtered products with all products
+    if (products.length > 0) {
+      setFilteredProducts(products);
+      setDisplayedProducts(products.slice(0, productsPerPage));
+    }
   }, [products]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMoreProducts();
+      }
+    });
+    if (observerRef.current) {
+      observer.observe(observerRef.current);
+    }
+    return () => {
+      if (observerRef.current) {
+        observer.unobserve(observerRef.current);
+      }
+    };
+  }, [filteredProducts]);
 
   function createProductDTOs(pdx) {
     if (!Array.isArray(pdx)) {
@@ -57,26 +78,26 @@ export default function Products() {
       p.productPrice >= rangeMin && p.productPrice <= rangeMax
     ));
     setFilteredProducts(uniqueFilteredProducts);
+    setDisplayedProducts(uniqueFilteredProducts.slice(0, productsPerPage));
     setCurrentPage(1); // Reset to first page when price range changes
   }
 
- 
   function handleTypeChange(event) {
     const selectedType = event.target.value;
     let filtered = [...products];
-
-   
-
-     // Clear the search query when changing product type
-  setSearchQuery(''); // Reset search query to empty string
-   
-   if (searchQuery) {    
-    const query = searchQuery.trim().toLowerCase();
+  
+    // Clear the search query when changing product type
+    setSearchQuery('');
+  
+    // Perform filtering based on search query
+    if (searchQuery) {
+      const query = searchQuery.trim().toLowerCase();
       const searchTerms = query.split(" ");
-   
+  
       filtered = filtered.filter(p => {
         const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
         const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
+        // Check if any search term appears anywhere in the product name or type
         return searchTerms.every(term =>
           productNameWithoutSpaces.includes(term) ||
           typeWithoutSpaces.includes(term) ||
@@ -85,17 +106,19 @@ export default function Products() {
         );
       });
     }
-
+  
+    // Filter by selected type (if not 'all')
     if (selectedType !== 'all') {
       filtered = filtered.filter(p => p.productType === selectedType);
     }
-
-     // Update state variables
-  setFilteredProducts(filtered);
-  setCurrentPage(1); // Reset pagination to first page
-  setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
+  
+    // Update state variables
+    setFilteredProducts(filtered);
+    setDisplayedProducts(filtered.slice(0, productsPerPage));
+    setCurrentPage(1); // Reset pagination to first page
+    setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
   }
-
+  
   function handleSearch(event) {
     // Check if Enter key was pressed (keyCode 13) or button was clicked
     if (event.key === 'Enter' || event.type === 'click') {
@@ -129,12 +152,12 @@ export default function Products() {
   
       // Update state variables
       setFilteredProducts(filtered);
+      setDisplayedProducts(filtered.slice(0, productsPerPage));
       setCurrentPage(1); // Reset pagination to first page
       setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
     }
   }
   
-
   function sortProducts(event) {
     const sortBy = event.target.value;
     let sortedProducts = [...filteredProducts];
@@ -158,22 +181,31 @@ export default function Products() {
     }
 
     setFilteredProducts(sortedProducts);
+    setDisplayedProducts(sortedProducts.slice(0, productsPerPage));
     setCurrentPage(1); // Reset to first page when sorting changes
   }
 
+  const loadMoreProducts = () => {
+    const nextPage = currentPage + 1;
+    const indexOfLastProduct = nextPage * productsPerPage;
+    const newProducts = filteredProducts.slice((nextPage - 1) * productsPerPage, indexOfLastProduct);
 
-  // Calculate current products to display based on pagination
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    if (newProducts.length > 0) {
+      setDisplayedProducts(prevProducts => [...prevProducts, ...newProducts]);
+      setCurrentPage(nextPage);
+    }
+  };
+
+  const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
   // Pagination click handler
   const handlePageClick = (pageNumber) => {
     setCurrentPage(pageNumber);
+    const indexOfLastProduct = pageNumber * productsPerPage;
+    const newProducts = filteredProducts.slice((pageNumber - 1) * productsPerPage, indexOfLastProduct);
+    setDisplayedProducts(newProducts);
     window.scrollTo(0, 0); // Scroll to top when changing page
   };
-
-
   return (
     <>
       <div id="product-filters">
@@ -198,8 +230,6 @@ export default function Products() {
             onChange={handleSearch}
           />
           <button onClick={handleSearch} id="searchButton">Search</button>
-
-
         </div>
         <div>
           <label htmlFor="sortFilter">Filter</label>
@@ -215,38 +245,56 @@ export default function Products() {
         {noProductsFound ? (
           <div>Sorry, no products match your search.</div>
         ) : (
-          currentProducts.map(p => (
+          displayedProducts.map(p => (
             <ProductCard key={`pcard-${p.productId}`} p={p} isSoldOut={soldOutIds.includes(p.productId)} />
           ))
         )}
       </div>
-       {/* Pagination */}
-       <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
-        <ul style={{ listStyle: 'none', padding: 0, display: 'flex', justifyContent: 'center' }}>
-          {Array.from({ length: Math.ceil(filteredProducts.length / productsPerPage) }, (_, i) => (
-            <li
-              key={i}
-              style={{ margin: '0 5px' }}
-              className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}
-            >
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+          <ul style={{ listStyle: 'none', padding: 0, display: 'flex' }}>
+            {/* Previous Page Button */}
+            <li>
               <button
-                style={{
-                  textDecoration: 'none',
-                  backgroundColor: currentPage === i + 1 ? 'blue' : '#f0f0f0',
-                  color: currentPage === i + 1 ? 'white' : '#333',
-                  border: '1px solid #ccc',
-                  padding: '5px 10px',
-                  cursor: 'pointer'
-                }}
-                className="page-link"
-                onClick={() => handlePageClick(i + 1)}
+                onClick={() => handlePageClick(currentPage - 1)}
+                disabled={currentPage === 1}
+                style={{ marginRight: '10px' }}
               >
-                {i + 1}
+                Prev
               </button>
             </li>
-          ))}
-        </ul>
-      </div>
+  
+            {/* Page Number Buttons */}
+            {Array.from({ length: totalPages }, (_, index) => (
+              <li key={`page-${index}`}>
+                <button
+                  onClick={() => handlePageClick(index + 1)}
+                  style={{
+                    margin: '0 5px',
+                    fontWeight: currentPage === index + 1 ? 'bold' : 'normal',
+                    textDecoration: 'underline',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {index + 1}
+                </button>
+              </li>
+            ))}
+  
+            {/* Next Page Button */}
+            <li>
+              <button
+                onClick={() => handlePageClick(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                style={{ marginLeft: '10px' }}
+              >
+                Next
+              </button>
+            </li>
+          </ul>
+        </div>
+      )}
     </>
   );
-}
+}  
