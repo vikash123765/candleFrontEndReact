@@ -1,11 +1,10 @@
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import ProductCard from "../components/ProductCard";
 import { getAllProducts, getProductsByIds } from "../lib/api";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [types, setTypes] = useState([]);
-  const [priceRangeValues, setPriceRangeValues] = useState([0, 300]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [displayedProducts, setDisplayedProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -62,6 +61,7 @@ export default function Products() {
     };
   }, [filteredProducts]);
 
+  // Function to create DTOs for products
   function createProductDTOs(pdx) {
     if (!Array.isArray(pdx)) {
       return [];
@@ -72,28 +72,14 @@ export default function Products() {
     }));
   }
 
-  function setProductRange() {
-    const [rangeMin, rangeMax] = priceRangeValues;
-    const uniqueFilteredProducts = products.filter(p => (
-      p.productPrice >= rangeMin && p.productPrice <= rangeMax
-    ));
-    setFilteredProducts(uniqueFilteredProducts);
-    setDisplayedProducts(uniqueFilteredProducts.slice(0, productsPerPage));
-    setCurrentPage(1); // Reset to first page when price range changes
-  }
-
-  function handleTypeChange(event) {
-    const selectedType = event.target.value;
+  // Function to filter products based on type and search query
+  function filterProducts(products, selectedType, query) {
     let filtered = [...products];
-  
-    // Clear the search query when changing product type
-    setSearchQuery('');
-  
+
     // Perform filtering based on search query
-    if (searchQuery) {
-      const query = searchQuery.trim().toLowerCase();
+    if (query) {
       const searchTerms = query.split(" ");
-  
+
       filtered = filtered.filter(p => {
         const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
         const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
@@ -106,85 +92,58 @@ export default function Products() {
         );
       });
     }
-  
+
     // Filter by selected type (if not 'all')
     if (selectedType !== 'all') {
       filtered = filtered.filter(p => p.productType === selectedType);
     }
-  
-    // Update state variables
+
+    return filtered;
+  }
+
+  // Update filtered products and displayed products based on filtered data
+  function updateFilteredProducts(filtered) {
     setFilteredProducts(filtered);
     setDisplayedProducts(filtered.slice(0, productsPerPage));
     setCurrentPage(1); // Reset pagination to first page
     setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
   }
-  
+
+  // Handle type change filter
+  function handleTypeChange(event) {
+    const selectedType = event.target.value;
+    const filtered = filterProducts(products, selectedType, searchQuery);
+    updateFilteredProducts(filtered);
+  }
+
+  // Handle search input change
   function handleSearch(event) {
     // Check if Enter key was pressed (keyCode 13) or button was clicked
     if (event.key === 'Enter' || event.type === 'click') {
       const query = searchRef.current.value.trim().toLowerCase(); // Access input value using useRef
       setSearchQuery(query);
-  
-      let filtered = [...products]; // Make a copy of products array
-  
-      // Perform filtering based on search query
-      if (query) {
-        const searchTerms = query.split(" ");
-  
-        filtered = filtered.filter(p => {
-          const productNameWithoutSpaces = p.productName.toLowerCase().replace(/\s+/g, '');
-          const typeWithoutSpaces = p.productType.toLowerCase().replace(/\s+/g, '');
-          // Check if any search term appears anywhere in the product name or type
-          return searchTerms.every(term =>
-            productNameWithoutSpaces.includes(term) ||
-            typeWithoutSpaces.includes(term) ||
-            String(p.productPrice).includes(term) ||
-            String(p.productId).includes(term)
-          );
-        });
-      }
-  
-      // Filter by selected type (if not 'all')
-      const selectedType = document.getElementById("typeFilter").value;
-      if (selectedType !== 'all') {
-        filtered = filtered.filter(p => p.productType === selectedType);
-      }
-  
-      // Update state variables
-      setFilteredProducts(filtered);
-      setDisplayedProducts(filtered.slice(0, productsPerPage));
-      setCurrentPage(1); // Reset pagination to first page
-      setNoProductsFound(filtered.length === 0); // Set noProductsFound flag
+      const filtered = filterProducts(products, document.getElementById("typeFilter").value, query);
+      updateFilteredProducts(filtered);
     }
   }
-  
+
+  // Sort products based on selected option
   function sortProducts(event) {
     const sortBy = event.target.value;
     let sortedProducts = [...filteredProducts];
 
     if (sortBy === 'price-d') {
-      sortedProducts.sort((a, b) => {
-        if (b.productPrice === a.productPrice) {
-          return a.productType.localeCompare(b.productType);
-        }
-        return b.productPrice - a.productPrice;
-      });
+      sortedProducts.sort((a, b) => b.productPrice - a.productPrice || a.productType.localeCompare(b.productType));
     } else if (sortBy === 'price-a') {
-      sortedProducts.sort((a, b) => {
-        if (a.productPrice === b.productPrice) {
-          return a.productType.localeCompare(b.productType);
-        }
-        return a.productPrice - b.productPrice;
-      });
+      sortedProducts.sort((a, b) => a.productPrice - b.productPrice || a.productType.localeCompare(b.productType));
     } else if (sortBy === 'all') {
       sortedProducts.sort((a, b) => a.productName.localeCompare(b.productName));
     }
 
-    setFilteredProducts(sortedProducts);
-    setDisplayedProducts(sortedProducts.slice(0, productsPerPage));
-    setCurrentPage(1); // Reset to first page when sorting changes
+    updateFilteredProducts(sortedProducts);
   }
 
+  // Function to load more products for pagination
   const loadMoreProducts = () => {
     const nextPage = currentPage + 1;
     const indexOfLastProduct = nextPage * productsPerPage;
@@ -206,6 +165,7 @@ export default function Products() {
     setDisplayedProducts(newProducts);
     window.scrollTo(0, 0); // Scroll to top when changing page
   };
+  
   return (
     <>
       <div id="product-filters">
@@ -254,16 +214,8 @@ export default function Products() {
       {totalPages > 1 && (
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
           <ul style={{ listStyle: 'none', padding: 0, display: 'flex' }}>
-            {/* Previous Page Button */}
-            <li>
-              <button
-                onClick={() => handlePageClick(currentPage - 1)}
-                disabled={currentPage === 1}
-                style={{ marginRight: '10px' }}
-              >
-                Prev
-              </button>
-            </li>
+        
+    
   
             {/* Page Number Buttons */}
             {Array.from({ length: totalPages }, (_, index) => (
@@ -282,16 +234,7 @@ export default function Products() {
               </li>
             ))}
   
-            {/* Next Page Button */}
-            <li>
-              <button
-                onClick={() => handlePageClick(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                style={{ marginLeft: '10px' }}
-              >
-                Next
-              </button>
-            </li>
+         
           </ul>
         </div>
       )}
