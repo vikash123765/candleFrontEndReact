@@ -10,8 +10,8 @@ import '../style/modal.css';
 export default function ProductModal({ p, image, setModalShown }) {
   const [store, setStore] = useAtom(storeAtom);
   const [stagedItems, setStagedItems] = useState([]);
-  const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [isAddToCartDisabled, setIsAddToCartDisabled] = useState(false);
 
   const closeModal = () => {
     setModalShown(false);
@@ -26,23 +26,24 @@ export default function ProductModal({ p, image, setModalShown }) {
   }
 
   function countInCart(productId) {
-    let count = store.cart.filter(item => item.productId === productId).length;
-    return count;
+    return store.cart.filter(item => item.productId === productId).length;
   }
 
   function addToStagedItems() {
-    setStagedItems([...stagedItems, p]);
+    const newStagedItems = [...stagedItems, p];
+    setStagedItems(newStagedItems);
+    clearErrorMessage(); // Clear error message on count change
   }
 
   function removeFromStagedItems() {
-    setStagedItems([...stagedItems.slice(0, stagedItems.length - 1)]);
+    const newStagedItems = stagedItems.slice(0, stagedItems.length - 1);
+    setStagedItems(newStagedItems);
+    clearErrorMessage(); // Clear error message on count change
   }
 
   async function addStagedItemsToCart() {
     // Calculate total items including staged items
-    const totalInCart = countInCart(p.productId) + stagedItems.length;
-
-
+    let totalInCart = countInCart(p.productId) + stagedItems.length;
 
     try {
       // Make an API call to check product availability
@@ -50,12 +51,10 @@ export default function ProductModal({ p, image, setModalShown }) {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          'productId': p.productId, // Assuming p has a productId property
-          'count': totalInCart // Total items including staged items
+          'productId': p.productId,
+          'count': totalInCart
         }
       });
-      console.log(p.productId)
-      console.log(totalInCart)
 
       if (response.ok) {
         // Add staged items to cart
@@ -65,11 +64,17 @@ export default function ProductModal({ p, image, setModalShown }) {
         // Clear staged items and close modal
         setStagedItems([]);
         closeModal();
+        // Reset error state and re-enable Add to Cart button
+        setErrorMessage('');
+        setIsAddToCartDisabled(false);
       } else {
-        // Show error message
-        const result = await response.text(); // Assuming the response is plain text
-        setErrorMessage(result); // Set error message
+        // Handle error response
+        const errorMessage = await response.text();
+        setErrorMessage(errorMessage); // Set error message
         setIsAddToCartDisabled(true); // Disable the add to cart button
+
+        // Reset totalInCart to 0
+        totalInCart = 0;
       }
     } catch (error) {
       console.error('Error adding product to cart:', error);
@@ -77,8 +82,13 @@ export default function ProductModal({ p, image, setModalShown }) {
     }
   }
 
+  function clearErrorMessage() {
+    setErrorMessage('');
+    setIsAddToCartDisabled(false);
+  }
+
   const displayPrice = p.productPrice.toFixed(2);
-  let productType = p.productType.toLowerCase().split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+  const productType = p.productType.toLowerCase().split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
   return (
     <div className="product-modal_backdrop" onClick={closeModal}>
@@ -98,23 +108,23 @@ export default function ProductModal({ p, image, setModalShown }) {
             <div>Description: {p.productDescription}</div>
             <div className="buttons-container">
               <div className="buttons row">
-                <div className='col-3'>
-                  <button onClick={removeFromStagedItems} className='remove'>
+                <div className="col-3">
+                  <button onClick={removeFromStagedItems} className="remove">
                     <RemoveIcon />
                   </button>
                 </div>
-                <div className='col-3'>
-                  <button onClick={addToStagedItems} className='add'>
+                <div className="col-3">
+                  <button onClick={addToStagedItems} className="add">
                     <AddIcon />
                   </button>
                 </div>
-                <div className='cart col-3'>
+                <div className="cart col-3">
                   <button disabled={stagedItems.length < 1 || isAddToCartDisabled} onClick={addStagedItemsToCart}>
                     Add {stagedItems.length} to cart
                   </button>
                 </div>
-                <div className='col-3'>
-                  <h4 className="price-mobile"> Kr{displayPrice}</h4>
+                <div className="col-3">
+                  <h4 className="price-mobile">Kr {displayPrice}</h4>
                 </div>
               </div>
               {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -125,3 +135,7 @@ export default function ProductModal({ p, image, setModalShown }) {
     </div>
   );
 }
+
+
+
+
