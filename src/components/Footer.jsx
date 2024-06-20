@@ -1,35 +1,37 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';  // Updated import
+import { useNavigate } from 'react-router-dom';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import YouTubeIcon from '@mui/icons-material/YouTube';
 import logoImage from '../Logo/postnord.png';
 import paypal from '../Logo/paypal.png';
 
+import tiktok from "../ProductImages/4362958_tiktok_logo_social media_icon.png";
+
+
 const social = [
   {
     icon: <FacebookIcon style={{ fontSize: '64px' }} />,
-    href: "#"
+    href: "https://www.facebook.com/profile.php?id=61561517660290"
   },
   {
     icon: <InstagramIcon style={{ fontSize: '64px' }} />,
     href: "#"
   },
   {
-    icon: <WhatsAppIcon style={{ fontSize: '64px' }} />,
-    href: "#"
+    icon: <img src={tiktok} alt="TikTok" style={{ width: 'auto', height: 'auto',marginBottom:"4px" }} />, // Adjusted verticalAlign to 'middle'
+    href: "https://www.tiktok.com/@vts.cases?lang=en"
   },
   {
     icon: <YouTubeIcon style={{ fontSize: '64px' }} />,
-    href: "#"
+    href: "https://www.youtube.com/channel/UCqxfRCq2rP44O1TKGmxKMaw"
   },
 ];
 
 const Footer = () => {
-  const navigate = useNavigate();  // Updated hook
+  const navigate = useNavigate();
 
-  const generalInfoRoute = "/About"; 
+  const generalInfoRoute = "/About";
 
   const handleNavigation = (route) => {
     navigate(route);
@@ -70,7 +72,6 @@ const Footer = () => {
         </div>
 
         <div className="footer-item">
-          {/* <h4>Payment and Delivery Services</h4> */}
           <img src={paypal} alt="PayPal" style={{ width: '90px', height: 'auto', marginBottom: '10px' }} />
           <img src={logoImage} alt="PostNord" style={{ width: '110px', height: 'auto', marginBottom: '10px' }} />
         </div>
