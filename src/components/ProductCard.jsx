@@ -64,6 +64,9 @@ import iphone15Pinapple from "../ProductImages/iphone15Pinapple.png";
 
 import iphone15Blue from "../ProductImages/iphone15Blue.png";
 
+import a14tajMahal from "../ProductImages/a14tajMahal.png";
+import iphone14pinkbackroundsamuraipremiumrubber from "../iphone 14 pro max premium rubber case pink backround samurai.png";
+
 
 export default function ProductCard({p, isSoldOut}) {
   const [imageHeight, setImageHeight] = useState('300px'); // Default height for larger screens
@@ -113,7 +116,10 @@ export default function ProductCard({p, isSoldOut}) {
     61:a14mountainreflection,
     65:moonEclipseamuraiIphone14ProMax,
     66:iphone15Pinapple,
-    71:iphone15Blue
+    71:iphone15Blue,
+    73:a14tajMahal,
+    74:iphone14pinkbackroundsamuraipremiumrubber
+
 
 
 
