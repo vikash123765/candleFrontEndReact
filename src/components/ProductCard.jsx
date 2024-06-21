@@ -65,7 +65,7 @@ import iphone15Pinapple from "../ProductImages/iphone15Pinapple.png";
 import iphone15Blue from "../ProductImages/iphone15Blue.png";
 
 import a14tajMahal from "../ProductImages/a14tajMahal.png";
-import iphone14pinkbackroundsamuraipremiumrubber from "../iphone 14 pro max premium rubber case pink backround samurai.png";
+import iphone14promaxsamuraipinkbackroundPremioumrubber from "../ProductImages/iphone14promaxsamuraipinkbackround.png";
 
 
 export default function ProductCard({p, isSoldOut}) {
@@ -118,7 +118,7 @@ export default function ProductCard({p, isSoldOut}) {
     66:iphone15Pinapple,
     71:iphone15Blue,
     73:a14tajMahal,
-    74:iphone14pinkbackroundsamuraipremiumrubber
+    74:iphone14promaxsamuraipinkbackroundPremioumrubber
 
 
 
