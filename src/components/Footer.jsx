@@ -16,7 +16,7 @@ const social = [
   },
   {
     icon: <InstagramIcon style={{ fontSize: '64px' }} />,
-    href: "#"
+    href: "https://www.instagram.com/vts.cases/"
   },
   {
     icon: <img src={tiktok} alt="TikTok" style={{ width: 'auto', height: 'auto',marginBottom:"4px" }} />, // Adjusted verticalAlign to 'middle'
