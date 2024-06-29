@@ -140,6 +140,7 @@ return (
                     <select name="gender">
                         <option value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
+                        <option value="OTHER">Other</option>
                     
                     </select>
                 </div>
