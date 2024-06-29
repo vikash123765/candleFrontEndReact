@@ -68,9 +68,9 @@ export default function Login() {
 
             console.error('Login failed:', userRes.statusText);
             setError("Login failed. Please check your credentials.");
-            alert("login failed please check your credentials! ")
+            alert("Login failed please check your credentials! ")
         } catch (error) {
-            alert("login failed please try again")
+            alert("Login failed please try again")
             console.error('Error during login:', error);
         }
         finally {

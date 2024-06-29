@@ -790,7 +790,7 @@ const isFormValidForLoggedInUser = validateForm(null, true);
 
         if (!isPayPalButtonEnabledRef.current) {
 
-            alert('Please fill out all required fields and select a shipping alternative.');
+            alert('Please fill out all required fields and select a shipping otion.');
         }
     }}
                                 />

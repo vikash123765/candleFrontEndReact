@@ -128,6 +128,9 @@ export default function Profile() {
                             <option value="FEMALE">
                                 Female
                             </option>
+                            <option value="OTHER">
+                                Other
+                            </option>
                           
                         </select>
                     </label>
