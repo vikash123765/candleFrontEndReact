@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import GuestCheckoutForm from '../components/GuestCheckoutForm.jsx';
 import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 import React, { useState, useEffect, useRef } from 'react';
+import logoImage from '../Logo/postnord.png';
 
 import '@fortawesome/fontawesome-free/css/all.min.css';
 // Declare shippingCost state
@@ -597,7 +598,10 @@ const isFormValidForLoggedInUser = validateForm(null, true);
                               <strong>Name:</strong> <br></br>{store.user.userName}
                           </div>
                             )}
+                            <p> <img src={logoImage} alt="PostNord" style={{ width: '110px', height: 'auto', marginBottom: '10px' }} /></p>
                             <div className="shipping-form">
+                            
+                                
                                 <label>
                                     <input
                                         type="checkbox"
