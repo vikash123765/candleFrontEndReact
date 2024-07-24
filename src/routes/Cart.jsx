@@ -496,6 +496,8 @@ const isFormValidForLoggedInUser = validateForm(null, true);
     
         return (
             <div>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
                 <h3>Your order</h3>
                 {store.cart.length ? (
                     <>

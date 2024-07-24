@@ -146,6 +146,8 @@ const handleMarkSent = async () => {
 
   return (
     <div>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
       <h1>Welcome, Admin!</h1>
       {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       {/* Authentication */}

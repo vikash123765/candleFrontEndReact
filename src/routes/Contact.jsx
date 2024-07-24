@@ -102,7 +102,10 @@ const [loading, setLoading] = useState(false); // Introduce loading state
 
   return (
     
+    
     <>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
      <p>Have a question, concern, or just want to get in touch? We're here to help! Please fill out the form below, and we'll get back to you as soon as possible.
 Let us know the subject of your inquiry, whether it's about an order, a product, or any other matter.
 Feel free to share the details of your issue or inquiry. The more information you provide, the better we can assist you.

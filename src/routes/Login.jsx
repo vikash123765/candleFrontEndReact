@@ -120,7 +120,8 @@ export default function Login() {
 return (
     <div className="custom-login-signup-container">
         {loading && <div className="custom-loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
-        
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
        
         
         {/* Signup form */}

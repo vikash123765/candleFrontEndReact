@@ -84,6 +84,8 @@ export default function Forgot() {
   return (
 
     <div>   
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
        {loading && <div className="loading-icon"><i className="fas fa-spinner fa-spin"></i></div>}
       <div>
         <h2>Security key generator</h2>
@@ -117,6 +119,7 @@ export default function Forgot() {
           />
           <button type="submit">Reset Password</button>
         </form>
+
       </div>
     </div>
   );

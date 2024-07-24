@@ -168,6 +168,8 @@ export default function Products() {
   
   return (
     <>
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
       <div id="product-filters">
         <div>
           <label htmlFor="typeFilter">Type</label>

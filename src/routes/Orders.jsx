@@ -13,6 +13,8 @@ export default function Orders() {
                 {store.orders.map((order, i) => (
                     <Order key={`${order.orderId}-${i}`} order={order} orderIndex={i} />
                 ))}
+                  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
             </div>
         </div>
     );

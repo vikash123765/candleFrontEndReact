@@ -3,7 +3,10 @@ import '../style/About.css';
 
 const About = () => {
   return (
+    
     <div className="about-container">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
       <section className="about-section">
         <h2>Welcome to Our E-Commerce Store</h2>
         <p>

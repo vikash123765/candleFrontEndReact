@@ -156,6 +156,8 @@ export default function Profile() {
                     <button type="submit">Change password</button>
                 </form>
             </div>
+            <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
         </section>
     );
 }

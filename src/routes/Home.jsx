@@ -27,6 +27,8 @@ export default function Home() {
 
     return (
         <>
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7185928504834368"
+     crossorigin="anonymous"></script>
             <section id="hero">
                 <h2>VTS cases</h2>
                 <p className="mobile-text">Welcome to VTScases! Elevate your mobile experience with our stylish, protective phone cases. Choose from silicone plain cases, colored silicone cases,printed silicone cases and printed premium rubber cases. Our cases combine fashion with functionality, offering trend-setting protection for your device!</p>
