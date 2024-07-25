@@ -126,7 +126,7 @@ const handleFormChange = () => {
 
     setFormFilled(isFilled);
 
-    // Check if all fields have strings
+    // Check if all fields have Strings
     const formFilled = [...newFormData.values()].every((value) => value.trim() !== '');
     setFormFilled(formFilled);
 
