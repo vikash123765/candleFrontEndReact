@@ -50,13 +50,10 @@ const About = () => {
       <section className="team-section">
         <h2>Our Team Members</h2>
         <div className="team-member">
-          <p>CEO</p>
+          <p>CEO/Founder</p>
           <h3>Vikash Kosaraju</h3>
         </div>
-        <div className="team-member">
-          <p>Co-Founder</p>
-          <h3>Stefanos Tzegay</h3>
-        </div>
+
       </section>
     </div>
   );
